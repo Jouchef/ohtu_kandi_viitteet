@@ -8,12 +8,12 @@ body {
 .reference {
 
     position: center;
-    padding-top: 200px;
-    width: 510px;
-    height: 255px;
-    background: rgb(234, 252, 234);
+    padding-top: 50px;
+    width: 150px;
+    height: 555px;
+    background: rgb(235, 239, 255);
     display: flex;
-    justify-content: center;
+    justify-content: left;
 }
 
 .reference .p {
