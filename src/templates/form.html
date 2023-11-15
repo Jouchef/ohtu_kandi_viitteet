@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style.css">
+    <title>insert title here</title>
+</head>
+
+<body>
+
+
+    <div class="reference">
+
+        <form action="/references" method="post">
+
+            <p>Type:
+                <input id="ra1" type="radio" name="ra" value="Book" required>
+                <label for="ra1">Book</label>
+
+                <input id="ra2" type="radio" name="ra" value="Article" required>
+                <label for="ra2">Article</label>
+
+                <input id="ra3" type="radio" name="ra" value="Inproseedings" required>
+                <label for="ra3">Inproseedings</label>
+            </p>
+
+
+            <p>
+                Author: <textarea name="name" rows="1" cols="30" required></textarea>
+                Title: <textarea name="name" rows="1" cols="30" required></textarea>
+                Booktitle: <textarea name="name" rows="1" cols="30" required></textarea>
+                Journal: <textarea name="name" rows="1" cols="30" required></textarea>
+                Year: <textarea name="name" rows="1" cols="30" required></textarea>
+                Volme: <textarea name="name" rows="1" cols="30" required></textarea>
+                Pages: <textarea name="name" rows="1" cols="30" required></textarea>
+                Publisher: <textarea name="name" rows="1" cols="30" required></textarea>
+
+            </p>
+
+            <input type="submit" value="Submit">
+
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        </form>
+    </div>
+
+</body>
+
+</html>
