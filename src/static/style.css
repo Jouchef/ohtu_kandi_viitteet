@@ -1,23 +1,25 @@
-body {
+.beginning {
 
-    margin: auto;
-    max-width: 800px;
-    font-size: 22px;
+    padding-top: 20px;
+    padding-left: 50px;
 
-    position: center;
-    padding-top: 200px;
-    width: 510px;
-    height: 255px;
-    display: flex;
-    justify-content: center;
+}
+
+.linkstyle {
+
+    font-size: 40px;
+    padding-left: 250px;
 }
 
 p {
 
+    padding-left: 250px;
     color: rgb(4, 2, 57);
+    font-size: 20px;
 }
 
 h2 {
 
     color: rgb(4, 2, 57);
+    font-size: 40px;
 }
