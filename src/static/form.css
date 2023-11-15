@@ -3,21 +3,20 @@ body {
     margin: auto;
     max-width: 800px;
     font-size: 22px;
+}
+
+.reference {
 
     position: center;
     padding-top: 200px;
     width: 510px;
     height: 255px;
+    background: rgb(234, 252, 234);
     display: flex;
     justify-content: center;
 }
 
-p {
-
-    color: rgb(4, 2, 57);
-}
-
-h2 {
+.reference .p {
 
     color: rgb(4, 2, 57);
 }
