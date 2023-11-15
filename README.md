@@ -10,3 +10,13 @@ Nettisovellus, jonka avulla voi pitää kirjaa LaTeX-ympäristössä toteutettuj
 Sovelluslinkki: (Tulossa!)
 
 Käyttöohje: (Tulossa!)
+
+## Definition of Done
+
+In order for a user story to be deemed “done” you need to check off a number of items:
+
+- Yksikkötestit menee läpi
+- Koodi on katselmoitu
+- Hyväksymiskriteerit täyttyy
+- Funktionaaliset testit menee läpi
+- Asiakas hyväksyy user storyn
