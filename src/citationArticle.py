@@ -1,5 +1,7 @@
+from generateCitate import GenerateCitate
+
 class CitationArticle():
-    def __init__(self, entry_type, cite_key, author, title, journal, year, volume, number, pages):
+    def __init__(self, entry_type, cite_key, author, title, journal, year, volume, number, pages, month=None, doi=None, note=None, key=None):
         self.entry_type = entry_type
         self.cite_key = cite_key
         self.author = author
@@ -9,6 +11,10 @@ class CitationArticle():
         self.volume = volume
         self.number = number
         self.pages = pages
+        self.month = month
+        self.doi = doi
+        self.note = note
+        self.key = key
 
     def citation_to_bibtex_entry(self):
         fields = {
@@ -18,15 +24,11 @@ class CitationArticle():
             "year": self.year,
             "volume": self.volume,
             "number": self.number,
-            "pages": self.pages
+            "pages": self.pages,
+            "month": self.month,
+            "doi": self.doi,
+            "note": self.note,
+            "key": self.key
         }
 
-        bibtex_entry = f"@{self.entry_type}{{{self.cite_key},\n"
-        for key, value in fields.items():
-            if value:
-                bibtex_entry += f"  {key} = \"{value}\",\n"
-        bibtex_entry = bibtex_entry.rstrip(',\n') + "\n}"  # Remove last comma and newline, then close the brace
-
-        return bibtex_entry
-
-
+        return GenerateCitate.generate_bibtex(self.entry_type, self.cite_key, fields)
