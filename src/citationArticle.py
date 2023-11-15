@@ -11,16 +11,22 @@ class CitationArticle():
         self.pages = pages
 
     def citation_to_bibtex_entry(self):
-        return (
-            f"@{self.entry_type}{{{self.cite_key},\n"
-            f"  author = \"{self.author}\",\n"
-            f"  title = \"{self.title}\",\n"
-            f"  journal = \"{self.journal}\",\n"
-            f"  year = {self.year},\n"
-            f"  volume = \"{self.volume}\",\n"
-            f"  number = \"{self.number}\",\n"
-            f"  pages = \"{self.pages}\"\n"
-            f"}}"
-        )
+        fields = {
+            "author": self.author,
+            "title": self.title,
+            "journal": self.journal,
+            "year": self.year,
+            "volume": self.volume,
+            "number": self.number,
+            "pages": self.pages
+        }
+
+        bibtex_entry = f"@{self.entry_type}{{{self.cite_key},\n"
+        for key, value in fields.items():
+            if value:
+                bibtex_entry += f"  {key} = \"{value}\",\n"
+        bibtex_entry = bibtex_entry.rstrip(',\n') + "\n}"  # Remove last comma and newline, then close the brace
+
+        return bibtex_entry
 
 
