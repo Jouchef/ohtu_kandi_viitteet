@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/style.css">
-    <title>insert title here</title>
+    <title>Reference app</title>
 </head>
 
 <body>
@@ -36,6 +36,13 @@
             {% if info is defined %}
             {% for i in info %}
             <p><b>Author:</b> {{ i[1] }} </p>
+            <p><b>Title:</b> {{ i[2] }} </p>
+            <p><b>Booktitle:</b> {{ i[3] }} </p>
+            <p><b>Journal:</b> {{ i[4] }} </p>
+            <p><b>Year:</b> {{ i[5] }} </p>
+            <p><b>Volume:</b> {{ i[6] }} </p>
+            <p><b>Pages:</b> {{ i[7] }} </p>
+            <p><b>Publisher:</b> {{ i[8] }} </p>
             {% endfor %}
             {% endif %}
         </div>
