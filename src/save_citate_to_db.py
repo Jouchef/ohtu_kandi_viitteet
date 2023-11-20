@@ -3,8 +3,8 @@ from sqlalchemy import text
 from database import db
 
 
-def citate_to_db(self, author, title, book_title, journal, year, volume, pages, publisher):
-    sql = text("INSERT INTO References (author, title, booktitle, journal, year, volume, pages, publisher) VALUES (:self, author, title, book_title, journal, year, volume, pages, publisher)")
+def citate_to_db(author, title, book_title, journal, year, volume, pages, publisher):
+    sql = text("INSERT INTO References (author, title, booktitle, journal, year, volume, pages, publisher) VALUES (:author, :title, :booktitle, :journal, :year, :volume, :pages, :publisher)")
 
     try:
         result = db.session.execute(sql, {"author": author, "title": title, "booktitle": book_title,
