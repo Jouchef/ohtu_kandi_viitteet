@@ -21,14 +21,14 @@ CREATE TABLE "References" (
 CREATE TABLE UserReferences (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES Users(id),
-    reference_id INTEGER REFERENCES References(id),
+    reference_id INTEGER REFERENCES "References"(id),
     UNIQUE(user_id, reference_id)
 );
 
 CREATE TABLE Tags (
     id SERIAL PRIMARY KEY,
     name TEXT UNIQUE NOT NULL,
-    reference_id INTEGER REFERENCES References(id)
+    reference_id INTEGER REFERENCES "References"(id)
 );
 
 

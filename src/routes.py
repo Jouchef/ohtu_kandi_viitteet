@@ -15,7 +15,7 @@ def new_reference():
     return render_template("form.html")
 
 
-@app.route("/add_reference", methods=["POST"])
+@app.route("/add_reference", methods=["GET", "POST"])
 def add_reference():
     """Render form."""
     author = request.form["name"]
@@ -28,4 +28,4 @@ def add_reference():
     publisher = request.form["publisher"]
     save_citate_to_db.citate_to_db(
         author, title, book_title, journal, year, volume, pages, publisher)
-    return render_template("index.html")  # tässä takaisin etusivulle?
+    return render_template("index.html", author=author, title=title, book_title=book_title, journal=journal, year=year, volume=volume, pages=pages, publisher=publisher)
