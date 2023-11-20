@@ -1,10 +1,17 @@
 import sqlite3
+from sqlalchemy import text
+from database import db
 
 
 def citate_to_db(self, author, title, book_title, journal, year, volume, pages, publisher):
-    sql = "INSERT INTO citate (author, title, book_title, journal, year, volume, pages, publisher) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    sql = text("INSERT INTO citate (author, title, book_title, journal, year, volume, pages, publisher) VALUES (:self, author, title, book_title, journal, year, volume, pages, publisher)")
 
-    data = (author, title, book_title, journal, year, volume, pages, publisher)
-    self.cursor.execute(sql, data)
-    self.conn.commit()
-    return
+    try:
+        result = db.session.execute(sql, {"author": author, "title": title, "book_title": book_title,
+                                    "journal": journal, "year": year, "volume": volume, "pages": pages, "publisher": publisher})
+        db.session.commit()
+
+        return
+    except Exception as e:
+        db.session.rollback()
+        return None
