@@ -1,11 +1,12 @@
-CREATE TABLE Users (
+CREATE TABLE Users_Table (
     id SERIAL PRIMARY KEY,
     username TEXT UNIQUE NOT NULL,
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL
 );
 
-CREATE TABLE "References" (
+-- With Book type Author/Editor field should be saved into Author column, not into Editor column
+CREATE TABLE References_Table (
     id SERIAL PRIMARY KEY,
     type TEXT,
     visible BOOLEAN,
@@ -31,17 +32,17 @@ CREATE TABLE "References" (
     organization TEXT
 );
 
-CREATE TABLE UserReferences (
+CREATE TABLE UserReferences_Table (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES Users(id),
-    reference_id INTEGER REFERENCES "References"(id),
+    reference_id INTEGER REFERENCES References_Table(id),
     UNIQUE(user_id, reference_id)
 );
 
-CREATE TABLE Tags (
+CREATE TABLE Tags_Table (
     id SERIAL PRIMARY KEY,
     name TEXT UNIQUE NOT NULL,
-    reference_id INTEGER REFERENCES "References"(id)
+    reference_id INTEGER REFERENCES References_Table(id)
 );
 
 
