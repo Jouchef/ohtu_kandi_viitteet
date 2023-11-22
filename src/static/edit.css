@@ -23,7 +23,8 @@ body {
 
 .linkstyle {
 
-    display: inline-block;
+    margin-top: 35px;
+    display: inline-flex;
     padding: 10px 20px;
 
     border: 1px solid rgb(4, 2, 57);
