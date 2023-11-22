@@ -30,8 +30,10 @@ def add_reference():
         author, title, book_title, journal, year, volume, pages, publisher)
     return render_template("index.html", author=author, title=title, book_title=book_title, journal=journal, year=year, volume=volume, pages=pages, publisher=publisher)
 
+
 @app.route("/edit_reference", methods=["GET", "POST"])
 def edit_reference():
-    info = sql_queries.edit_reference()
-    #pitää hakea halutun viitteen tiedot tietokannasta! -> tallenna tiedot listaan "info=[]"
-    return render_template("edit.html", info=info)
+    # info = sql_queries.edit_reference()
+    # pitää hakea halutun viitteen tiedot tietokannasta! -> tallenna tiedot listaan "info=[]"
+    # info=info
+    return render_template("edit.html")

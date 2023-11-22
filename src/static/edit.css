@@ -1,13 +1,58 @@
-.beginning {
+body {
 
-    padding-top: 20px;
-    padding-left: 50px;
-    background: rgb(235, 239, 255);
+    margin: auto;
+    max-width: 800px;
+    font-size: 22px;
 }
 
-p {
+.reference {
 
+    position: center;
+    padding-top: 50px;
+    width: 150px;
+    height: 555px;
+    background: rgb(235, 239, 255);
+    display: flex;
+    justify-content: left;
+}
+
+.reference .p {
 
     color: rgb(4, 2, 57);
+}
+
+.linkstyle {
+
+    display: inline-block;
+    padding: 10px 20px;
+
+    border: 1px solid rgb(4, 2, 57);
+    border-radius: 3px;
+    background-color: solid rgb(234, 252, 234);
+    color: rgb(4, 2, 57);
+    font-size: 22px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.linkstyle:hover {
+
+    background-color: solid rgb(234, 252, 234);
+    animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 5px rgb(4, 2, 57);
+    }
+
+    100% {
+        box-shadow: 0 0 20px rgb(4, 2, 57);
+    }
+}
+
+.beginning p {
+
     font-size: 28px;
+    color: rgb(4, 2, 57);
 }

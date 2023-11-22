@@ -13,22 +13,26 @@
         <p>Here you can edit or delete your reference</p>
     </div>
 
-    <p>
-        Author: <textarea name="name" rows="1" cols="30" required></textarea>
-        Title: <textarea name="title" rows="1" cols="30" required></textarea>
-        Booktitle: <textarea name="book_title" rows="1" cols="30" required></textarea>
-        Journal: <textarea name="journal" rows="1" cols="30" required></textarea>
-        Year: <textarea name="year" rows="1" cols="30" required></textarea>
-        Volume: <textarea name="volme" rows="1" cols="30" required></textarea>
-        Pages: <textarea name="pages" rows="1" cols="30" required></textarea>
-        Publisher: <textarea name="publisher" rows="1" cols="30" required></textarea>
-    </p>
+    <div class="reference">
+        <form action="/make_changes" method="post">
+            <p>
+                Author: <textarea name="name" rows="1" cols="30" value="default value" required></textarea>
+                Title: <textarea name="title" rows="1" cols="30" value="default value" required></textarea>
+                Booktitle: <textarea name="book_title" rows="1" cols="30" value="default value" required></textarea>
+                Journal: <textarea name="journal" rows="1" cols="30" value="default value" required></textarea>
+                Year: <textarea name="year" rows="1" cols="30" value="default value" required></textarea>
+                Volume: <textarea name="volme" rows="1" cols="30" value="default value" required></textarea>
+                Pages: <textarea name="pages" rows="1" cols="30" value="default value" required></textarea>
+                Publisher: <textarea name="publisher" rows="1" cols="30" value="default value" required></textarea>
+            </p>
 
-    <input type="submit" value="Submit">
+            <input type="submit" value="Submit">
+        </form>
 
 
+
+    </div>
     <a href="/delete_reference" class="linkstyle">Delete</a>
-
 </body>
 
 </html>
