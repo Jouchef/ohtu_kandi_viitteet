@@ -1,4 +1,4 @@
-# python file
+"""Citation main function"""""
 from citationArticle import CitationArticle
 from generateCitate import GenerateCitate
 

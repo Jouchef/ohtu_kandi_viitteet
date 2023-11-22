@@ -7,15 +7,16 @@ CREATE TABLE Users (
 
 CREATE TABLE "References" (
     id SERIAL PRIMARY KEY,
+    type TEXT,
+    visible BOOLEAN,
     author TEXT,
     title TEXT,
-    year INTEGER,
-    booktitle TEXT,
     journal TEXT,
-    volume INTEGER,
-    pages TEXT,
+    year INTEGER,
+    volume TEXT,
     publisher TEXT,
-    type TEXT
+    booktitle TEXT,
+    
 );
 
 CREATE TABLE UserReferences (

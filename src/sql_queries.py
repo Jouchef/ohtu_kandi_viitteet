@@ -15,3 +15,7 @@ def citate_to_db(author, title, book_title, journal, year, volume, pages, publis
     except Exception as e:
         db.session.rollback()
         return None
+
+
+def edit_queries():
+    sql = text("SELECT author, title, book_title, journal, year, volume, pages, publisher WHERE ")

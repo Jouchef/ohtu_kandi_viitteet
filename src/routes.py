@@ -1,6 +1,6 @@
 from app import app
 from flask import Flask, render_template, redirect, request
-import save_citate_to_db
+import sql_queries
 
 
 @app.route("/")
@@ -26,6 +26,12 @@ def add_reference():
     volume = request.form["volme"]
     pages = request.form["pages"]
     publisher = request.form["publisher"]
-    save_citate_to_db.citate_to_db(
+    sql_queries.citate_to_db(
         author, title, book_title, journal, year, volume, pages, publisher)
     return render_template("index.html", author=author, title=title, book_title=book_title, journal=journal, year=year, volume=volume, pages=pages, publisher=publisher)
+
+@app.route("/edit_reference", methods=["GET", "POST"])
+def edit_reference():
+    info = sql_queries.edit_reference()
+    #pitää hakea halutun viitteen tiedot tietokannasta! -> tallenna tiedot listaan "info=[]"
+    return render_template("edit.html", info=info)
