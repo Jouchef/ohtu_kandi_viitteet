@@ -9,10 +9,11 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/new_reference")
+@app.route("/new_reference", methods=['GET', 'POST'])
 def new_reference():
     """Render form."""
-    return render_template("form.html")
+    selected_type = request.form.get('ra', 'Article')
+    return render_template("form.html", selected_type=selected_type)
 
 
 @app.route("/add_reference", methods=["GET", "POST"])
