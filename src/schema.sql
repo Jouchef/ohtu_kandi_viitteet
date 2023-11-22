@@ -8,14 +8,23 @@ CREATE TABLE Users (
 CREATE TABLE "References" (
     id SERIAL PRIMARY KEY,
     type TEXT,
-    visible BOOLEAN,
     author TEXT,
     title TEXT,
     journal TEXT,
-    year INTEGER,
+    year TEXT,
     volume TEXT,
     publisher TEXT,
     booktitle TEXT,
+    number TEXT,
+    pages TEXT,
+    month TEXT,
+    doi TEXT,
+    note TEXT,
+    key TEXT,
+    series TEXT,
+    address TEXT,
+    edition TEXT,
+    month TEXT,
     
 );
 
