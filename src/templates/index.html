@@ -16,38 +16,28 @@
     </div>
 
 
-    <div class="mainview">
-        <div class="reference_list">
-            <br>
-            <a href="/new_reference" class="linkstyle">Add</a>
-            <br>
-
-            <ul>
-                <p>Reference list:</p>
-                {% for i in reference_name %}
-                <a href="/headings?name={{ i }}&thereference={{ i }}" class="linkstyle" style=display:flex;
-                    flex-direction:column;>{{ i }}</a>
-                {% endfor %}
-            </ul>
-        </div>
+    <a href="/new_reference" class="linkstyle">Add</a>
 
 
-        <div class="refernece_view">
-            {% if info is defined %}
-            {% for i in info %}
-            <p><b>Author:</b> {{ i[1] }} </p>
-            <p><b>Title:</b> {{ i[2] }} </p>
-            <p><b>Booktitle:</b> {{ i[3] }} </p>
-            <p><b>Journal:</b> {{ i[4] }} </p>
-            <p><b>Year:</b> {{ i[5] }} </p>
-            <p><b>Volume:</b> {{ i[6] }} </p>
-            <p><b>Pages:</b> {{ i[7] }} </p>
-            <p><b>Publisher:</b> {{ i[8] }} </p>
-            {% endfor %}
-            {% endif %}
-        </div>
+    <div class="refernece_view">
+        {% if info is defined %}
+        {% for i in info %}
+        <p><b>Author:</b> {{ i[1] }} </p>
+        <p><b>Title:</b> {{ i[2] }} </p>
+        <p><b>Booktitle:</b> {{ i[3] }} </p>
+        <p><b>Journal:</b> {{ i[4] }} </p>
+        <p><b>Year:</b> {{ i[5] }} </p>
+        <p><b>Volume:</b> {{ i[6] }} </p>
+        <p><b>Pages:</b> {{ i[7] }} </p>
+        <p><b>Publisher:</b> {{ i[8] }} </p>
+        {% endfor %}
+        {% endif %}
+    </div>
 
-        {{ author }}, {{ title }}, {{ book_title }}, {{ journal }},{{ year }},{{ volume }},{{ pages }}, {{ publisher }}
+    <a href="/delete_reference" class="linkstyle">Delete</a>
+
+
+    {{ author }}, {{ title }}, {{ book_title }}, {{ journal }},{{ year }},{{ volume }},{{ pages }}, {{ publisher }}
 </body>
 
 </html>
