@@ -8,6 +8,7 @@ CREATE TABLE Users (
 CREATE TABLE "References" (
     id SERIAL PRIMARY KEY,
     type TEXT,
+    visible BOOLEAN,
     author TEXT,
     title TEXT,
     journal TEXT,
@@ -25,7 +26,9 @@ CREATE TABLE "References" (
     address TEXT,
     edition TEXT,
     month TEXT,
-    
+    url TEXT,
+    editor TEXT,
+    organization TEXT
 );
 
 CREATE TABLE UserReferences (
