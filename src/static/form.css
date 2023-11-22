@@ -3,7 +3,9 @@ body {
     margin: auto;
     max-width: 800px;
     font-size: 22px;
+}
 
+.reference {
 
     position: center;
     padding-top: 50px;
