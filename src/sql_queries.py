@@ -44,7 +44,7 @@ def inproceedings_to_db():
     pass
 
 def all_references_from_db():
-    sql = text("SELECT * FROM References_Table WHERE visible = 1 ORDER BY Author ASC")
+    sql = text("SELECT * FROM References_Table WHERE visible = 1 ORDER BY author ASC")
 
     try:
         result = db.session.execute(sql)
@@ -57,8 +57,19 @@ def all_references_from_db():
         return None
 
 
-def search_by_name_from_db():
-    pass
+def search_by_name_from_db(search):
+    sql = text("SELECT * FROM References_Table WHERE visible = 1 AND LOWER(author) LIKE LOWER(:author) ORDER BY author ASC")
+
+    try:
+        result = db.session.execute(sql, {"author": f"%{search}%"}).fetchall()
+
+        db.session.commit()
+
+        return result
+
+    except Exception as e:
+        db.session.rollback()
+        return None
 
 def change_visible_to_false():
     sql = text("UPDATE References_Table SET visible = 0 WHERE id = :id")
@@ -73,7 +84,26 @@ def change_visible_to_false():
         db.session.rollback()
         return None
 
-def edit_queries():
-    pass
-    # sql = text(
-    #  "SELECT author, title, book_title, journal, year, volume, pages, publisher WHERE ")
+def edit_queries(author, title, booktitle, journal, year, volume, pages, publisher, id):
+    sql = text("UPDATE References_Table SET"
+               " author = COALESCE(:author, author),"
+               " title = COALESCE(:title, title),"
+               " booktitle = COALESCE(:booktitle, booktitle),"
+               " journal = COALESCE(:journal, journal),"
+               " year = COALESCE(:year, year),"
+               " volume = COALESCE(:volume, volume),"
+               " pages = COALESCE(:pages, pages),"
+               " publisher = COALESCE(:publisher, publisher)"
+               " WHERE id = :id")
+
+    try:
+        result = db.session.execute(sql, {"author": author, "title": title, "booktitle": booktitle,
+                                           "journal": journal, "year": year, "volume": volume,
+                                           "pages": pages, "publisher": publisher, "id": id})
+
+        db.session.commit()
+
+        return
+    except Exception as e:
+        db.session.rollback()
+        return None
