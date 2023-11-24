@@ -23,7 +23,7 @@ class TestSqlQueries(unittest.TestCase):
         note = "Sample note"
         key = "sample-key"
 
-        article_to_db(author, title, journal, year, volume, number, pages, month, doi, note, key)
+        article_to_db(self.db, author, title, journal, year, volume, number, pages, month, doi, note, key)
         sql = text("SELECT * FROM References_Table WHERE title=:title")
         query = self.db.session.execute(sql, {"title": title})
         row = query.fetchone()

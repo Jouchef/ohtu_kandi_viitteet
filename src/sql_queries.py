@@ -19,22 +19,22 @@ def citate_to_db(author, title, book_title, journal, year, volume, pages, publis
         db.session.rollback()
         return None
 
-def article_to_db(author, title, journal, year, volume, number=None,
+def article_to_db(database, author, title, journal, year, volume, number=None,
                    pages=None, month=None, doi=None, note=None, key=None):
     sql = text("INSERT INTO References_Table (type, visible, author, title, journal, year, volume, number, pages, month, doi, note, key)"
                " VALUES (:author, :title, :journal, :year, :volume, :number, :pages, :month, :doi, :note, :key)")
     
     try:
-        result = db.session.execute(sql, {"type": "article", "visible": 1, "author": author,
+        result = database.session.execute(sql, {"type": "article", "visible": 1, "author": author,
                                           "title": title, "journal": journal, "year": year, "volume": volume,
                                           "number": number, "pages": pages, "month": month, "doi": doi,
                                           "note": note, "key": key})
 
-        db.session.commit()
+        database.session.commit()
 
         return
     except Exception as e:
-        db.session.rollback()
+        database.session.rollback()
         return None
 
 def book_to_db():
