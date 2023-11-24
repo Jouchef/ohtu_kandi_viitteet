@@ -19,8 +19,8 @@ def citate_to_db(author, title, book_title, journal, year, volume, pages, publis
         db.session.rollback()
         return None
 
-def article_to_db(database, author, title, journal, year, volume, number=None,
-                   pages=None, month=None, doi=None, note=None, key=None):
+def article_to_db(author, title, journal, year, volume, number=None,
+                   pages=None, month=None, doi=None, note=None, key=None, database=db):
     sql = text("INSERT INTO References_Table (type, visible, author, title, journal, year, volume, number, pages, month, doi, note, key)"
                " VALUES (:author, :title, :journal, :year, :volume, :number, :pages, :month, :doi, :note, :key)")
     

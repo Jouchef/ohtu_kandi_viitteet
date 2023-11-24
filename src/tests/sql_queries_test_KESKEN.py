@@ -3,12 +3,13 @@ from sql_queries import article_to_db
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
+from os import getenv
 
 class TestSqlQueries(unittest.TestCase):
     def setUp(self):
-        self.app = Flask(__name__)
-        self.app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///user"
-        self.db = SQLAlchemy(self.app)
+        app = Flask(__name__)
+        app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
+        self.db = SQLAlchemy(app)
 
     def test_article_to_db(self):
         author = "John Doe"
@@ -23,7 +24,7 @@ class TestSqlQueries(unittest.TestCase):
         note = "Sample note"
         key = "sample-key"
 
-        article_to_db(self.db, author, title, journal, year, volume, number, pages, month, doi, note, key)
+        article_to_db(author, title, journal, year, volume, number, pages, month, doi, note, key, self.db)
         sql = text("SELECT * FROM References_Table WHERE title=:title")
         query = self.db.session.execute(sql, {"title": title})
         row = query.fetchone()
