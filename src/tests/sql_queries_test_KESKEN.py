@@ -1,9 +1,14 @@
 import unittest
 from sql_queries import article_to_db
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
 
 class TestSqlQueries(unittest.TestCase):
     def setUp(self):
-        pass
+        self.app = Flask(__name__)
+        self.app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///user"
+        self.db = SQLAlchemy(self.app)
 
     def test_article_to_db(self):
         author = "John Doe"
@@ -19,8 +24,8 @@ class TestSqlQueries(unittest.TestCase):
         key = "sample-key"
 
         article_to_db(author, title, journal, year, volume, number, pages, month, doi, note, key)
-
-        query = self.session.execute("SELECT * FROM References_Table WHERE title=:title", {"title": title})
+        sql = text("SELECT * FROM References_Table WHERE title=:title")
+        query = self.db.session.execute(sql, {"title": title})
         row = query.fetchone()
 
         self.assertEqual(row.author, author)
