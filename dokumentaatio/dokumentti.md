@@ -4,4 +4,5 @@ After this you can run the app with
 
 ```
 poetry shell
-flask run ```
+flask run
+```
