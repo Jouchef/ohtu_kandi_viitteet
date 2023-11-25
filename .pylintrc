@@ -1,4 +1,5 @@
 [MAIN]
+jobs=1
 
 [MESSAGE CONTROL]
 
@@ -11,6 +12,6 @@ disable=raw-checker-failed,
         deprecated-pragma,
         use-symbolic-message-instead,
         missing-module-docstring,
-        redefined-builtin,
-        too-few-public-methods
+        missing-function-docstring,
+        missing-class-docstring
 
