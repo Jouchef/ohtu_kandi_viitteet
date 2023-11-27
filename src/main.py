@@ -1,6 +1,5 @@
 # python file
 from citationArticle import CitationArticle
-from generateCitate import GenerateCitate
 
 def main():
     citation = CitationArticle("article", "CitekeyArticle", "P. J. Cohen", 
