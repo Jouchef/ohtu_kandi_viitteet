@@ -12,11 +12,20 @@ git clone https://github.com/Jouchef/ohtu_kandi_viitteet.git
 ```
 poetry install
 ```
-To be able to connect to database you need to specify environment parameter by runnin command \
-```
-export DATABASE_URL=postgresql:///user
++ install postgresql if you do not have it already
 ``` 
-After this you can run the app:
+After this you have to create .env file for environment variables:
+```
+touch .env
+```
+Change the content of the file to following:
+```
+FLASK_APP="./src/app.py"
+DATABASE_FILE_NAME = 'database.db'
+DATABASE_URL='postgresql:///user'
+```
+
+Now you can run the app: 
 ```
 poetry shell
 flask run

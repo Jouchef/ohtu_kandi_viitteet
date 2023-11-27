@@ -16,46 +16,38 @@
     </div>
 
 
-    <a href="/new_reference" class="linkstyle">Add</a>
-    <a href="/login" class="linkstyle">Login</a>
+    <a href="/form" class="linkstyle">Add</a>
+    <a href="/edit_reference" class="linkstyle">Edit</a>
 
-
-    <div class="reference_view">
-        {% if info is defined %}
-        {% for i in info %}
-        <p><b>Author:</b> {{ i[1] }} </p>
-        <p><b>Title:</b> {{ i[2] }} </p>
-        <p><b>Booktitle:</b> {{ i[3] }} </p>
-        <p><b>Journal:</b> {{ i[4] }} </p>
-        <p><b>Year:</b> {{ i[5] }} </p>
-        <p><b>Volume:</b> {{ i[6] }} </p>
-        <p><b>Pages:</b> {{ i[7] }} </p>
-        <p><b>Publisher:</b> {{ i[8] }} </p>
-        {% endfor %}
-        {% endif %}
-
-        <a href="/edit_reference" class="linkstyle">Edit</a>
+    <div class="register">
+        <h2>Register</h2>
+        <a href="/login" class="linkstyle">Login</a>
+        <a href="/register" class="linkstyle">Register</a>
     </div>
 
-    {{ author }}, {{ title }}, {{ book_title }}, {{ journal }},{{ year }},{{ volume }},{{ pages }}, {{ publisher }}
     <h2>Table for references</h2>
-    <table>
-        <tr>
-            <th>Author</th>
-            <th>Title</th>
-            <th>Year</th>
-            <th>Type</th>
-        </tr>
-        {% for cite in citates %}
-        <tr>
-            <td>{{ citate_id }}</td>
-            <td>{{ citate_info.author }}</td>
-            <td>{{ citate_info.title }}</td>
-            <td>{{ citate_info.year }}</td>
-            <td>{{ citate_info.type }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Author</th>
+                    <th>Title</th>
+                    <th>Year</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for citate in citates %}
+                <tr>
+                    <td>{{ citate[3] }}</td>
+                    <td>{{ citate[4] }}</td>
+                    <td>{{ citate[6] }}</td>
+                    <td>{{ citate[1] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>

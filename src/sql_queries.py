@@ -1,72 +1,69 @@
 """This file contains all the SQL queries that are used in the application."""
 
-import sqlite3
 from sqlalchemy import text
-
-from database import db
-
-# NOT IN USE !!
-# Will be replaced byt article_to_db(), book_to_db() and inproceedings_to_db().
+import psycopg2
+conn = psycopg2.connect(database="ohtu", user="postgres", host="localhost", port="5432")
 
 
-def citate_to_db(author, title, book_title, journal, year, volume, pages, publisher):
-    sql = text("INSERT INTO References_Table (author, title, booktitle, journal, year, volume, pages, publisher) VALUES (:author, :title, :booktitle, :journal, :year, :volume, :pages, :publisher)")
-
-    try:
-        result = db.session.execute(sql, {"author": author, "title": title, "booktitle": book_title,
-                                    "journal": journal, "year": year, "volume": volume, "pages": pages, "publisher": publisher})
-        db.session.commit()
-
-        return
-    except Exception as e:
-        db.session.rollback()
-        return None
 
 
-def article_to_db(author, title, journal, year, volume, number=None,
-                  pages=None, month=None, doi=None, note=None, key=None):
+
+
+def article_to_db(article: dict):
+    """Add a new article to the database."""
+    author = article["author"]
+    title = article["title"]
+    journal = article["journal"]
+    year = article["year"]
+    volume = article["volume"]
+    number = article["number"]
+    pages = article["pages"]
+    month = article["month"]
+    doi = article["doi"]
+    note = article["note"]
+    key = article["key"]
+
+
     sql = text("INSERT INTO References_Table (type, visible, author, title, journal, year, volume, number, pages, month, doi, note, key)"
-               " VALUES (:author, :title, :journal, :year, :volume, :number, :pages, :month, :doi, :note, :key)")
+               " VALUES (:type, :visible, :author, :title, :journal, :year, :volume, :number, :pages, :month, :doi, :note, :key)")
 
     try:
-        result = db.session.execute(sql, {"type": "article", "visible": 1, "author": author,
-                                          "title": title, "journal": journal, "year": year, "volume": volume,
-                                          "number": number, "pages": pages, "month": month, "doi": doi,
-                                          "note": note, "key": key})
-
+        db.session.execute(text(sql, {
+            "type": "article",
+            "visible": 1,
+            "author": author,
+            "title": title,
+            "journal": journal,
+            "year": year,
+            "volume": volume,
+            "number": number,
+            "pages": pages,
+            "month": month,
+            "doi": doi,
+            "note": note,
+            "key": key
+        }))
         db.session.commit()
-
         return True
     except Exception as e:
         db.session.rollback()
         return None
 
 
-def book_to_db():
-    pass
-
-
-def book_to_db():
-    pass
-
-
-def inproceedings_to_db():
-    pass
-
-
 def all_references_from_db():
-    sql = text(
-        "SELECT * FROM References_Table WHERE visible = 1 ORDER BY Author ASC")
+    """Get all references from the database."""
+    sql = text( "SELECT * FROM References_Table WHERE visible = 1 ORDER BY Author ASC")
 
     try:
-        result = db.session.execute(sql)
-
-        db.session.commit()
-
-        return result
+        cur = conn.cursor()
+        result = cur.execute(text(sql))
+        references = result.fetchall() # this is a list of tuples
+        cur.close()
+        conn.close()
+        return references
     except Exception as e:
-        db.session.rollback()
-        return e
+        print (e, "error")
+        return None
 
 
 def search_by_name_from_db(search):
