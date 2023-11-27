@@ -16,7 +16,18 @@ To be able to connect to database you need to specify environment parameter by r
 ```
 export DATABASE_URL=postgresql:///user
 ``` 
-After this you can run the app:
+After this you have to create .env file for environment variables:
+```
+touch .env
+```
+Change the content of the file to following:
+```
+FLASK_APP="./src/app.py"
+DATABASE_FILE_NAME = 'database.db'
+DATABASE_URL='postgresql:///user'
+```
+
+Now you can run the app: 
 ```
 poetry shell
 flask run
