@@ -116,17 +116,16 @@ def ids_list():
 def citates_to_list():
     citates_dict = {}
     print(ids_list())
-    for idnex, id in enumerate(ids_list()):
+    for index, citate_id in enumerate(ids_list()):
         sql = text(
             "SELECT author, title, year, type FROM References_Table WHERE id = :id")
-        result = db.session.execute(sql, {"id": id}).fetchall()
-        for j in result:
-            author, title, year, type = result
-            citates_dict[id] = {
+        result = db.session.execute(sql, {"id": citate_id}).fetchall()
+        for author, title, year, citate_type in result:
+            citates_dict[citate_id] = {
                 'author': author,
                 'title': title,
                 'year': year,
-                'type': type
+                'type': citate_type
             }
     print(citates_dict)
     return citates_dict
