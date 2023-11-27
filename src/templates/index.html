@@ -16,7 +16,7 @@
     </div>
 
 
-    <a href="/new_reference" class="linkstyle">Add</a>
+    <a href="/form" class="linkstyle">Add</a>
     <a href="/edit_reference" class="linkstyle">Edit</a>
 
     <div class="register">
@@ -30,7 +30,6 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Author</th>
                     <th>Title</th>
                     <th>Year</th>
@@ -38,13 +37,12 @@
                 </tr>
             </thead>
             <tbody>
-                {% for citate_id, citate_info in citates.items() %}
+                {% for citate in citates %}
                 <tr>
-                    <td>{{ citate_id }}</td>
-                    <td>{{ citate_info.author }}</td>
-                    <td>{{ citate_info.title }}</td>
-                    <td>{{ citate_info.year }}</td>
-                    <td>{{ citate_info.type }}</td>
+                    <td>{{ citate[3] }}</td>
+                    <td>{{ citate[4] }}</td>
+                    <td>{{ citate[6] }}</td>
+                    <td>{{ citate[1] }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

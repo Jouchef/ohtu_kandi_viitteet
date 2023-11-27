@@ -1,7 +1,10 @@
+from app import app
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask
-from os import getenv
-db = SQLAlchemy()
-app = Flask(__name__)
+from os import getenv, environ
+import dotenv
 
-app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL") # this is retrieved from the .env file
+
+dotenv.load_dotenv('.env')
+app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
+
+db = SQLAlchemy(app)

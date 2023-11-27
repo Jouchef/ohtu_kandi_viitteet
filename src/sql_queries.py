@@ -1,7 +1,9 @@
 """This file contains all the SQL queries that are used in the application."""
 
 from sqlalchemy import text
-from database import db
+import psycopg2
+conn = psycopg2.connect(database="ohtu", user="postgres", host="localhost", port="5432")
+
 
 
 
@@ -20,13 +22,13 @@ def article_to_db(article: dict):
     doi = article["doi"]
     note = article["note"]
     key = article["key"]
-    
+
 
     sql = text("INSERT INTO References_Table (type, visible, author, title, journal, year, volume, number, pages, month, doi, note, key)"
                " VALUES (:type, :visible, :author, :title, :journal, :year, :volume, :number, :pages, :month, :doi, :note, :key)")
 
     try:
-        result = db.session.execute(sql, {
+        db.session.execute(text(sql, {
             "type": "article",
             "visible": 1,
             "author": author,
@@ -40,40 +42,27 @@ def article_to_db(article: dict):
             "doi": doi,
             "note": note,
             "key": key
-        })
+        }))
         db.session.commit()
-        return result
+        return True
     except Exception as e:
         db.session.rollback()
         return None
 
 
-def book_to_db():
-    pass
-
-
-def book_to_db():
-    pass
-
-
-def inproceedings_to_db():
-    pass
-
-
 def all_references_from_db():
     """Get all references from the database."""
-    sql = text(
-        "SELECT * FROM References_Table WHERE visible = 1 ORDER BY Author ASC")
+    sql = text( "SELECT * FROM References_Table WHERE visible = 1 ORDER BY Author ASC")
 
     try:
-        result = db.session.execute(sql)
-        references = result.fetchall()
-
-        #db.session.commit() committia ei tarvita kun tehdään haku tietokannasta
-
+        cur = conn.cursor()
+        result = cur.execute(text(sql))
+        references = result.fetchall() # this is a list of tuples
+        cur.close()
+        conn.close()
         return references
     except Exception as e:
-        db.session.rollback()
+        print (e, "error")
         return None
 
 
