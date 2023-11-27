@@ -1,4 +1,5 @@
-![GHA workflow badge](https://github.com/Jouchef/ohtu_kandi_viitteet/workflows/CI/badge.svg)
+![GHA workflow badge](https://github.com/Jouchef/ohtu_kandi_viitteet/workflows/CI/badge.svg) ![![codecov](tähäntokenlinkki)](tähän linkki)
+
 
 # Ohjelmistotuotannon miniprojekti
 Ohjelmistotuotanto-kurssin miniprojekti

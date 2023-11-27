@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/form.css">
-    <title>insert title here</title>
+    <title>Reference app</title>
 </head>
 
 <body>
@@ -12,20 +12,51 @@
 
     <div class="reference">
 
-        <form action="/add_reference" method="post">
+        <form action="/new_reference" method="POST">
+            <p>Type:
+                <select name="ra" onchange="this.form.submit()">
+                    <option value="Article" {% if selected_type == 'Article' %}selected{% endif %}>Article</option>
+                    <option value="Book" {% if selected_type == 'Book' %}selected{% endif %}>Book</option>
+                    <option value="Inproceedings" {% if selected_type == 'Inproceedings' %}selected{% endif %}>Inproceedings</option>
+                </select>
+            </p>
+        </form>
+
+        <!-- Tietojen lähettämislomake -->
+        <form action="/add_reference" method="POST">
+            <!-- Tässä näytetään kentät valitun tyypin mukaan -->
+            {% if selected_type == 'Book' %}
+                <!-- Book kentät -->
+                <!-- Lisää muut kentät tähän -->
+            {% elif selected_type == 'Inproceedings' %}
+                <!-- Inproceedings kentät -->
+                <!-- Lisää muut kentät tähän -->
+            {% else %}
+                <!-- Article kentät -->
+                Author: <textarea name="name" rows="1" cols="30" required></textarea>
+                Title: <textarea name="title" rows="1" cols="30" required></textarea>
+                Booktitle: <textarea name="book_title" rows="1" cols="30" required></textarea>
+                Journal: <textarea name="journal" rows="1" cols="30" required></textarea>
+                Year: <textarea name="year" rows="1" cols="30" required></textarea>
+                Volume: <textarea name="volme" rows="1" cols="30" required></textarea>
+                Pages: <textarea name="pages" rows="1" cols="30" required></textarea>
+                Publisher: <textarea name="publisher" rows="1" cols="30" required></textarea>
+            {% endif %}
+
+            <input type="submit" value="Submit">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        </form>
+
+        <!-- <form action="/add_reference" method="POST">
 
             <p>Type:
                 <br>
-                <input id="ra1" type="radio" name="ra" value="Book" required>
-                <label for="ra1">Book</label>
-                <br>
-                <input id="ra2" type="radio" name="ra" value="Article" required>
-                <label for="ra2">Article</label>
-                <br>
-                <input id="ra3" type="radio" name="ra" value="Inproseedings" required>
-                <label for="ra3">Inproseedings</label>
+                <select name="ra" required>
+                    <option value="Book">Book</option>
+                    <option value="Article">Article</option>
+                    <option value="Inproceedings">Inproceedings</option>
+                </select>
             </p>
-
 
             <p>
                 Author: <textarea name="name" rows="1" cols="30" required></textarea>
@@ -33,7 +64,7 @@
                 Booktitle: <textarea name="book_title" rows="1" cols="30" required></textarea>
                 Journal: <textarea name="journal" rows="1" cols="30" required></textarea>
                 Year: <textarea name="year" rows="1" cols="30" required></textarea>
-                Volme: <textarea name="volme" rows="1" cols="30" required></textarea>
+                Volume: <textarea name="volme" rows="1" cols="30" required></textarea>
                 Pages: <textarea name="pages" rows="1" cols="30" required></textarea>
                 Publisher: <textarea name="publisher" rows="1" cols="30" required></textarea>
 
@@ -42,7 +73,7 @@
             <input type="submit" value="Submit">
 
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-        </form>
+        </form> -->
     </div>
 
 </body>
