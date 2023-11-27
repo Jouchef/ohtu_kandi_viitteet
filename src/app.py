@@ -12,8 +12,6 @@ def redirect_to_login():
     """Redirect to login page."""
     return redirect(url_for("render_login"))
 
-
-
 def redirect_to_register():
     """Redirect to register page."""
     return redirect(url_for("render_register"))
@@ -31,7 +29,14 @@ def redirect_to_index():
 @app.route("/")
 def render_home():
     """Render home page."""
-    return render_template("index.html")
+    citates = sql_queries.all_references_from_db()
+    #list to dict
+    if citates is None:
+        citates_dict = {}  
+    else:
+        citates_dict = {idx: reference for idx, reference in enumerate(citates)}
+        
+    return render_template("index.html", citates=citates_dict)
 
 
 @app.route("/login", methods=["GET"])

@@ -55,18 +55,20 @@ def inproceedings_to_db():
 
 
 def all_references_from_db():
+    """Get all references from the database."""
     sql = text(
         "SELECT * FROM References_Table WHERE visible = 1 ORDER BY Author ASC")
 
     try:
         result = db.session.execute(sql)
+        references = result.fetchall()
 
-        db.session.commit()
+        #db.session.commit() committia ei tarvita kun tehdään haku tietokannasta
 
-        return result
+        return references
     except Exception as e:
         db.session.rollback()
-        return e
+        return None
 
 
 def search_by_name_from_db(search):
