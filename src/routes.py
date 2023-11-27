@@ -49,6 +49,44 @@ def render_home():
     print(data)
     return render_template('index.html', citates=data)
 
+@app.route("/form", methods=["GET","POST"])
+def add_reference():
+    """Add reference to database."""
+    if request.method == "GET":
+        return render_template("form.html")
+    if request.method == "POST":
+        conn = psycopg2.connect(database="ohtu", user="postgres", host="localhost", port="5432")
+        cur = conn.cursor()
+        # create a dictionary from the form data
+        author = request.form.get("author")
+        title = request.form.get("title")
+        journal = request.form.get("journal")
+        year = request.form.get("year")
+        volume = request.form.get("volume")
+        number = request.form.get("number")
+        pages = request.form.get("pages")
+        month = request.form.get("month")
+        doi = request.form.get("doi")
+        note = request.form.get("note")
+        key = request.form.get("key")
+        # insert the data into the table
+        cur.execute(
+            '''INSERT INTO references_table (author, title, journal, year, volume, number, pages, month, doi, note, key) 
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', 
+            (author, title, journal, year, volume, number, pages, month, doi, note, key))
+        conn.commit()
+        #citations = cur.fetchall()
+        #print(citations)
+        # close the cursor and connection
+        cur.close()
+        conn.close()
+
+        # call the function to render the index page with the citations
+        return redirect_to_index()
+
+
+
+
 @app.route("/login", methods=["GET"])
 def render_login():
     """Render login form."""
@@ -74,43 +112,7 @@ def logout():
     """Logout."""
     return redirect_to_login()
 
-@app.route("/form", methods=["GET","POST"])
-def add_reference():
-    """Add reference to database."""
-    if request.method == "GET":
-        return render_template("form.html")
-    if request.method == "POST":
-        # create a dictionary from the form data
-        author = request.form.get("author")
-        title = request.form.get("title")
-        journal = request.form.get("journal")
-        year = request.form.get("year")
-        volume = request.form.get("volume")
-        number = request.form.get("number")
-        pages = request.form.get("pages")
-        month = request.form.get("month")
-        doi = request.form.get("doi")
-        note = request.form.get("note")
-        key = request.form.get("key")
-        article = {
-            "author": author,
-            "title": title,
-            "journal": journal,
-            "year": year,
-            "volume": volume,
-            "number": number,
-            "pages": pages,
-            "month": month,
-            "doi": doi,
-            "note": note,
-            "key": key
-        }
-        sql_queries.article_to_db(article)
-        # get the citations from the database
-        citations = sql_queries.all_references_from_db()
-        print(citations)
-        # call the function to render the index page with the citations 
-        return redirect_to_index()
+
 
 
 
