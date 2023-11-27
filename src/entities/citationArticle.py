@@ -1,4 +1,4 @@
-from generateCitate import GenerateCitate
+from services.generateCitate import GenerateCitate
 
 class CitationArticle():
     def __init__(self, entry_type, cite_key, author, title, journal, year, volume, number, pages, month=None, doi=None, note=None, key=None):

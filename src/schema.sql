@@ -5,7 +5,7 @@ CREATE TABLE Users_Table (
     password TEXT NOT NULL
 );
 
--- With Book type Author/Editor field should be saved into Author column, not into Editor column
+-- When type == Book, Author/Editor field should be saved into Author column, not into Editor column
 CREATE TABLE References_Table (
     id SERIAL PRIMARY KEY,
     type TEXT,
@@ -33,7 +33,7 @@ CREATE TABLE References_Table (
 
 CREATE TABLE UserReferences_Table (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES Users(id),
+    user_id INTEGER REFERENCES Users_Table(id),
     reference_id INTEGER REFERENCES References_Table(id),
     UNIQUE(user_id, reference_id)
 );

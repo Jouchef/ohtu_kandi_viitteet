@@ -1,5 +1,5 @@
 import unittest
-from generateCitate import GenerateCitate  
+from services.generateCitate import GenerateCitate  
 
 class TestGenerateCitate(unittest.TestCase):
 

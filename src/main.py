@@ -1,6 +1,6 @@
 """Citation main function"""""
-from citationArticle import CitationArticle
-from generateCitate import GenerateCitate
+from entities.citationArticle import CitationArticle
+from services.generateCitate import GenerateCitate
 
 
 def main():

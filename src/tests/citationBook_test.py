@@ -1,5 +1,5 @@
 import unittest
-from citationBook import CitationBook  
+from entities.citationBook import CitationBook  
 
 class TestCitationBook(unittest.TestCase):
     def test_citation_to_bibtex_entry(self):
