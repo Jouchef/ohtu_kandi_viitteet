@@ -29,7 +29,8 @@ def add_reference():
     publisher = request.form["publisher"]
     sql_queries.citate_to_db(
         author, title, book_title, journal, year, volume, pages, publisher)
-    return render_template("index.html", author=author, title=title, book_title=book_title, journal=journal, year=year, volume=volume, pages=pages, publisher=publisher)
+    citates = sql_queries.citates_to_list()
+    return render_template("index.html", author=author, title=title, book_title=book_title, journal=journal, year=year, volume=volume, pages=pages, publisher=publisher, citates=citates)
 
 
 @app.route("/edit_reference", methods=["GET", "POST"])

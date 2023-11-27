@@ -37,6 +37,22 @@
     </div>
 
     {{ author }}, {{ title }}, {{ book_title }}, {{ journal }},{{ year }},{{ volume }},{{ pages }}, {{ publisher }}
+    <h2>Table for references</h2>
+    <table>
+        <tr>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Year</th>
+            <th>Type</th>
+        </tr>
+        { % for id, item in  {{ citates }} %}
+        <tr>
+            <td>{{ item.author }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.year }}</td>
+            <td>{{ item.type }}</td>
+        </tr>
+    </table>
 </body>
 
 </html>

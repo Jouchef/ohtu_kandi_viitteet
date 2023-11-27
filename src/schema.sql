@@ -26,7 +26,6 @@ CREATE TABLE References_Table (
     series TEXT,
     address TEXT,
     edition TEXT,
-    month TEXT,
     url TEXT,
     editor TEXT,
     organization TEXT
