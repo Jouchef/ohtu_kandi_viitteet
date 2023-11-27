@@ -24,7 +24,6 @@ def citate_to_db(author, title, book_title, journal, year, volume, pages, publis
 
 
 def article_to_db(author, title, journal, year, volume, number=None,
-<<<<<<< HEAD
                   pages=None, month=None, doi=None, note=None, key=None):
     sql = text("INSERT INTO References_Table (type, visible, author, title, journal, year, volume, number, pages, month, doi, note, key)"
                " VALUES (:author, :title, :journal, :year, :volume, :number, :pages, :month, :doi, :note, :key)")
@@ -34,34 +33,12 @@ def article_to_db(author, title, journal, year, volume, number=None,
                                           "title": title, "journal": journal, "year": year, "volume": volume,
                                           "number": number, "pages": pages, "month": month, "doi": doi,
                                           "note": note, "key": key})
-=======
-                   pages=None, month=None, doi=None, note=None, key=None, database=db):
-    
-    sql = text("INSERT INTO References_Table (type, visible, author, title, journal, year, volume, number, pages, month, doi, note, key)"
-               " VALUES (:author, :title, :journal, :year, :volume, :number, :pages, :month, :doi, :note, :key)")
->>>>>>> 25ec1af36744ac1f33dd54adaad39ca40e35d6be
 
-    try:
-        result = database.session.execute(sql, 
-                                          {"type": "article",
-                                           "visible": 1,
-                                           "author": author,
-                                           "title": title,
-                                           "journal": journal,
-                                           "year": year,
-                                           "volume": volume,
-                                          "number": number,
-                                          "pages": pages,
-                                          "month": month,
-                                          "doi": doi,
-                                          "note": note,
-                                          "key": key})
-
-        database.session.commit()
+        db.session.commit()
 
         return True
     except Exception as e:
-        database.session.rollback()
+        db.session.rollback()
         return None
 
 
@@ -74,12 +51,8 @@ def inproceedings_to_db():
 
 
 def all_references_from_db():
-<<<<<<< HEAD
     sql = text(
         "SELECT * FROM References_Table WHERE visible = 1 ORDER BY Author ASC")
-=======
-    sql = text("SELECT * FROM References_Table WHERE visible = 1 ORDER BY author ASC")
->>>>>>> 25ec1af36744ac1f33dd54adaad39ca40e35d6be
 
     try:
         result = db.session.execute(sql)
@@ -90,11 +63,11 @@ def all_references_from_db():
     except Exception as e:
         db.session.rollback()
         return e
-    
 
 
 def search_by_name_from_db(search):
-    sql = text("SELECT * FROM References_Table WHERE visible = 1 AND LOWER(author) LIKE LOWER(:author) ORDER BY author ASC")
+    sql = text(
+        "SELECT * FROM References_Table WHERE visible = 1 AND LOWER(author) LIKE LOWER(:author) ORDER BY author ASC")
 
     try:
         result = db.session.execute(sql, {"author": f"%{search}%"}).fetchall()
@@ -121,7 +94,6 @@ def change_visible_to_false():
         db.session.rollback()
         return None
 
-<<<<<<< HEAD
 
 def edit_queries():
     pass
@@ -158,40 +130,3 @@ def citates_to_list():
             }
     print(citates_dict)
     return citates_dict
-=======
-def edit_queries(author, title, booktitle, journal, year, volume, pages, publisher, id):
-    sql = text("UPDATE References_Table SET"
-               " author = COALESCE(:author, author),"
-               " title = COALESCE(:title, title),"
-               " booktitle = COALESCE(:booktitle, booktitle),"
-               " journal = COALESCE(:journal, journal),"
-               " year = COALESCE(:year, year),"
-               " volume = COALESCE(:volume, volume),"
-               " pages = COALESCE(:pages, pages),"
-               " publisher = COALESCE(:publisher, publisher)"
-               " WHERE id = :id")
-
-    try:
-        result = db.session.execute(sql, {"author": author, "title": title, "booktitle": booktitle,
-                                           "journal": journal, "year": year, "volume": volume,
-                                           "pages": pages, "publisher": publisher, "id": id})
-
-        db.session.commit()
-
-        return
-    except Exception as e:
-        db.session.rollback()
-        return None
-
-def make_changes(author, title, book_title, journal, year, volume, pages, publisher):
-    """Make changes to the database for a specific reference."""
-    #sql = text("UPDATE References_Table SET"
-    #           " title = COALESCE(:title, title),"
-    #           " booktitle = COALESCE(:booktitle, booktitle),"
-    #           " journal = COALESCE(:journal, journal),"
-    #           " year = COALESCE(:year, year),"
-    #           " volume = COALESCE(:volume, volume),"
-    #           " pages = COALESCE(:pages, pages),"
-    #           " publisher = COALESCE(:publisher, publisher)"
-    #          " WHERE id = :id")
->>>>>>> 25ec1af36744ac1f33dd54adaad39ca40e35d6be
