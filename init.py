@@ -5,40 +5,49 @@
 import psycopg2
 
 # PostgreSQL connection information
-DB_NAME = 'ohtu'
-# ask for username 
+DB_NAME = 'postgres'
+# ask for username
 username = input("Username: ")
 DB_USER = username
-DB_HOST = 'localhost'  # Change if your PostgreSQL server is hosted elsewhere
-DB_PORT = '5432'  # Change if your PostgreSQL is using a different port
+DB_HOST = 'localhost'
+DB_PORT = '5432' 
+NEW_DB_NAME = input("Database name: ")
 
 # Function to read schema.sql file
 def read_schema_file(file_path):
     with open(file_path, 'r') as file:
         return file.read()
     
-# Function to initialize database and add tables
-def initialize_database():
+# Function to create a new database and tables
+def create_database():
+    conn = None
     try:
-        # Connect to the PostgreSQL server
+        # Connect to the default database 'postgres'
         conn = psycopg2.connect(
             dbname=DB_NAME,
             user=DB_USER,
             host=DB_HOST,
             port=DB_PORT
         )
+        print ("Opened database successfully")
+    except:
+        print("Error while creating connection PostgreSQL database")
+    
+    if conn is not None:
+        conn.autocommit = True
 
-        # Create a cursor object using the connection
-        cur = conn.cursor()
+        cursor = conn.cursor()
 
-        # Read schema file content
-        schema_content = read_schema_file('src/schema.sql')
+        print("Database does not exist")
+        print("Creating a new database with name: " + NEW_DB_NAME + "........")
+        sql = '''CREATE database ''' + NEW_DB_NAME + ''';'''
+            #print(sql)
+        cursor.execute(sql)
+        print("Database created successfully........")
 
-        # Execute the SQL commands from the schema file
-        cur.execute(schema_content)
-        conn.commit()
+        #Closing the connection
+        conn.close()
 
-        print("Tables created successfully!")
 
     except psycopg2.Error as e:
         print("Error:", e)
