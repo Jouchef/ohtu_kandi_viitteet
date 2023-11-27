@@ -47,7 +47,7 @@ def render_home():
     cur.close()
     conn.close()
     print(data)
-    return render_template('index.html', citates=data) 
+    return render_template('index.html', citates=data)
 
 @app.route("/login", methods=["GET"])
 def render_login():

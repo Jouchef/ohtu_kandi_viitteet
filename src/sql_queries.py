@@ -23,32 +23,21 @@ def article_to_db(article: dict):
     note = article["note"]
     key = article["key"]
 
-
-    sql = text("INSERT INTO References_Table (type, visible, author, title, journal, year, volume, number, pages, month, doi, note, key)"
-               " VALUES (:type, :visible, :author, :title, :journal, :year, :volume, :number, :pages, :month, :doi, :note, :key)")
-
+    # insert the data into the table
+    sql = text(
+        "INSERT INTO References_Table (author, title, journal, year, volume, number, pages, month, doi, note, key) VALUES (:author, :title, :journal, :year, :volume, :number, :pages, :month, :doi, :note, :key)")
     try:
-        db.session.execute(text(sql, {
-            "type": "article",
-            "visible": 1,
-            "author": author,
-            "title": title,
-            "journal": journal,
-            "year": year,
-            "volume": volume,
-            "number": number,
-            "pages": pages,
-            "month": month,
-            "doi": doi,
-            "note": note,
-            "key": key
-        }))
-        db.session.commit()
+        cur = conn.cursor()
+        conn.execute(sql, author=author, title=title, journal=journal, year=year, volume=volume, number=number,
+                     pages=pages, month=month, doi=doi, note=note, key=key)
+        conn.commit()
+        cur.close()
+        conn.close()
+  
         return True
     except Exception as e:
-        db.session.rollback()
-        return None
-
+        print (e, "error")
+        return False
 
 def all_references_from_db():
     """Get all references from the database."""
