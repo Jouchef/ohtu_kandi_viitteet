@@ -38,23 +38,30 @@
     </div>
 
     <h2>Table for references</h2>
-    <table>
-        <tr>
-            <th>Author</th>
-            <th>Title</th>
-            <th>Year</th>
-            <th>Type</th>
-        </tr>
-        {% for citate_id, citate_info in citates.items() %}
-        <tr>
-            <td>{{ citate_id }}</td>
-            <td>{{ citate_info.author }}</td>
-            <td>{{ citate_info.title }}</td>
-            <td>{{ citate_info.year }}</td>
-            <td>{{ citate_info.type }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Author</th>
+                    <th>Title</th>
+                    <th>Year</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for citate_id, citate_info in citates.items() %}
+                <tr>
+                    <td>{{ citate_id }}</td>
+                    <td>{{ citate_info.author }}</td>
+                    <td>{{ citate_info.title }}</td>
+                    <td>{{ citate_info.year }}</td>
+                    <td>{{ citate_info.type }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>
