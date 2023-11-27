@@ -32,7 +32,7 @@ def render_home():
     citates = sql_queries.all_references_from_db()
     #list to dict
     if citates is None:
-        citates_dict = {}  
+        citates_dict = {}
     else:
         citates_dict = {idx: reference for idx, reference in enumerate(citates)}
         
@@ -71,22 +71,36 @@ def new_reference():
     return render_template("form.html", selected_type=selected_type)
 
 
+@app.route("/add_reference", methods=["GET"])
+def render_form():
+    """Render form."""
+    render_template("form.html")
+
 @app.route("/add_reference", methods=["GET", "POST"])
 def add_reference():
-    """Render form."""
-    author = request.form["name"]
-    title = request.form["title"]
-    book_title = request.form["book_title"]
-    journal = request.form["journal"]
-    year = request.form["year"]
-    volume = request.form["volme"]
-    pages = request.form["pages"]
-    publisher = request.form["publisher"]
-    sql_queries.article_to_db(
-        author, title, book_title, journal, year, volume, pages, publisher)
-    return render_template("index.html", author=author, title=title, 
-                           book_title=book_title, journal=journal, year=year, 
-                           volume=volume, pages=pages, publisher=publisher)
+    """Add reference to database."""
+    #ONLY WORKS WITH ARTICLE TYPE
+    # cretae a new reference into a dict
+    if request.method == "GET":
+        return render_template("form.html")
+    elif request.method == "POST":
+        article = {
+        "author": request.form.get("author"),
+        "title": request.form.get("title"),
+        "journal": request.form.get("journal"),
+        "year": request.form.get("year"),
+        "volume": request.form.get("volume"),
+        "number": request.form.get("number"),
+        "pages": request.form.get("pages"),
+        "month": request.form.get("month"),
+        "doi": request.form.get("doi"),
+        "note": request.form.get("note"),
+        "key": request.form.get("key")}
+        sql_queries.article_to_db(article)
+        return render_template("index.html", citates=article)
+    else:
+        return "Invalid request method"
+
 
 
 
@@ -109,13 +123,6 @@ def handle_register():
     except Exception as error:
         flash(str(error))
         return redirect_to_register()
-
-
-# tämän avulla voi tarkastaa onko palvelin käynnissä
-@app.route("/ping")
-def ping():
-    """Ping."""
-    return "Pong"
 
 
 # sovelluksen tilan alustaminen testejä varten
@@ -149,5 +156,6 @@ def make_changes():
 
 @app.route("/delete_reference", methods=["GET", "POST"])
 def delete_reference():
+    # TODO 
     pass
 
