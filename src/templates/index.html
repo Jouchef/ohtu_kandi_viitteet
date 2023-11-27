@@ -46,7 +46,15 @@
             <th>Year</th>
             <th>Type</th>
         </tr>
-
+        {% for citate_id, citate_info in citates.items() %}
+        <tr>
+            <td>{{ citate_id }}</td>
+            <td>{{ citate_info.author }}</td>
+            <td>{{ citate_info.title }}</td>
+            <td>{{ citate_info.year }}</td>
+            <td>{{ citate_info.type }}</td>
+        </tr>
+        {% endfor %}
     </table>
 </body>
 
