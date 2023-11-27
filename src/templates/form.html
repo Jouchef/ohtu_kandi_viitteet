@@ -27,20 +27,48 @@
             <!-- Tässä näytetään kentät valitun tyypin mukaan -->
             {% if selected_type == 'Book' %}
                 <!-- Book kentät -->
-                <!-- Lisää muut kentät tähän -->
+                Author: <input type="text" name="author" required>
+                Title: <input type="text" name="title" required>
+                Publisher: <input type="text" name="publisher" required>
+                Year: <input type="number" name="year" required>
+                Volume: <input type="text" name="volume" required>
+                Series: <input type="text" name="series" required>
+                Address: <input type="text" name="address" required>
+                Edition: <input type="text" name="edition" required>
+                Month: <input type="text" name="month" required>
+                Note: <input type="text" name="note" required>
+                Key: <input type="text" name="key" required>
+                URL: <input type="text" name="url" required>
             {% elif selected_type == 'Inproceedings' %}
                 <!-- Inproceedings kentät -->
-                <!-- Lisää muut kentät tähän -->
+                Author: <input type="text" name="author" required>
+                Title: <input type="text" name="title" required>
+                Booktitle: <input type="text" name="booktitle" required>
+                Year: <input type="number" name="year" required>
+                Editor: <input type="text" name="editor">
+                Volume: <input type="text" name="volume">
+                Series: <input type="text" name="series">
+                Pages: <input type="text" name="pages">
+                Address: <input type="text" name="address">
+                Month: <input type="text" name="month">
+                Organization: <input type="text" name="organization">
+                Publisher: <input type="text" name="publisher">
+                Note: <input type="text" name="note">
+                Key: <input type="text" name="key">
             {% else %}
                 <!-- Article kentät -->
-                Author: <textarea name="name" rows="1" cols="30" required></textarea>
-                Title: <textarea name="title" rows="1" cols="30" required></textarea>
-                Booktitle: <textarea name="book_title" rows="1" cols="30" required></textarea>
-                Journal: <textarea name="journal" rows="1" cols="30" required></textarea>
-                Year: <textarea name="year" rows="1" cols="30" required></textarea>
-                Volume: <textarea name="volme" rows="1" cols="30" required></textarea>
-                Pages: <textarea name="pages" rows="1" cols="30" required></textarea>
-                Publisher: <textarea name="publisher" rows="1" cols="30" required></textarea>
+                Author: <input type="text" name="author" required>
+                Title: <input type="text" name="title" required>
+                Journal: <input type="text" name="journal" required>
+                Year: <input type="number" name="year" required>
+                Volume: <input type="text" name="volume" required>
+                Number: <input type="text" name="number" >
+                Pages: <input type="text" name="pages" >
+                Month: <input type="text" name="month">
+                DOI: <input type="text" name="doi" >
+                Note: <input type="text" name="note">
+                Key: <input type="text" name="key">
+
             {% endif %}
 
             <input type="submit" value="Submit">

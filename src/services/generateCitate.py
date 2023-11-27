@@ -1,4 +1,5 @@
 class GenerateCitate:
+    """Class for generating citate to Bibtex from a given entry type, cite key and fields"""
     @staticmethod
     def generate_bibtex(entry_type, cite_key, fields):
         bibtex_entry = f"@{entry_type}{{{cite_key},\n"
