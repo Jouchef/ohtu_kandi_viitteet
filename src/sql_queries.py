@@ -24,9 +24,8 @@ def citate_to_db(author, title, book_title, journal, year, volume, pages, publis
 
 
 def article_to_db(author, title, journal, year, volume, number=None,
-<< << << < HEAD
-                  pages=None, month=None, doi=None, note=None, key=None:
-                  sql = text("INSERT INTO References_Table (type, visible, author, title, journal, year, volume, number, pages, month, doi, note, key)"
+                  pages=None, month=None, doi=None, note=None, key=None):
+    sql = text("INSERT INTO References_Table (type, visible, author, title, journal, year, volume, number, pages, month, doi, note, key)"
                " VALUES (:author, :title, :journal, :year, :volume, :number, :pages, :month, :doi, :note, :key)")
 
     try:
@@ -34,37 +33,17 @@ def article_to_db(author, title, journal, year, volume, number=None,
                                           "title": title, "journal": journal, "year": year, "volume": volume,
                                           "number": number, "pages": pages, "month": month, "doi": doi,
                                           "note": note, "key": key})
-== == == =
-    pages = None, month=None, doi=None, note=None, key=None, database=db):
 
-    sql = text("INSERT INTO References_Table (type, visible, author, title, journal, year, volume, number, pages, month, doi, note, key)"
-               " VALUES (:author, :title, :journal, :year, :volume, :number, :pages, :month, :doi, :note, :key)")
-
-
->>>>>> > 25ec1af36744ac1f33dd54adaad39ca40e35d6be
-
-   try:
-        result = database.session.execute(sql,
-                                          {"type": "article",
-                                           "visible": 1,
-                                           "author": author,
-                                           "title": title,
-                                           "journal": journal,
-                                           "year": year,
-                                           "volume": volume,
-                                           "number": number,
-                                           "pages": pages,
-                                           "month": month,
-                                           "doi": doi,
-                                           "note": note,
-                                           "key": key})
-
-        database.session.commit()
+        db.session.commit()
 
         return True
     except Exception as e:
-        database.session.rollback()
+        db.session.rollback()
         return None
+
+
+def book_to_db():
+    pass
 
 
 def book_to_db():
@@ -76,14 +55,10 @@ def inproceedings_to_db():
 
 
 def all_references_from_db():
-<<<<<< < HEAD
-   sql = text(
+    sql = text(
         "SELECT * FROM References_Table WHERE visible = 1 ORDER BY Author ASC")
-== =====
-   sql = text("SELECT * FROM References_Table WHERE visible = 1 ORDER BY author ASC")
->>>>>> > 25ec1af36744ac1f33dd54adaad39ca40e35d6be
 
-   try:
+    try:
         result = db.session.execute(sql)
 
         db.session.commit()
@@ -123,8 +98,6 @@ def change_visible_to_false():
         db.session.rollback()
         return None
 
-<<<<<< < HEAD
-
 
 def edit_queries():
     pass
@@ -147,21 +120,19 @@ def ids_list():
 def citates_to_list():
     citates_dict = {}
     print(ids_list())
-    for idnex, id in enumerate(ids_list()):
+    for index, citate_id in enumerate(ids_list()):
         sql = text(
             "SELECT author, title, year, type FROM References_Table WHERE id = :id")
-        result = db.session.execute(sql, {"id": id}).fetchall()
-        for j in result:
-            author, title, year, type = result
-            citates_dict[id] = {
+        result = db.session.execute(sql, {"id": citate_id}).fetchall()
+        for author, title, year, citate_type in result:
+            citates_dict[citate_id] = {
                 'author': author,
                 'title': title,
                 'year': year,
-                'type': type
+                'type': citate_type
             }
     print(citates_dict)
     return citates_dict
-== =====
 
 
 def edit_queries(author, title, booktitle, journal, year, volume, pages, publisher, id):
@@ -179,7 +150,7 @@ def edit_queries(author, title, booktitle, journal, year, volume, pages, publish
     try:
         result = db.session.execute(sql, {"author": author, "title": title, "booktitle": booktitle,
                                           "journal": journal, "year": year, "volume": volume,
-                                           "pages": pages, "publisher": publisher, "id": id})
+                                          "pages": pages, "publisher": publisher, "id": id})
 
         db.session.commit()
 
@@ -191,6 +162,7 @@ def edit_queries(author, title, booktitle, journal, year, volume, pages, publish
 
 def make_changes(author, title, book_title, journal, year, volume, pages, publisher):
     """Make changes to the database for a specific reference."""
+
     # sql = text("UPDATE References_Table SET"
     #           " title = COALESCE(:title, title),"
     #           " booktitle = COALESCE(:booktitle, booktitle),"
@@ -200,4 +172,3 @@ def make_changes(author, title, book_title, journal, year, volume, pages, publis
     #           " pages = COALESCE(:pages, pages),"
     #           " publisher = COALESCE(:publisher, publisher)"
     #          " WHERE id = :id")
->>>>>> > 25ec1af36744ac1f33dd54adaad39ca40e35d6be

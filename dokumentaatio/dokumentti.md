@@ -10,7 +10,7 @@ git clone https://github.com/Jouchef/ohtu_kandi_viitteet.git
 ```
 + install dependencies using poetry
 ```
-peotry install
+poetry install
 ```
 To be able to connect to database you need to specify environment parameter by runnin command \
 ```
