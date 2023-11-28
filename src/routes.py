@@ -3,61 +3,64 @@
 from repositories.user_repository import user_repository
 from services.user_service import user_service
 import sql_queries
+from sql_queries import change_visible_to_false
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 from app import app
+from db import db
 import psycopg2
-
-# Initialize the SQLAlchemy object without directly associating it with the app
-# make conn and cur global variable so that they can be used in other functions
-conn = psycopg2.connect(database="ohtu", user="postgres", host="localhost", port="5432")
-
-cur = conn.cursor()
-
-def redirect_to_login():
-    """Redirect to login page."""
-    return redirect(url_for("render_login"))
-
-def redirect_to_register():
-    """Redirect to register page."""
-    return redirect(url_for("render_register"))
+import os
+from dotenv import load_dotenv
 
 
-def redirect_to_new_citation():
-    """Redirect to new citation page."""
-    return redirect(url_for("render_new_citation"))
+# Define the Reference model
+class Reference(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    author = db.Column(db.String(100))
+    title = db.Column(db.String(100))
+    journal = db.Column(db.String(100))
+    year = db.Column(db.Integer)
+    volume = db.Column(db.Integer)
+    number = db.Column(db.Integer)
+    pages = db.Column(db.String(100))
+    month = db.Column(db.String(100))
+    doi = db.Column(db.String(100))
+    note = db.Column(db.String(100))
+    key = db.Column(db.String(100))
 
-def redirect_to_index():
-    """Redirect to index page."""
-    return redirect(url_for("render_home"))
+    def __init__(self, author, title, journal, year, volume, number, pages, month, doi, note, key):
+        self.author = author
+        self.title = title
+        self.journal = journal
+        self.year = year
+        self.volume = volume
+        self.number = number
+        self.pages = pages
+        self.month = month
+        self.doi = doi
+        self.note = note
+        self.key = key
 
-
+# Define the routes
 @app.route("/")
 def render_home():
-    conn = psycopg2.connect(database="ohtu", user="postgres", host="localhost", port="5432")
+    references = Reference.query.all()
+    return render_template('index.html', citates=references)
 
-    cur = conn.cursor()
-
-    cur.execute('''SELECT * FROM references_table''')
-
-    # Fetch the data
-    data = cur.fetchall()
-
-    cur.close()
-    conn.close()
-    print(data)
-    return render_template('index.html', citates=data)
+@app.route('/delete_reference/<int:citate_id>', methods=['POST'])
+def delete_reference(citate_id):
+    reference = Reference.query.get(citate_id)
+    if reference:
+        db.session.delete(reference)
+        db.session.commit()
+    return redirect(url_for("render_home"))
 
 @app.route("/form", methods=["GET","POST"])
 def add_reference():
-    """Add reference to database."""
     if request.method == "GET":
         return render_template("form.html")
     if request.method == "POST":
-        conn = psycopg2.connect(database="ohtu", user="postgres", host="localhost", port="5432")
-        cur = conn.cursor()
-        # create a dictionary from the form data
         author = request.form.get("author")
         title = request.form.get("title")
         journal = request.form.get("journal")
@@ -69,20 +72,14 @@ def add_reference():
         doi = request.form.get("doi")
         note = request.form.get("note")
         key = request.form.get("key")
-        # insert the data into the table
-        cur.execute(
-            '''INSERT INTO references_table (author, title, journal, year, volume, number, pages, month, doi, note, key) 
-               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', 
-            (author, title, journal, year, volume, number, pages, month, doi, note, key))
-        conn.commit()
-        #citations = cur.fetchall()
-        #print(citations)
-        # close the cursor and connection
-        cur.close()
-        conn.close()
 
-        # call the function to render the index page with the citations
-        return redirect_to_index()
+        reference = Reference(author=author, title=title, journal=journal, year=year, volume=volume, number=number,
+                              pages=pages, month=month, doi=doi, note=note, key=key)
+        db.session.add(reference)
+        db.session.commit()
+
+        return redirect(url_for("render_home"))
+
 
 
 
@@ -167,7 +164,4 @@ def make_changes():
     return render_template("index.html")
 
 
-@app.route("/delete_reference", methods=["GET", "POST"])
-def delete_reference():
-    # TODO 
-    pass
+

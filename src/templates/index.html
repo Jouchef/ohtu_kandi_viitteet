@@ -34,6 +34,7 @@
                     <th>Title</th>
                     <th>Year</th>
                     <th>Type</th>
+                    <th>Poista</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,7 +43,13 @@
                     <td>{{ citate[3] }}</td>
                     <td>{{ citate[4] }}</td>
                     <td>{{ citate[6] }}</td>
-                    <td>{{ citate[1] }}</td>
+                    <td>{{ citate[0] }}</td>
+                    <td>
+                        <form action="/delete_reference/{{ citate[0] }}" method="POST">
+                            <input type="submit" value="Poista">
+                        </form>
+                    </td>
+            
                 </tr>
                 {% endfor %}
             </tbody>

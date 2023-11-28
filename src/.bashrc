@@ -1,0 +1,1 @@
+PGHOST=/var/run/postgresql

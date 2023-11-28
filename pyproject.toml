@@ -18,6 +18,8 @@ robotframework = "^6.1.1"
 robotframework-seleniumlibrary = "^6.2.0"
 requests = "^2.31.0"
 python-dotenv = "^1.0.0"
+sqlalchemy = "^2.0.23"
+psycopg2-binary = "^2.9.9"
 
 
 [tool.poetry.group.dev.dependencies]
