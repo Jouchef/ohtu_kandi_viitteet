@@ -9,7 +9,7 @@ CREATE TABLE Users_Table (
 CREATE TABLE References_Table (
     id SERIAL PRIMARY KEY,
     type TEXT,
-    visible BOOLEAN,
+    visible BOOLEAN NOT NULL DEFAULT TRUE,
     author TEXT,
     title TEXT,
     journal TEXT,

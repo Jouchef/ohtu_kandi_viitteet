@@ -11,6 +11,16 @@
 
 
     <div class="reference">
+        <form action="/new_reference" method="POST">
+            <p>Type:
+                <select name="ra" onchange="this.form.submit()">
+                    <option value="Article" {% if selected_type == 'Article' %}selected{% endif %}>Article</option>
+                    <option value="Book" {% if selected_type == 'Book' %}selected{% endif %}>Book</option>
+                    <option value="Inproceedings" {% if selected_type == 'Inproceedings' %}selected{% endif %}>Inproceedings</option>
+                </select>
+            </p>
+        </form>
+
 
         <!-- Tietojen lähettämislomake -->
         <form action="/form" method="POST">

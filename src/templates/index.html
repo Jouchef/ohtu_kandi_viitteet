@@ -17,7 +17,6 @@
 
 
     <a href="/form" class="linkstyle">Add</a>
-    <a href="/edit_reference" class="linkstyle">Edit</a>
 
     <div class="register">
         <h2>Register</h2>
@@ -34,6 +33,7 @@
                     <th>Title</th>
                     <th>Year</th>
                     <th>Type</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,6 +43,7 @@
                     <td>{{ citate[4] }}</td>
                     <td>{{ citate[6] }}</td>
                     <td>{{ citate[1] }}</td>
+                    <td><a href="/edit/{{ citate[0] }}">Edit</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
