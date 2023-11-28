@@ -10,7 +10,7 @@ Nettisovellus, jonka avulla voi pitää kirjaa LaTeX-ympäristössä toteutettuj
 
 Sovelluslinkki: (Tulossa!)
 
-Käyttöohje: (Tulossa!)
+## [Documentation](https://github.com/Jouchef/ohtu_kandi_viitteet/blob/main/dokumentaatio/dokumentti.md)
 
 ## Definition of Done
 
