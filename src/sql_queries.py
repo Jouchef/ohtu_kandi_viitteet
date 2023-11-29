@@ -26,7 +26,7 @@ def article_to_db(article: dict):
     try:
         cur = conn.cursor()
         cur.execute(sql, author=author, title=title, journal=journal, year=year, volume=volume, number=number,
-                     pages=pages, month=month, doi=doi, note=note, key=key)
+                    pages=pages, month=month, doi=doi, note=note, key=key)
         conn.commit()
         cur.close()
         conn.close()
@@ -44,13 +44,8 @@ def all_references_from_db():
 
     try:
         cur = conn.cursor()
-<<<<<<< HEAD
         result = cur.execute(sql)
-        references = result.fetchall() # this is a list of tuples
-=======
-        result = cur.execute(text(sql))
         references = result.fetchall()  # this is a list of tuples
->>>>>>> 346b87e (deletion)
         cur.close()
         conn.close()
 
@@ -67,7 +62,7 @@ def search_by_name_from_db(search):
     try:
         cur = conn.cursor()
         result = cur.execute(sql, {"author": f"%{search}%"})
-        reference = result.fetchall() # this is a list of tuples
+        reference = result.fetchall()  # this is a list of tuples
         cur.close()
         conn.close()
 
@@ -92,6 +87,7 @@ def change_visible_to_false():
         cur.rollback()
         print(e, "error")
         return None
+
 
 def ids_list():
     sql = text("SELECT id FROM References_Table WHERE visible = TRUE")
@@ -149,8 +145,8 @@ def edit_queries(author, title, booktitle, journal, year, volume, pages, publish
     try:
         cur = conn.cursor()
         cur.execute(sql, {"author": author, "title": title, "booktitle": booktitle,
-                                          "journal": journal, "year": year, "volume": volume,
-                                          "pages": pages, "publisher": publisher, "id": id})
+                          "journal": journal, "year": year, "volume": volume,
+                          "pages": pages, "publisher": publisher, "id": id})
 
         conn.commit()
         cur.close()
