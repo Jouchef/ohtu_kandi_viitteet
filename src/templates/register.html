@@ -5,40 +5,60 @@
   <title>Reference app</title>
 </head>
 <body>
-<h1>Register</h1>
+  <h1>Register</h1>
 
-<form action="/register" method="post">
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul>
-      {% for message in messages %}
-        <li>{{ message }}</li>
-      {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+  <form action="/register" method="post" onsubmit="return validateForm()">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
 
-  <div>
-    <label for="username">Username</label>
-    <input type="text" name="username" id="username" />
-  </div>
+    <div>
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username" />
+    </div>
 
-  <div>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" />
-  </div>
+    <div>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" />
+    </div>
 
-  <div>
-    <label for="password_confirmation">Password confirmation</label>
-    <input type="password" name="password_confirmation" id="password_confirmation" />
-  </div>
+    <div>
+      <label for="password_confirmation">Password confirmation</label>
+      <input type="password" name="password_confirmation" id="password_confirmation" />
+    </div>
 
-  <button>
-    Register
-  </button>
+    <button type="submit">
+      Register
+    </button>
 
-  <div>
-    <a href="/login">Login</a>
-  </div>
-</form>
+    <div>
+      <a href="/login">Login</a>
+    </div>
+  </form>
+
+  <script>
+    function validateForm() {
+      var password = document.getElementById("password").value;
+      var confirmPassword = document.getElementById("password_confirmation").value;
+      var regex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]{12,}$/;
+
+      if (!regex.test(password)) {
+        alert("Password must be 12 characters long and contain at least one uppercase letter, one number, and one special character.");
+        return false;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Password and confirmation do not match.");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
 </body>
