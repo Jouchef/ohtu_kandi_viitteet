@@ -159,17 +159,15 @@ def edit_queries(author, title, booktitle, journal, year, volume, pages, publish
         return None
 
 
-def delete_reference(reference_id):
+def delete_reference(id):
     sql = text(
-        "UPDATE References_Table SET visible=FALSE WHERE id=:reference_id")
-
+        "UPDATE References_Table SET visible=False WHERE id=:id")
     try:
         cur = conn.cursor()
-        cur.execute(sql, {"id": reference_id})
+        cur.execute(sql, {"id": id})
         conn.commit()
         cur.close()
         conn.close()
-
         return True
     except Exception as e:
         print(e, "error")

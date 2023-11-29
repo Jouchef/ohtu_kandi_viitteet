@@ -210,6 +210,7 @@ def new_reference():
 def delete_reference(reference_id):
     try:
         sql_queries.delete_reference(reference_id)
+        sql_queries.ids_list()
         return redirect_to_index()
     except Exception as error:
         flash(str(error))
