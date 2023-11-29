@@ -17,6 +17,7 @@ def redirect_to_login():
     """Redirect to login page."""
     return redirect(url_for("render_login"))
 
+
 def redirect_to_register():
     """Redirect to register page."""
     return redirect(url_for("render_register"))
@@ -26,6 +27,7 @@ def redirect_to_new_citation():
     """Redirect to new citation page."""
     return redirect(url_for("render_new_citation"))
 
+
 def redirect_to_index():
     """Redirect to index page."""
     return redirect(url_for("render_home"))
@@ -33,9 +35,10 @@ def redirect_to_index():
 
 @app.route("/")
 def render_home():
-    conn = psycopg2.connect(database="ohtu", user="postgres", host="localhost", port="5432")
+    conn = psycopg2.connect(
+        database="ohtu", user="postgres", host="localhost", port="5432")
     cur = conn.cursor()
-    cur.execute('''SELECT * FROM references_table''') # where visible = True
+    cur.execute('''SELECT * FROM references_table''')  # where visible = True
 
     # Fetch the data
     data = cur.fetchall()
@@ -44,13 +47,15 @@ def render_home():
     conn.close()
     return render_template('index.html', citates=data)
 
-@app.route("/form", methods=["GET","POST"])
+
+@app.route("/form", methods=["GET", "POST"])
 def add_reference():
     """Add reference to database."""
     if request.method == "GET":
         return render_template("form.html")
     if request.method == "POST":
-        conn = psycopg2.connect(database="ohtu", user="postgres", host="localhost", port="5432")
+        conn = psycopg2.connect(
+            database="ohtu", user="postgres", host="localhost", port="5432")
         cur = conn.cursor()
         # create a dictionary from the form data
         author = request.form.get("author")
@@ -71,8 +76,8 @@ def add_reference():
                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''',
             (visible, author, title, journal, year, volume, number, pages, month, doi, note, key))
         conn.commit()
-        #citations = cur.fetchall()
-        #print(citations)
+        # citations = cur.fetchall()
+        # print(citations)
         # close the cursor and connection
         cur.close()
         conn.close()
@@ -106,29 +111,34 @@ def logout():
     """Logout."""
     return redirect_to_login()
 
+
 @app.route("/edit/<int:reference_id>", methods=["GET", "POST"])
 def editprofile(reference_id):
     """Edit preferencese from database using form and id."""
     if request.method == 'GET':
         # get the reference from the database
-        conn = psycopg2.connect(database="ohtu", user="postgres", host="localhost", port="5432")
+        conn = psycopg2.connect(
+            database="ohtu", user="postgres", host="localhost", port="5432")
         cur = conn.cursor()
-        cur.execute('''SELECT * FROM references_table WHERE id = %s''', (reference_id,)) # this returns a list of tuples
+        cur.execute('''SELECT * FROM references_table WHERE id = %s''',
+                    (reference_id,))  # this returns a list of tuples
 
         reference = cur.fetchone()
         cur.close()
         conn.close()
         # render the edit page with the reference
-        if reference[2 ] == True:
+        if reference[2] == True:
             return render_template('edit.html', reference=reference)
         else:
             return redirect_to_index()
-    if request.method == 'POST':
 
-        conn = psycopg2.connect(database="ohtu", user="postgres", host="localhost", port="5432")
+    if request.method == 'POST':
+        conn = psycopg2.connect(
+            database="ohtu", user="postgres", host="localhost", port="5432")
         cur = conn.cursor()
         try:
-            cur.execute('''SELECT * FROM references_table WHERE id = %s''', (reference_id,))
+            cur.execute(
+                '''SELECT * FROM references_table WHERE id = %s''', (reference_id,))
             reference = cur.fetchone()
             if reference[2] == True and reference is not None:
 
@@ -145,7 +155,7 @@ def editprofile(reference_id):
                 note = request.form.get("note")
                 key = request.form.get("key")
                 # update the reference in the database
-                cur.execute('''UPDATE references_table SET author = %s, title = %s, journal = %s, year = %s, volume = %s, number = %s, pages = %s, month = %s, doi = %s, note = %s, key = %s WHERE id = %s''', 
+                cur.execute('''UPDATE references_table SET author = %s, title = %s, journal = %s, year = %s, volume = %s, number = %s, pages = %s, month = %s, doi = %s, note = %s, key = %s WHERE id = %s''',
                             (author, title, journal, year, volume, number, pages, month, doi, note, key, reference_id))
                 conn.commit()
                 cur.close()
@@ -159,7 +169,6 @@ def editprofile(reference_id):
             print(error)
             # call the function to render the index page with the updated reference
             return render_home()
-
 
 
 @app.route("/register", methods=["GET"])
@@ -189,6 +198,7 @@ def reset_tests():
     user_repository.delete_all()
     return "Reset"
 
+
 @app.route("/new_reference", methods=['GET', 'POST'])
 def new_reference():
     """Render form."""
@@ -198,5 +208,10 @@ def new_reference():
 
 @app.route("/delete_reference", methods=["GET", "POST"])
 def delete_reference():
-    # TODO 
-    pass
+    author = request.form.get("author")
+    title = request.form.get("title")
+    year = request.form.get("year")
+    print(author, title, year)
+    sql_queries.delete_reference(author, title, year)
+    # jos onnistuu, anna käyttäjälle ilmo et deletion completed! etc
+    return render_template("index.html")

@@ -2,11 +2,8 @@
 
 from sqlalchemy import text
 import psycopg2
-conn = psycopg2.connect(database="ohtu", user="postgres", host="localhost", port="5432")
-
-
-
-
+conn = psycopg2.connect(database="ohtu", user="postgres",
+                        host="localhost", port="5432")
 
 
 def article_to_db(article: dict):
@@ -33,26 +30,33 @@ def article_to_db(article: dict):
         conn.commit()
         cur.close()
         conn.close()
-  
+
         return True
     except Exception as e:
-        print (e, "error")
+        print(e, "error")
         return False
+
 
 def all_references_from_db():
     """Get all references from the database."""
-    sql = text( "SELECT * FROM References_Table WHERE visible = 1 ORDER BY Author ASC")
+    sql = text(
+        "SELECT * FROM References_Table WHERE visible = 1 ORDER BY Author ASC")
 
     try:
         cur = conn.cursor()
+<<<<<<< HEAD
         result = cur.execute(sql)
         references = result.fetchall() # this is a list of tuples
+=======
+        result = cur.execute(text(sql))
+        references = result.fetchall()  # this is a list of tuples
+>>>>>>> 346b87e (deletion)
         cur.close()
         conn.close()
 
         return references
     except Exception as e:
-        print (e, "error")
+        print(e, "error")
         return None
 
 
@@ -157,6 +161,23 @@ def edit_queries(author, title, booktitle, journal, year, volume, pages, publish
         cur.rollback()
         print(e, "error")
         return None
+
+
+def delete_reference(author, title, year):
+    sql = text(
+        "UPDATE References_Table SET visible=:FALSE WHERE author=:author, title=:title, year=:year")
+
+    try:
+        cur = conn.cursor()
+        conn.execute(sql, author=author, title=title, year=year)
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        return True
+    except Exception as e:
+        print(e, "error")
+        return False
 
 
 def make_changes(author, title, book_title, journal, year, volume, pages, publisher):

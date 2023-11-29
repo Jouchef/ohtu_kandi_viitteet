@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/edit.css">
+    <link rel="stylesheet" href="/static/edit.css">
     <title>Reference app</title>
 </head>
 
@@ -13,16 +13,16 @@
         <p>Here you can edit or delete your reference</p>
 
 
-    <div class="reference">
+        <div class="reference">
 
-            <form method="POST", action="/edit/{{ reference[0] }}">
+            <form action="/edit/{{ reference[0] }}" method="POST">
                 <label for="name">Author:</label>
                 <input type="text" id="author" name="author" value="{{ reference[3] }}" required><br>
                 <label for="name">Title:</label>
                 <input type="text" id="title" name="title" value="{{ reference[4] }}" required><br>
                 <label for="name">Journal:</label>
                 <input type="text" id="journal" name="journal" value="{{ reference[5] }}" required><br>
-                <label for ="name">Year:</label>
+                <label for="name">Year:</label>
                 <input type="text" id="year" name="year" value="{{ reference[6] }}" required><br>
                 <label for="name">Volume:</label>
                 <input type="text" id="volume" name="volume" value="{{ reference[7] }}" required><br>
@@ -38,15 +38,11 @@
                 <input type="text" id="note" name="note" value="{{ reference[12] }}" required><br>
                 <label for="name">Key:</label>
                 <input type="text" id="key" name="key" value="{{ reference[13] }}" required><br>
- 
-                </p>
-            <input type="submit" value="Submit">
-        </form>
+                <input type="submit" value="Submit">
+            </form>
 
-
-
-    </div>
-    <a href="/delete_reference" class="linkstyle">Delete</a>
+        </div>
+        <a href="/delete_reference" class="linkstyle">Delete</a>
 </body>
 
 </html>
