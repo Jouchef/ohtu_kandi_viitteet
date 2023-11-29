@@ -32,30 +32,14 @@ def redirect_to_index():
     """Redirect to index page."""
     return redirect(url_for("render_home"))
 
-
-# @app.route("/")
-# def render_home():
-   # conn = psycopg2.connect(
-    # database="ohtu", user="postgres", host="localhost", port="5432")
-    # cur = conn.cursor()
-   # cur.execute('''SELECT * FROM references_table''')  # where visible = True
-
-    # Fetch the data
-    # data = cur.fetchall()
-
-    # cur.close()
-    # conn.close()
-    # return render_template('index.html', citates=data)
-
 @app.route("/")
 def render_home():
     """Render home page."""
     conn = psycopg2.connect(
         database="ohtu", user="postgres", host="localhost", port="5432")
     cur = conn.cursor()
-    cur.execute('''SELECT * FROM references_table''')  # where visible = True
-
-    # Fetch the data
+    cur.execute('''SELECT * FROM references_table WHERE visible = True''')
+    
     data = cur.fetchall()
 
     cur.close()
@@ -73,6 +57,7 @@ def add_reference():
             database="ohtu", user="postgres", host="localhost", port="5432")
         cur = conn.cursor()
         # create a dictionary from the form data
+        reference_type = request.form.get("type")
         author = request.form.get("author")
         title = request.form.get("title")
         journal = request.form.get("journal")
@@ -86,9 +71,9 @@ def add_reference():
         key = request.form.get("key")
         visible = True
         cur.execute(
-            '''INSERT INTO references_table (visible, author, title, journal, year, volume, number, pages, month, doi, note, key)
-               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', #pylint: disable=line-too-long
-            (visible, author, title, journal, year, volume, number, pages, month, doi, note, key)) 
+            '''INSERT INTO references_table (type, visible, author, title, journal, year, volume, number, pages, month, doi, note, key)
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', #pylint: disable=line-too-long
+            (reference_type, visible, author, title, journal, year, volume, number, pages, month, doi, note, key)) 
         conn.commit()
         cur.close()
         conn.close()
@@ -143,6 +128,17 @@ def edit_reference(reference_id):
             cur.execute(
                 '''SELECT * FROM references_table WHERE id = %s''', (reference_id,))
             reference = cur.fetchone()
+
+            # if they clicked the delete button
+            if request.form.get('delete') == 'delete':
+                cur.execute(
+                    '''UPDATE references_table SET visible = False WHERE id = %s''', (reference_id,))
+                conn.commit()
+                cur.close()
+                conn.close()
+                return redirect_to_index()
+
+
             if reference[2] == True and reference is not None:
 
                 print(reference)
@@ -199,20 +195,4 @@ def new_reference():
     return render_template("form.html", selected_type=selected_type)
 
 
-@app.route("/delete_reference/<int:reference_id>", methods=["GET", "POST"])
-def delete_reference(reference_id):
-    """Delete reference from database using id."""
-        if request.method == 'GET':
-        # get the reference from the database
-        conn = psycopg2.connect(
-            database="ohtu", user="postgres", host="localhost", port="5432")
-        cur = conn.cursor()
-        cur.execute('''SELECT * FROM references_table WHERE id = %s''',
-                    (reference_id,))
-        reference = cur.fetchone()
-        cur.close()
-        conn.close()
-        
-
-    # jos onnistuu, anna käyttäjälle ilmo et deletion completed! etc
 

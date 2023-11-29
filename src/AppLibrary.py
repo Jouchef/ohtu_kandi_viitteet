@@ -9,7 +9,7 @@ class AppLibrary:
 
     def reset_application(self):
         """Resets the application to a known state."""
-        requests.post(f"{self._base_url}/tests/reset")        
+        requests.post(f"{self._base_url}/tests/reset")
 
     def create_user(self, username, password):
         data = {

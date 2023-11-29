@@ -52,14 +52,6 @@ def create_database():
         # Closing the connection
         conn.close()
 
- #   except psycopg2.Error as e:
-  #      print("Error:", e)
-
-    # finally:
-   #     # Close communication with the database
-  #  if conn is not None:
-   #     conn.close()
-    #    conn.close()
 
 
 # Call the function to initialize the database
