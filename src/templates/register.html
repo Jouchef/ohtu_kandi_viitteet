@@ -45,15 +45,15 @@
   <script>
     function validateForm() {
       var password = document.getElementById("password").value;
-      var confirmPassword = document.getElementById("password_confirmation").value;
+      var confirm = document.getElementById("password_confirmation").value;
       var regex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]{12,}$/;
 
       if (!regex.test(password)) {
-        alert("Password must be 12 characters long and contain at least one uppercase letter, one number, and one special character.");
+        alert("salasanan pitää olla 12 merkkiä ja sisältää ainakin yhden ison kirjaimen, yhden numeron ja yhden erikoismerkin.");
         return false;
       }
 
-      if (password !== confirmPassword) {
+      if (password !== confirm) {
         alert("Password and confirmation do not match.");
         return false;
       }
