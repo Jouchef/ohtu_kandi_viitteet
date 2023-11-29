@@ -206,12 +206,13 @@ def new_reference():
     return render_template("form.html", selected_type=selected_type)
 
 
-@app.route("/delete_reference", methods=["GET", "POST"])
-def delete_reference():
-    author = request.form.get("author")
-    title = request.form.get("title")
-    year = request.form.get("year")
-    print(author, title, year)
-    sql_queries.delete_reference(author, title, year)
+@app.route("/delete_reference/<int:reference_id>", methods=["GET", "POST"])
+def delete_reference(reference_id):
+    try:
+        sql_queries.delete_reference(reference_id)
+        return redirect_to_index()
+    except Exception as error:
+        flash(str(error))
+        return redirect_to_index()
+
     # jos onnistuu, anna käyttäjälle ilmo et deletion completed! etc
-    return render_template("index.html")
