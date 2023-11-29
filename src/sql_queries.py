@@ -67,7 +67,7 @@ def search_by_name_from_db(search):
         cur.close()
         conn.close()
 
-        return result
+        return reference
     except Exception as e:
         print(e, "error")
         return None
