@@ -27,6 +27,8 @@
             <!-- Tässä näytetään kentät valitun tyypin mukaan -->
             {% if selected_type == 'Book' %}
                 <!-- Book kentät -->
+                <-! hidden kenttä joka kertoo minkä tyyppinen viite on kyseessä -->
+                <input type="hidden" name="type" value="Book">
                 Author: <input type="text" name="author" required>
                 Title: <input type="text" name="title" required>
                 Publisher: <input type="text" name="publisher" required>
@@ -41,6 +43,7 @@
                 URL: <input type="text" name="url" required>
             {% elif selected_type == 'Inproceedings' %}
                 <!-- Inproceedings kentät -->
+                <input type="hidden" name="type" value="Inproceedings">
                 Author: <input type="text" name="author" required>
                 Title: <input type="text" name="title" required>
                 Booktitle: <input type="text" name="booktitle" required>
@@ -57,6 +60,7 @@
                 Key: <input type="text" name="key">
             {% else %}
                 <!-- Article kentät -->
+                <input type="hidden" name="type" value="Article">
                 Author: <input type="text" name="author" required>
                 Title: <input type="text" name="title" required>
                 Journal: <input type="text" name="journal" required>

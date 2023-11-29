@@ -49,7 +49,18 @@ def redirect_to_index():
 
 @app.route("/")
 def render_home():
-    return render_template("login_and_register.html")
+    """Render home page."""
+    conn = psycopg2.connect(
+        database="ohtu", user="postgres", host="localhost", port="5432")
+    cur = conn.cursor()
+    cur.execute('''SELECT * FROM references_table''')  # where visible = True
+
+    # Fetch the data
+    data = cur.fetchall()
+
+    cur.close()
+    conn.close()
+    return render_template('index.html', citates=data)
 
 
 @app.route("/form", methods=["GET", "POST"])
@@ -73,20 +84,14 @@ def add_reference():
         doi = request.form.get("doi")
         note = request.form.get("note")
         key = request.form.get("key")
-        # insert the data into the table
         visible = True
         cur.execute(
             '''INSERT INTO references_table (visible, author, title, journal, year, volume, number, pages, month, doi, note, key)
-               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''',
-            (visible, author, title, journal, year, volume, number, pages, month, doi, note, key))
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', #pylint: disable=line-too-long
+            (visible, author, title, journal, year, volume, number, pages, month, doi, note, key)) 
         conn.commit()
-        # citations = cur.fetchall()
-        # print(citations)
-        # close the cursor and connection
         cur.close()
         conn.close()
-
-        # call the function to render the index page with the citations
         return redirect_to_index()
 
 
@@ -102,11 +107,9 @@ def login():
             session["username"] = username
             return render_template("index.html")
         else:
-            return render_template("error.html", message=("wrong username"))
+            return render_template("error.html", message="wrong username")
     else:
         return render_template("login.html")
-
-
 @app.route("/logout", methods=["POST"])
 def logout():
     """Logout."""
@@ -114,7 +117,7 @@ def logout():
 
 
 @app.route("/edit/<int:reference_id>", methods=["GET", "POST"])
-def editprofile(reference_id):
+def edit_reference(reference_id):
     """Edit preferencese from database using form and id."""
     if request.method == 'GET':
         # get the reference from the database
@@ -127,7 +130,6 @@ def editprofile(reference_id):
         reference = cur.fetchone()
         cur.close()
         conn.close()
-        # render the edit page with the reference
         if reference[2] == True:
             return render_template('edit.html', reference=reference)
         else:
@@ -155,26 +157,23 @@ def editprofile(reference_id):
                 doi = request.form.get("doi")
                 note = request.form.get("note")
                 key = request.form.get("key")
-                # update the reference in the database
                 cur.execute('''UPDATE references_table SET author = %s, title = %s, journal = %s, year = %s, volume = %s, number = %s, pages = %s, month = %s, doi = %s, note = %s, key = %s WHERE id = %s''',
                             (author, title, journal, year, volume, number, pages, month, doi, note, key, reference_id))
                 conn.commit()
                 cur.close()
                 conn.close()
-                # redirect to the index page
                 return redirect_to_index()
             else:
-                # render index page with error message
                 return render_home()
         except Exception as error:
             print(error)
-            # call the function to render the index page with the updated reference
             return render_home()
 
 
 # Maijan uusi register (toimii)
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    """Handle register form."""
     if request.method == "GET":
         return render_template("register.html")
 
@@ -182,38 +181,38 @@ def register():
     password = request.form["password"]
     if sql_queries.register(username, password):
         return render_template("login_and_register.html")
-    else:
-        return render_template("error.html", message=(f"This username already exists: {username}"))
+    return render_template("error.html", message= f"This username already exists: {username}")
 
 
 # sovelluksen tilan alustaminen testejä varten
 @app.route("/tests/reset", methods=["POST"])
 def reset_tests():
+    """Reset database for testing purposes."""
     user_repository.delete_all()
     return "Reset"
 
 
 @app.route("/new_reference", methods=['GET', 'POST'])
 def new_reference():
-    """Render form."""
+    """Render form with correct fields."""
     selected_type = request.form.get('ra', 'Article')
     return render_template("form.html", selected_type=selected_type)
 
 
 @app.route("/delete_reference/<int:reference_id>", methods=["GET", "POST"])
 def delete_reference(reference_id):
-    try:
-        sql_queries.delete_reference(reference_id)
-        sql_queries.ids_list()
-        return redirect_to_index()
-    except Exception as error:
-        flash(str(error))
-        return redirect_to_index()
+    """Delete reference from database using id."""
+        if request.method == 'GET':
+        # get the reference from the database
+        conn = psycopg2.connect(
+            database="ohtu", user="postgres", host="localhost", port="5432")
+        cur = conn.cursor()
+        cur.execute('''SELECT * FROM references_table WHERE id = %s''',
+                    (reference_id,))
+        reference = cur.fetchone()
+        cur.close()
+        conn.close()
+        
 
     # jos onnistuu, anna käyttäjälle ilmo et deletion completed! etc
 
-
-# @app.route("/delete_reference", methods=["GET", "POST"])
-# def delete_reference():
-    # TODO
-    # pass

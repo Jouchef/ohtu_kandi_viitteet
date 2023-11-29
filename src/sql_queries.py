@@ -26,11 +26,11 @@ def article_to_db(article: dict):
 
     # insert the data into the table
     sql = text(
-        "INSERT INTO References_Table (author, title, journal, year, volume, number, pages, month, doi, note, key) VALUES (:author, :title, :journal, :year, :volume, :number, :pages, :month, :doi, :note, :key)")
+        "INSERT INTO References_Table (author, title, journal, year, volume, number, pages, month, doi, note, key) VALUES (:author, :title, :journal, :year, :volume, :number, :pages, :month, :doi, :note, :key)") #pylint: disable=line-too-long
     try:
         cur = conn.cursor()
         cur.execute(sql, author=author, title=title, journal=journal, year=year, volume=volume, number=number,
-                    pages=pages, month=month, doi=doi, note=note, key=key)
+                    pages=pages, month=month, doi=doi, note=note, key=key) #pylint: disable=no-value-for-parameter
         conn.commit()
         cur.close()
         conn.close()
@@ -60,6 +60,7 @@ def all_references_from_db():
 
 
 def search_by_name_from_db(search):
+    """Search for references by author name."""
     sql = text(
         "SELECT * FROM References_Table WHERE visible = 1 AND LOWER(author) LIKE LOWER(:author) ORDER BY author ASC")
 
@@ -76,21 +77,6 @@ def search_by_name_from_db(search):
         return None
 
 
-def change_visible_to_false():
-    sql = text("UPDATE References_Table SET visible = 0 WHERE id = :id")
-
-    try:
-        cur = conn.cursor()
-        cur.execute(sql, {"id": id})
-        conn.commit()
-        cur.close()
-        conn.close()
-
-        return
-    except Exception as e:
-        cur.rollback()
-        print(e, "error")
-        return None
 
 
 def ids_list():
@@ -165,7 +151,7 @@ def edit_queries(author, title, booktitle, journal, year, volume, pages, publish
 
 def delete_reference(id):
     sql = text(
-        "UPDATE References_Table SET visible=False WHERE id=:id")
+        "UPDATE References_Table SET visible = false WHERE id=id")
     try:
         cur = conn.cursor()
         cur.execute(sql, {"id": id})
