@@ -1,5 +1,9 @@
 """This file contains all the SQL queries that are used in the application."""
 
+from werkzeug.security import check_password_hash, generate_password_hash
+import secrets
+from flask import session, request
+from db import db
 from sqlalchemy import text
 import psycopg2
 conn = psycopg2.connect(database="ohtu", user="postgres",
@@ -186,3 +190,42 @@ def make_changes(author, title, book_title, journal, year, volume, pages, publis
     #           " pages = COALESCE(:pages, pages),"
     #           " publisher = COALESCE(:publisher, publisher)"
     #          " WHERE id = :id")
+
+
+def register(username, password):  # UUSI
+    hash_value = generate_password_hash(password)
+    sql = text("SELECT username FROM Users_Table")
+    result = db.session.execute(sql)
+    usernames = result.fetchall()
+    usernames_list = [name[0].strip("'") for name in usernames]
+    for i in usernames_list:
+        if i == username:
+            return False
+    print(username)
+    print(password)
+    email = "jotain"
+    try:
+        sql = text(
+            "INSERT INTO Users_Table (username,email,password) VALUES (:username,:email, :password)")
+        db.session.execute(
+            sql, {"username": username, "email": email, "password": hash_value})
+        db.session.commit()
+    except:
+        return False
+    return (username, password)
+
+
+def login(username, password):  # UUSI
+    sql = text("SELECT id, password FROM Users_Table WHERE username=:username")
+    result = db.session.execute(sql, {"username": username})
+    user = result.fetchone()
+    if not user:
+        return False
+    else:
+        if check_password_hash(user.password, password):
+            session["user_id"] = user.id
+            session["csrf_token"] = secrets.token_hex(16)
+
+            return True
+        else:
+            return False

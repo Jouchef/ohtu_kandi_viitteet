@@ -3,7 +3,7 @@
 from repositories.user_repository import user_repository
 from services.user_service import user_service
 import sql_queries
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, session, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 from app import app
@@ -33,19 +33,23 @@ def redirect_to_index():
     return redirect(url_for("render_home"))
 
 
-@app.route("/")
-def render_home():
-    conn = psycopg2.connect(
-        database="ohtu", user="postgres", host="localhost", port="5432")
-    cur = conn.cursor()
-    cur.execute('''SELECT * FROM references_table''')  # where visible = True
+# @app.route("/")
+# def render_home():
+   # conn = psycopg2.connect(
+    # database="ohtu", user="postgres", host="localhost", port="5432")
+    # cur = conn.cursor()
+   # cur.execute('''SELECT * FROM references_table''')  # where visible = True
 
     # Fetch the data
-    data = cur.fetchall()
+    # data = cur.fetchall()
 
-    cur.close()
-    conn.close()
-    return render_template('index.html', citates=data)
+    # cur.close()
+    # conn.close()
+    # return render_template('index.html', citates=data)
+
+@app.route("/")
+def render_home():
+    return render_template("login_and_register.html")
 
 
 @app.route("/form", methods=["GET", "POST"])
@@ -86,24 +90,21 @@ def add_reference():
         return redirect_to_index()
 
 
-@app.route("/login", methods=["GET"])
-def render_login():
-    """Render login form."""
-    return render_template("login.html")
-
-
-@app.route("/login", methods=["POST"])
-def handle_login():
+@app.route("/login", methods=["GET", "POST"])
+def login():
     """Handle login form."""
-    username = request.form.get("username")
-    password = request.form.get("password")
-
-    try:
-        user_service.check_credentials(username, password)
-        return redirect_to_index()
-    except Exception as error:
-        flash(str(error))
-        return redirect_to_index()
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        print(username)
+        print(password)
+        if sql_queries.login(username, password):
+            session["username"] = username
+            return render_template("index.html")
+        else:
+            return render_template("error.html", message=("wrong username"))
+    else:
+        return render_template("login.html")
 
 
 @app.route("/logout", methods=["POST"])
@@ -171,25 +172,18 @@ def editprofile(reference_id):
             return render_home()
 
 
-@app.route("/register", methods=["GET"])
-def render_register():
-    """Render register form."""
-    return render_template("register.html")
+# Maijan uusi register (toimii)
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "GET":
+        return render_template("register.html")
 
-
-@app.route("/register", methods=["POST"])
-def handle_register():
-    """Register a new user."""
-    username = request.form.get("username")
-    password = request.form.get("password")
-    password_confirmation = request.form.get("password_confirmation")
-
-    try:
-        user_service.create_user(username, password, password_confirmation)
-        return redirect_to_login
-    except Exception as error:
-        flash(str(error))
-        return redirect_to_register()
+    username = request.form["username"]
+    password = request.form["password"]
+    if sql_queries.register(username, password):
+        return render_template("login_and_register.html")
+    else:
+        return render_template("error.html", message=(f"This username already exists: {username}"))
 
 
 # sovelluksen tilan alustaminen testejä varten
@@ -217,3 +211,9 @@ def delete_reference(reference_id):
         return redirect_to_index()
 
     # jos onnistuu, anna käyttäjälle ilmo et deletion completed! etc
+
+
+# @app.route("/delete_reference", methods=["GET", "POST"])
+# def delete_reference():
+    # TODO
+    # pass
