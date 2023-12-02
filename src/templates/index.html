@@ -10,16 +10,18 @@
 <body>
 
     <div class="beginning">
+        <h1>Reference app</h1>
         <h2>Welcome!</h2>
         <br>
+        {% if session.username %}
         <b> Click a reference or add one!</b>
     </div>
 
 
-    <a href="/form" class="linkstyle">Add</a>
+    <a href="/form" class="linkstyle">Add</a> 
 
 
-    <h2>Table for references</h2>
+    <h2>Table of references</h2>
     <div class="table-container">
         <table>
             <thead>
@@ -44,6 +46,11 @@
             </tbody>
         </table>
     </div>
+    {% else %}
+    <p> You are not logged in. </p>
+    <a href="/login" class="linkstyle">Login</a>
+    <a href="/register" class="linkstyle">Register</a>
+    {% endif %}
 </body>
 
 </html>

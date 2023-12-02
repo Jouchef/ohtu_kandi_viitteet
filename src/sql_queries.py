@@ -189,12 +189,12 @@ def register(username, password):  # UUSI
             return False
     print(username)
     print(password)
-    email = "jotain"
+
     try:
         sql = text(
             "INSERT INTO Users_Table (username,email,password) VALUES (:username,:email, :password)")
         db.session.execute(
-            sql, {"username": username, "email": email, "password": hash_value})
+            sql, {"username": username, "password": hash_value})
         db.session.commit()
     except:
         return False

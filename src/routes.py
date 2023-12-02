@@ -5,12 +5,8 @@ from services.user_service import user_service
 import sql_queries
 from flask import Flask, session, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-from os import getenv
 from app import app
 import psycopg2
-
-# Initialize the SQLAlchemy object without directly associating it with the app
-# make conn and cur global variable so that they can be used in other functions
 
 
 def redirect_to_login():
@@ -38,6 +34,10 @@ def render_home():
     conn = psycopg2.connect(
         database="ohtu", user="postgres", host="localhost", port="5432")
     cur = conn.cursor()
+    # select all references from the database from the table references_table
+    # which are visible and have the id of the user who is logged in
+
+
     cur.execute('''SELECT * FROM references_table WHERE visible = True''')
     
     data = cur.fetchall()

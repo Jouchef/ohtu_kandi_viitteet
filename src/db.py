@@ -1,5 +1,8 @@
 """Database module for the application."""
-from app import app
+from os import getenv
 from flask_sqlalchemy import SQLAlchemy
-# Initialize the SQLAlchemy object without directly associating it with the app
+from app import app
+
+app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
