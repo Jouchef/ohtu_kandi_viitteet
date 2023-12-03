@@ -8,6 +8,7 @@
   <h1>Register</h1>
 
   <form action="/register" method="post" onsubmit="return validateForm()">
+    <!--<input type="hidden" name="csrf_token" value="{{ csrf_token }}"> -->
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <ul>
@@ -36,10 +37,13 @@
     <button type="submit">
       Register
     </button>
-
-    <div>
-      <a href="/login">Login</a>
-    </div>
+    <br>
+    <button>
+    <a href="/login" class="button">Login</a>
+    </button >
+    <button>
+      <a href="/" class="button">Back to frontpage</a>
+    </button>
   </form>
 
   <script>

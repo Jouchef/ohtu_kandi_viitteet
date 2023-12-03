@@ -18,6 +18,8 @@ robotframework = "^6.1.1"
 robotframework-seleniumlibrary = "^6.2.0"
 requests = "^2.31.0"
 python-dotenv = "^1.0.0"
+werkzeug = "^3.0.1"
+flask-wtf = "^1.2.1"
 
 
 [tool.poetry.group.dev.dependencies]

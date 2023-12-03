@@ -11,3 +11,5 @@ class GenerateCitate:
                     bibtex_entry += f"  {key} = \"{value}\",\n"
         bibtex_entry = bibtex_entry.rstrip(',\n') + "\n}"  # Remove last comma and newline, then close the brace
         return bibtex_entry
+    
+    

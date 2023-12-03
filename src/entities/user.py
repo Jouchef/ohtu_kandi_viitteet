@@ -1,6 +1,6 @@
 """User class definition."""
-class User:
-    def __init__(self, username, email, password):
+class User: # pylint: disable=too-few-public-methods
+    """User class definition."""
+    def __init__(self, username, password):
         self.username = username
-        self.email = email
         self.password = password

@@ -1,49 +1,44 @@
-from entities.user import User
-
-
+"""User repository module.
+handles all database operations related to users."""
+from src.db import db # pylint: disable=import-error no-name-in-module
+from src.models.user import User_model # pylint: disable=import-error no-name-in-module
 class UserRepository:
-    def __init__(self):
-        self._users = []
-
+    """User repository class which handles all database operations 
+    related to users."""
     def find_all(self):
-        return self._users
+        """Returns all users from the database."""
+        return User_model.query.all()
 
     def find_by_username(self, username):
-        users = self.find_all()
+        """Returns a user with the given username."""
+        return User_model.query.filter_by(username=username).first()
 
-        users_with_username = filter(
-            lambda user: user.username == username,
-            users
-        )
-
-        users_with_username_list = list(users_with_username)
-
-        return users_with_username_list[0] if len(users_with_username_list) > 0 else None
 
     def create(self, user):
-        users = self.find_all()
-
-        existing_user = self.find_by_username(user.username)
-
-        if existing_user:
-            raise Exception(
-                f"User with username {user.username} already exists")
-
-        users.append(user)
-
-        self._users = users
-
-        return user
+        """Creates a new user to the database."""
+        new_user = User_model(username=user.username,
+                              password=user.password)
+        db.session.add(new_user)
+        db.session.commit()
+        return new_user
 
     def delete(self, user_id):
-        users = self.find_all()
-
-        users_without_id = filter(lambda user: user.id != user_id, users)
-
-        self._users = list(users_without_id)
+        """Deletes a user from the database."""
+        user = User_model.query.filter_by(id=user_id).first()
+        db.session.delete(user)
+        db.session.commit()
 
     def delete_all(self):
-        self._users = []
+        """Deletes all users from the database."""
+        User_model.query.delete()
+        db.session.commit()
 
+    def login(self, username, password):
+        """Checks if the given username and password match."""
+        user = User_model.query.filter_by(username=username).first()
+        if user and user.password == password:
+            return user
+        return None
 
 user_repository = UserRepository()
+        

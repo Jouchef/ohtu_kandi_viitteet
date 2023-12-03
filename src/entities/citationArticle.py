@@ -1,7 +1,10 @@
-from services.generateCitate import GenerateCitate
+"""Class for article citation.""" # pylint: disable=invalid-name
 
-class CitationArticle():
-    def __init__(self, entry_type, cite_key, author, title, journal, year, volume, number, pages, month=None, doi=None, note=None, key=None):
+class CitationArticle(): # pylint: disable=too-many-public-methods
+    """Class for article citation."""
+    def __init__(self, entry_type, cite_key, author, title, journal,
+                 year, volume, number, pages, month=None, doi=None,
+                 note=None, key=None): # pylint: disable=too-many-arguments
         self.entry_type = entry_type
         self.cite_key = cite_key
         self.author = author
@@ -15,20 +18,3 @@ class CitationArticle():
         self.doi = doi
         self.note = note
         self.key = key
-
-    def citation_to_bibtex_entry(self):
-        fields = {
-            "author": self.author,
-            "title": self.title,
-            "journal": self.journal,
-            "year": self.year,
-            "volume": self.volume,
-            "number": self.number,
-            "pages": self.pages,
-            "month": self.month,
-            "doi": self.doi,
-            "note": self.note,
-            "key": self.key
-        }
-
-        return GenerateCitate.generate_bibtex(self.entry_type, self.cite_key, fields)

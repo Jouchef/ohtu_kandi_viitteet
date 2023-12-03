@@ -15,4 +15,7 @@ disable=raw-checker-failed,
         missing-function-docstring,
         missing-class-docstring
         wrong-import-order
+        invalid-name
 
+[FORMAT]
+ignore-patterns=src/tests/*

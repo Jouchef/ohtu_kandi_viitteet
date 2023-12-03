@@ -18,7 +18,8 @@
     </div>
 
 
-    <a href="/form" class="linkstyle">Add</a> 
+    <a href="{{ url_for('references.render_add_reference_form') }}" class="linkstyle">Add</a>
+
 
 
     <h2>Table of references</h2>
@@ -34,17 +35,21 @@
                 </tr>
             </thead>
             <tbody>
-                {% for citate in citates %}
+                {% for reference in references %}
                 <tr>
-                    <td>{{ citate[3] }}</td>
-                    <td>{{ citate[4] }}</td>
-                    <td>{{ citate[6] }}</td>
-                    <td>{{ citate[1] }}</td>
-                    <td><a href="/edit/{{ citate[0] }}">Edit</a></td>
+                    <td>{{ reference.author }}</td>
+                    <td>{{ reference.title }}</td>
+                    <td>{{ reference.year }}</td>
+                    <td>{{ reference.reference_type }}</td>
+                    <td><a href="/edit/{{ reference.id }}">Edit</a></td>
                 </tr>
                 {% endfor %}
+
             </tbody>
         </table>
+            <form action="/logout" method="post">
+                <input type="submit" value="Logout" class="linkstyle">
+            </form>
     </div>
     {% else %}
     <p> You are not logged in. </p>

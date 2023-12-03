@@ -11,9 +11,9 @@
 
 
     <div class="reference">
-        <form action="/new_reference" method="POST">
+        <form action="/change_reference_type" method="POST">
             <p>Type:
-                <select name="ra" onchange="this.form.submit()">
+                <select name="menu" onchange="this.form.submit()">
                     <option value="Article" {% if selected_type == 'Article' %}selected{% endif %}>Article</option>
                     <option value="Book" {% if selected_type == 'Book' %}selected{% endif %}>Book</option>
                     <option value="Inproceedings" {% if selected_type == 'Inproceedings' %}selected{% endif %}>Inproceedings</option>
@@ -27,7 +27,6 @@
             <!-- Tässä näytetään kentät valitun tyypin mukaan -->
             {% if selected_type == 'Book' %}
                 <!-- Book kentät -->
-                <-! hidden kenttä joka kertoo minkä tyyppinen viite on kyseessä -->
                 <input type="hidden" name="type" value="Book">
                 Author: <input type="text" name="author" required>
                 Title: <input type="text" name="title" required>
@@ -76,7 +75,6 @@
             {% endif %}
 
             <input type="submit" value="Submit">
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         </form>
 
     </div>
