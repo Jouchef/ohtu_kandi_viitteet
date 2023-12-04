@@ -2,6 +2,7 @@
 from repositories.reference_repository import reference_repository as default_reference_repository # pylint: disable=no-name-in-module, import-error line-too-long
 from models.reference import Reference_model as Reference # pylint: disable=no-name-in-module, import-error line-too-long
 from models.user_references import UserReferences_model # pylint: disable=no-name-in-module, import-error line-too-long
+from entities.citationArticle import CitationArticle
 
 class ReferenceService:
     """Reference services.
@@ -68,6 +69,22 @@ class ReferenceService:
         Returns only visible references."""
         references = self._reference_repository.get_all_references_by_user_id(user_id)
         return references
+
+    def references_to_bibtex(self, user_id):
+        """Converts references to bibtex format."""
+        references = self._reference_repository.get_all_references_by_user_id(user_id)
+        bibtex = "References\n\n"
+        for reference in references:
+            if reference.reference_type == "Article":
+                citation = CitationArticle(reference.reference_type, reference.key, reference.author,
+                                           reference.title, reference.journal,
+                                           reference.year, reference.volume, reference.number, reference.pages,
+                                           reference.month, reference.doi, reference.note, reference.key)
+                bibtex += citation.citation_to_bibtex_entry()
+                bibtex += "\n\n"
+            print(bibtex)
+            #print("tulostetaan reference: ", reference.author, reference.title, reference.reference_type)
+        return bibtex
 
 
     def edit_reference(self, reference_id, **kwargs):

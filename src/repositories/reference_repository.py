@@ -37,6 +37,8 @@ class ReferenceRepository:
                                                 == Reference.id).\
                                                     filter(UserReferences_model.user_id == user_id,
                                                            Reference.visible.is_(True)).all() # pylint: disable=line-too-long
+        #print("Haetaan käyttäjän viitteet")
+        #print(references, "testi")
         return references
 
     def edit_reference(self, reference_id, **kwargs):
