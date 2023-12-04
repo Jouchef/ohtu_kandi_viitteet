@@ -1,7 +1,8 @@
-import unittest
-from entities.citationBook import CitationBook  
+import unittest #pylint: disable:invalid-name
+from entities.citationBook import CitationBook
 
 class TestCitationBook(unittest.TestCase):
+    """Tests for the CitationBook class"""
     def test_citation_to_bibtex_entry(self):
         citation = CitationBook(
             "book", "CitekeyBook", "Author Name", "Book Title", 
@@ -22,5 +23,8 @@ class TestCitationBook(unittest.TestCase):
             "  note = \"Additional note\"\n"
             "}"
         )
+        self.assertAlmostEqual(citation.generate_bibtex(), expected_output)
 
-        self.assertEqual(citation.citation_to_bibtex_entry(), expected_output)
+if __name__ == '__main__':
+    unittest.main()
+    

@@ -1,7 +1,8 @@
-import unittest
+import unittest #pylint: disable:invalid-name
 from entities.citationArticle import CitationArticle
 
 class TestCitationArticle(unittest.TestCase):
+    """Tests for the CitationArticle class"""
     def test_citation_to_bibtex_entry(self):
         # Create an instance of CitationArticle with specified values for additional fields
         citation = CitationArticle(

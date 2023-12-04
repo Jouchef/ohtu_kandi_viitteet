@@ -1,7 +1,11 @@
-"""Proceedings, of a conference."""
+"""Proceedings, of a conference.""" #pylint: disable=invalid-name
+from services.generateCitate import GenerateCitate # pylint: disable=import-error
 class CitationInProceedings():
     """Proceedings, of a conference."""
-    def __init__(self, entry_type, cite_key, author, title, booktitle, year, editor=None, volume=None, number=None, series=None, pages=None, address=None, month=None, organization=None, publisher=None, note=None, key=None):
+    def __init__(self, entry_type, cite_key, author, title, booktitle,
+                 year, editor=None, volume=None, number=None, series=None,
+                 pages=None, address=None, month=None, organization=None,
+                 publisher=None, note=None, key=None):
         self.entry_type = entry_type
         self.cite_key = cite_key
         self.author = author
@@ -19,3 +23,24 @@ class CitationInProceedings():
         self.publisher = publisher
         self.note = note
         self.key = key
+
+    def citation_to_bibtex_entry(self):
+        """Return a string in BibTeX format."""
+        fields = {
+                "author": self.author,
+                "title": self.title,
+                "booktitle": self.booktitle,
+                "year": self.year,
+                "editor": self.editor,
+                "volume": self.volume,
+                "number": self.number,
+                "series": self.series,
+                "pages": self.pages,
+                "address": self.address,
+                "month": self.month,
+                "organization": self.organization,
+                "publisher": self.publisher,
+                "note": self.note,
+                "key": self.key
+            }
+        return GenerateCitate.generate_bibtex(self.entry_type, self.cite_key, fields)

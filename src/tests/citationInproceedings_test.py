@@ -1,12 +1,14 @@
-import unittest
-from entities.citationInproceedings import CitationInProceedings  
+import unittest #pylint: disable:invalid-name
+from entities.citationInproceedings import CitationInProceedings
+from services.generateCitate import GenerateCitate # pylint: disable=import-error
 
 class TestCitationInProceedings(unittest.TestCase):
+    """Tests for the CitationInProceedings class"""
     def test_citation_to_bibtex_entry(self):
         citation = CitationInProceedings(
             "inproceedings", "CitekeyInproc", "Author Name", "Paper Title", 
             "Conference Name", 2021, pages="123-130", address="Location", 
-            month="September", organization="Org Name", publisher="Publisher Name", 
+            month="September", organization="Org Name", publisher="Publisher Name",
             note="Additional note"
         )
 

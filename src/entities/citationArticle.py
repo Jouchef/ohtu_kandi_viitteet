@@ -1,6 +1,6 @@
 """Class for article citation.""" # pylint: disable=invalid-name
-
-class CitationArticle(): # pylint: disable=too-many-public-methods
+from services.generateCitate import GenerateCitate # pylint: disable=import-error
+class CitationArticle(): # pylint: disable=too-few-public-methods too-many-instance-attributes
     """Class for article citation."""
     def __init__(self, entry_type, cite_key, author, title, journal,
                  year, volume, number, pages, month=None, doi=None,
@@ -18,3 +18,20 @@ class CitationArticle(): # pylint: disable=too-many-public-methods
         self.doi = doi
         self.note = note
         self.key = key
+
+    def citation_to_bibtex_entry(self):
+        """Return a string in BibTeX format."""
+        fields = {
+                "author": self.author,
+                "title": self.title,
+                "journal": self.journal,
+                "year": self.year,
+                "volume": self.volume,
+                "number": self.number,
+                "pages": self.pages,
+                "month": self.month,
+                "doi": self.doi,
+                "note": self.note,
+                "key": self.key
+            }
+        return GenerateCitate.generate_bibtex(self.entry_type, self.cite_key, fields)

@@ -1,4 +1,5 @@
 """Class for book citation.""" # pylint: disable=invalid-name
+from services.generateCitate import GenerateCitate # pylint: disable=import-error
 class CitationBook():
     """Class for book citation."""
     def __init__(self, entry_type, cite_key, author,
@@ -20,3 +21,22 @@ class CitationBook():
         self.note = note
         self.key = key
         self.url = url
+
+    def generate_bibtex(self):
+        """Return a string in BibTeX format."""
+        fields = {
+                "author": self.author,
+                "title": self.title,
+                "publisher": self.publisher,
+                "year": self.year,
+                "volume": self.volume,
+                "number": self.number,
+                "series": self.series,
+                "address": self.address,
+                "edition": self.edition,
+                "month": self.month,
+                "note": self.note,
+                "key": self.key,
+                "url": self.url
+            }
+        return GenerateCitate.generate_bibtex(self.entry_type, self.cite_key, fields)

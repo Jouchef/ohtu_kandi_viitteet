@@ -2,7 +2,8 @@
 jobs=1
 [MASTER]
 disable=
-    C0114
+    C0114,
+    W0012
 
 
 [MESSAGE CONTROL]
