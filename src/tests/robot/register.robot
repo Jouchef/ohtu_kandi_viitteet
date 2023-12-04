@@ -44,16 +44,16 @@ Login After Successful Registration
     Submit Credentials
     Login Should Succeed
 
-#Login After UnSuccessful Registration
-#    Set Username  ka
-#    Set Password  kalle123
-#    Set PasswordConfirmation  kalle123
-#    Submit New User
-#    Go To Login Page
-#    Set Username  ka
-#    Set Password  kalle123
-#    Submit Credentials
-    #Login Should Fail With Message  Invalid username or password
+Login After UnSuccessful Registration
+    Set Username  ka
+    Set Password  kalle123
+    Set PasswordConfirmation  kalle123
+    Submit New User
+    Go To Login Page
+    Set Username  ka
+    Set Password  kalle123
+    Submit Credentials
+    Login Should Fail With Message  Invalid username or password
 
 
 *** Keywords ***

@@ -9,6 +9,7 @@ from flask import (render_template,
 from services.reference_service import ReferenceService as reference_service # pylint: disable=import-error no-name-in-module
 
 from services.user_service import UserService # pylint: disable=import-error no-name-in-module
+from services.user_service import UserInputError, AuthenticationError
 user_service = UserService()
 users = Blueprint("users", __name__)
 
@@ -42,23 +43,17 @@ def render_login():
 
 @users.route("/login", methods=["POST"])
 def login():
-    """Log in user."""
+    """Call the function to check credentials and log in user."""
     username = request.form["username"]
     password = request.form["password"]
 
     try:
-        print("trying to log in")
         user = user_service.check_credentials(username, password)
-        print("user: ", user )
-        if user:
-            session["username"] = username
-            session["user_id"] = user.id
-            print("Logged in")
-            return redirect("/")
+        session["username"] = username
+        session["user_id"] = user.id
+        return redirect("/")
 
-        raise Exception("Wrong username or password") # pylint: disable=broad-exception-raised
-
-    except Exception as error: # pylint: disable=broad-except
+    except (AuthenticationError, UserInputError) as error:
         flash(str(error))
         return render_template("login.html")
 
@@ -85,7 +80,7 @@ def register():
         user_service.create_user(username, password, password_confirmation)
         return render_template("login_and_register.html")
     except Exception as error: # pylint: disable=broad-except
-        flash(str(error))
+        
         return render_template("register.html")
 
 @users.route("/ping")

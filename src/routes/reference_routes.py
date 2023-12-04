@@ -1,4 +1,4 @@
-
+"""Routing module to handle reference related requests."""
 from flask import (render_template,
                    redirect, session,
                    request,
@@ -47,7 +47,8 @@ def create_reference():
         reference_service.create_reference(reference_type = reference_type, author=author,
                                            title=title, journal=journal, year=year,
                                            volume=volume, number=number, pages=pages,
-                                           month=month, doi=doi, note=note, key=key, visible=visible,
+                                           month=month, doi=doi, note=note,
+                                           key=key, visible=visible,
                                            user_id = user_id) # pylint: disable=line-too-long
         print ("reference created")
         return redirect("/")

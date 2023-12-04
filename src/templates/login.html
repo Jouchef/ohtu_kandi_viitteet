@@ -20,9 +20,13 @@
   </div>
 
   <div>
-      <input type="submit" value="Login" /> 
+      <input type="submit" value="Login"/> <br>
       <input type="submit" value="Register" formaction="/register" formmethod="get" />
   </div>
 </form>
+{% for message in get_flashed_messages() %}
+    <div class="flash-message">{{ message }}</div>
+{% endfor %}
 </body>
 </html>
+

@@ -17,6 +17,8 @@ class AuthenticationError(Exception):
 class UserService:
     """Service for user related operations."""
     def __init__(self, user_repository=default_user_repository):
+        """Initialize UserService.
+        This method can be used for injecting a mock repository for testing purposes."""
         self._user_repository = user_repository
 
     def get_user_id(self):
@@ -25,15 +27,18 @@ class UserService:
         return session.get("user_id")
 
     def check_credentials(self, username, password):
-        """Check if username and password match."""
+        """Check if username and password match.
+        when user is logging in."""
+
         if not username or not password:
             raise UserInputError("Username and password are required")
-
+        # check if username exists in the database
         user = self._user_repository.find_by_username(username)
 
-        if not user or not check_password_hash(user.password, password):
-            raise AuthenticationError("Invalid username or password")
-
+        if not user:
+            raise AuthenticationError("Wrong username")
+        if not check_password_hash(user.password, password):
+            raise AuthenticationError("Wrong password")
         return user
 
     def create_user(self, username, password, password_confirmation):
@@ -61,5 +66,7 @@ class UserService:
             raise UserInputError("Password must contain special characters")
         if password != password_confirmation:
             raise UserInputError("Passwords do not match")
+        if self._user_repository.find_by_username(username):
+            raise UserInputError("Username is already taken")
 
 user_service = UserService()

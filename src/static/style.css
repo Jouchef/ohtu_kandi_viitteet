@@ -73,3 +73,12 @@ th {
     background-color: #f2f2f2;
 }
 
+.flash-message {
+    background-color: white; /* White background */
+    color: black; /* Black text for contrast */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd; /* Light grey border */
+    border-radius: 5px;
+    text-align: center;
+}
