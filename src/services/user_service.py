@@ -42,7 +42,9 @@ class UserService:
         return user
 
     def create_user(self, username, password, password_confirmation):
-        """Create a new user."""
+        """Create a new user in to the database
+        this is done by hashing the password and saving the user to the database 
+        calling the user_repository create method."""
 
         self.validate(username, password, password_confirmation)
         hashed_password = generate_password_hash(password)

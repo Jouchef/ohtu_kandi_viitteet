@@ -78,6 +78,7 @@ def register():
     password_confirmation = request.form["password_confirmation"]
     try:
         user_service.create_user(username, password, password_confirmation)
+        print("User created successfully")
         return render_template("login_and_register.html")
     except Exception as error: # pylint: disable=broad-except
         
