@@ -1,23 +1,24 @@
 """Module to handle user routes"""
-#import secrets
+# import secrets
 from flask import (render_template,
                    redirect,
                    session, request,
                    Blueprint,
-                     flash) # pylint: disable=import-error unused-import
-#from flask_wtf.csrf import generate_csrf # pylint: disable=import-error unused-import
-from services.reference_service import ReferenceService as reference_service # pylint: disable=import-error no-name-in-module
+                   flash)  # pylint: disable=import-error unused-import
+# from flask_wtf.csrf import generate_csrf # pylint: disable=import-error unused-import
+from services.reference_service import ReferenceService as reference_service  # pylint: disable=import-error no-name-in-module
 
-from services.user_service import UserService # pylint: disable=import-error no-name-in-module
+from services.user_service import UserService  # pylint: disable=import-error no-name-in-module
 from services.user_service import UserInputError, AuthenticationError
 user_service = UserService()
 users = Blueprint("users", __name__)
 
-#@users.before_request
-#def make_csrf_token():
+# @users.before_request
+# def make_csrf_token():
 #    """Create CSRF token"""
 #    if 'csrf_token' not in session:
 #        session['csrf_token'] = secrets.token_hex(16)
+
 
 @users.route("/", methods=["GET"])
 def render_home():
@@ -40,6 +41,7 @@ def render_home():
 def render_login():
     """Render login page."""
     return render_template("login.html")
+
 
 @users.route("/login", methods=["POST"])
 def login():
@@ -65,10 +67,12 @@ def logout():
     session.pop("user_id", None)
     return render_template("index.html")
 
+
 @users.route("/register", methods=["GET"])
 def render_register():
     """Render register page."""
     return render_template("register.html")
+
 
 @users.route("/register", methods=["POST"])
 def register():
@@ -80,9 +84,10 @@ def register():
         user_service.create_user(username, password, password_confirmation)
         print("User created successfully")
         return render_template("login_and_register.html")
-    except Exception as error: # pylint: disable=broad-except
-        
+    except Exception as error:  # pylint: disable=broad-except
+
         return render_template("register.html")
+
 
 @users.route("/ping")
 def ping():
