@@ -12,12 +12,30 @@ reference_service = reference_service()
 user_service = UserService()
 references = Blueprint("references", __name__)
 
+@references.route("/edit/<int:reference_id>", methods=["GET"])
+def render_edit_reference_form(reference_id):
+    """Render form for editing reference."""
+    print("render_edit_reference_form called")
+    try:
+        print("try")
+        user_name = session.get("username")
+        if not user_name:
+            raise Exception("You must be logged in to edit a reference") # pylint: disable=broad-exception-raised
+        #print("user_name")
+        print("calling get_reference from reference_service")
+        reference = reference_service.get_reference(reference_id)
+        print(f"reference {reference}")
+        return render_template("edit.html", reference=reference)
+
+    except Exception as error:
+        print(f"Error occurred: {error}")
+        flash(str(error))
+        return redirect("/")
 
 @references.route("/form", methods=["GET"])
 def render_add_reference_form():
     """Render form for new reference."""
     return render_template("form.html")
-
 
 @references.route("/form", methods=["POST"])
 def create_reference():
