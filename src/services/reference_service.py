@@ -54,7 +54,8 @@ class ReferenceService:
 
 
     def add_reference_to_user(self, user_id, reference_id):
-        """Adds a reference to a user."""
+        """Adds a reference to a user
+        by creating a new UserReferences_model object."""
         reference_user_new = UserReferences_model(user_id = user_id,
                                                   reference_id = reference_id)
         return self._reference_repository.add_reference_to_user(reference_user_new)
@@ -71,8 +72,20 @@ class ReferenceService:
 
 
     def edit_reference(self, reference_id, **kwargs):
-        """Edits a reference with the given id."""
-        return self._reference_repository.edit_reference(reference_id, **kwargs)
+        """INPUT:
+        reference_id = the id of the reference to be edited
+        kwargs = the new values for the reference
+        DO: queries the reference with the given id and updates the values"""
+        # first querying the reference
+        reference = self._reference_repository.get_reference(reference_id)
+        if reference:
+            # then updating the values
+            for key, value in kwargs.items():
+                setattr(reference, key, value)
+            # then saving the reference
+            return self._reference_repository.edit_reference(reference)
+        return None
+
 
     def delete_reference(self, reference_id):
         """Deletes a reference with the given id.

@@ -15,7 +15,7 @@
 
         <div class="reference">
 
-            <form action="/edit/{{ reference[0] }}" method="POST">
+            <form action="/edit/{{ reference.id }}" method="POST">
                 <label for="name">Author:</label>
                 <input type="text" id="author" name="author" value="{{ reference.author }}" required><br>
                 <label for="name">Title:</label>
@@ -38,9 +38,9 @@
                 <input type="text" id="note" name="note" value="{{ reference.note }}" required><br>
                 <label for="name">Key:</label>
                 <input type="text" id="key" name="key" value="{{ reference.key }}" required><br>
-                <input type="submit" value="Submit" class="linkstyle">
+                <input type="submit" name="submit_button" value="Submit" class="linkstyle">
                 <br>
-                <a href="/delete_reference/{{ reference[0] }}" class="linkstyle">Delete</a>
+                <a href="/delete_reference/{{ reference.id }}" class="linkstyle">Delete</a>
             </form>
 
         </div>

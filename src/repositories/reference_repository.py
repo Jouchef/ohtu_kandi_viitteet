@@ -39,16 +39,13 @@ class ReferenceRepository:
                                                            Reference.visible.is_(True)).all() # pylint: disable=line-too-long
         return references
 
-    def edit_reference(self, reference_id, **kwargs):
-        """Edits a reference with the given id."""
-        reference = Reference.query.filter_by(id=reference_id).first()
-
-        if reference:
-            for key, value in kwargs.items():
-                setattr(reference, key, value)
-            db.session.commit()
-            return True
-        return False
+    def edit_reference(self, reference):
+        """INPUT: reference object that has the new values
+        DO: updates the reference with the given id with the new values to the database
+        RETURNS: True if successful, False if not successful"""
+        print("Editing reference in database")
+        db.session.add(reference)
+        db.session.commit()
 
     def delete_reference(self, reference_id):
         """Deletes a reference with the given id.

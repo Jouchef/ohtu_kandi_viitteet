@@ -27,10 +27,49 @@ def render_edit_reference_form(reference_id):
         print(f"reference {reference}")
         return render_template("edit.html", reference=reference)
 
-    except Exception as error:
+    except Exception as error: # pylint: disable=broad-except
         print(f"Error occurred: {error}")
         flash(str(error))
         return redirect("/")
+
+@references.route("/edit/<int:reference_id>", methods=["POST"])
+def edit_reference(reference_id):
+    """Edit reference when oushing the submit button."""
+    print("edit_reference called")
+    if request.method == "POST":
+        print("request.method == POST")
+        if request.form.get('submit_button') == 'Submit':
+            try:
+
+
+                print("trying to edit reference")
+                user_name = session.get("username")
+                if not user_name:
+                    raise Exception("You must be logged in to edit a reference") # pylint: disable=broad-exception-raised
+                #print("user_name")
+                data = {
+                    "reference_type" : request.form.get("type"),
+                    "author" : request.form.get("author"),
+                    "title" : request.form.get("title"),
+                    "journal" : request.form.get("journal"),
+                    "year" : request.form.get("year"),
+                    "volume" : request.form.get("volume"),
+                    "number" : request.form.get("number"),
+                    "pages" : request.form.get("pages"),
+                    "month" : request.form.get("month"),
+                    "doi" : request.form.get("doi"),
+                    "note" : request.form.get("note"),
+                    "key" : request.form.get("key"),
+                    "visible" : True }
+                # calling the function with the data and id
+                print("calling edit_reference from reference_service with data and id")
+                reference_service.edit_reference(reference_id, **data)
+                print("reference edited")
+                return redirect("/")
+            except Exception as error: # pylint: disable=broad-except
+                print(f"Error occurred: {error}")
+                flash(str(error))
+                return redirect("/")
 
 @references.route("/form", methods=["GET"])
 def render_add_reference_form():
