@@ -4,7 +4,7 @@ Library  ../AppLibrary.py
 
 *** Variables ***
 ${SERVER}  localhost:5000
-${DELAY}  0.7 seconds
+${DELAY}  0 seconds
 ${HOME_URL}  http://127.0.0.1:5000
 ${LOGIN_URL}  ${HOME_URL}/login
 ${REGISTER_URL}  ${HOME_URL}/register
@@ -31,8 +31,7 @@ Register Page Should Be Open
     Page Should Contain Element  //h1[text()='Register']
 
 Login Should Succeed
-# there shoudl be button with text "Logout"
-    Page Should Contain Element  //button[text()='Logout']
+    Main Page Should Be Open
 Go To Login Page
     Go To  ${LOGIN_URL}
 Go To Register Page
@@ -59,7 +58,7 @@ Set PasswordConfirmation
 Submit Credentials
     Click Button  Login
 
-#Login Should Fail With Message
-#    [Arguments]  ${message}
-#    Login Page Should Be Open
-#    Page Should Contain  ${message}
+Login Should Fail With Message
+    [Arguments]  ${message}
+    Login Page Should Be Open
+    Page Should Contain  ${message}

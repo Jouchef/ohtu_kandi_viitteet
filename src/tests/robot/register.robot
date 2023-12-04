@@ -49,11 +49,12 @@ Login After UnSuccessful Registration
     Set Password  kalle123
     Set PasswordConfirmation  kalle123
     Submit New User
+    User Creation Should Fail With    The password should be 12 characters long and contain at least one uppercase letter, one number and one special character.
     Go To Login Page
     Set Username  ka
     Set Password  kalle123
     Submit Credentials
-    Login Should Fail With Message  Invalid username or password
+    Login Should Fail With Message  Wrong username
 
 
 *** Keywords ***
@@ -69,6 +70,8 @@ User Creation Should Fail With
     Should Be Equal  ${message}  ${expected_message}
     #Handle Alert    action=DISMISS
     #Alert Should Not Be Present
+
+
     
 
 
