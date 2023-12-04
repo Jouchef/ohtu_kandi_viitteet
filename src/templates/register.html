@@ -50,7 +50,7 @@
     function validateForm() {
       var password = document.getElementById("password").value;
       var confirm = document.getElementById("password_confirmation").value;
-      var regex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]{12,}$/;
+      var regex = /^(?=.*[A-ZÄÖÅ])(?=.*[0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9ÄäÖöÅå!@#$%^&*()_+]{12,}$/;
 
       if (!regex.test(password)) {
         alert("salasanan pitää olla 12 merkkiä ja sisältää ainakin yhden ison kirjaimen, yhden numeron ja yhden erikoismerkin.");
