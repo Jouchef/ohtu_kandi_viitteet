@@ -23,3 +23,8 @@ In order for a user story to be deemed “done” you need to check off a number
 - Asiakas hyväksyy user storyn
 
 
+
+
+
+
+
