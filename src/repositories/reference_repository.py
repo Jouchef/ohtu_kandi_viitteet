@@ -1,7 +1,7 @@
 """Repository for citations."""
-from src.models.reference import Reference_model as Reference # pylint: disable=import-error no-name-in-module
-from src.models.user_references import UserReferences_model # pylint: disable=import-error no-name-in-module
-from src.db import db # pylint: disable=import-error no-name-in-module
+from models.reference import Reference_model as Reference # pylint: disable=import-error no-name-in-module
+from models.user_references import UserReferences_model # pylint: disable=import-error no-name-in-module
+from db import db # pylint: disable=import-error no-name-in-module
 
 class ReferenceRepository:
     """Repository for citations.

@@ -1,6 +1,6 @@
 """Main module for running the application."""
-from src.app import create_app
 from dotenv import load_dotenv
+from app import create_app
 
 load_dotenv()
 app = create_app()

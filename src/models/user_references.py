@@ -1,5 +1,5 @@
 """User reference connecting model to database""" # pylint disable=invalid-name
-from src.db import db # pylint: disable=import-error no-name-in-module
+from db import db # pylint: disable=import-error no-name-in-module
 
 
 class UserReferences_model(db.Model): # pylint: disable=invalid-name too-few-public-methods

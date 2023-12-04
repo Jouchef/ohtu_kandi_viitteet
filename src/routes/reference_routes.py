@@ -1,14 +1,13 @@
-"""Module to handle references routing"""
 
 from flask import (render_template,
                    redirect, session,
                    request,
                    Blueprint,
-                     flash) # pylint: disable=import-error unused-import
+                     flash)
 
 
-from src.services.reference_service import ReferenceService as reference_service # pylint: disable=import-error no-name-in-module
-from src.services.user_service import UserService # pylint: disable=import-error no-name-in-module
+from services.reference_service import ReferenceService as reference_service # pylint: disable=import-error no-name-in-module
+from services.user_service import UserService # pylint: disable=import-error no-name-in-module
 reference_service = reference_service()
 user_service = UserService()
 references = Blueprint("references", __name__)

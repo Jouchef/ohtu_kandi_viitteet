@@ -6,9 +6,9 @@ from flask import (render_template,
                    Blueprint,
                      flash) # pylint: disable=import-error unused-import
 #from flask_wtf.csrf import generate_csrf # pylint: disable=import-error unused-import
-from src.services.reference_service import ReferenceService as reference_service # pylint: disable=import-error no-name-in-module
+from services.reference_service import ReferenceService as reference_service # pylint: disable=import-error no-name-in-module
 
-from src.services.user_service import UserService # pylint: disable=import-error no-name-in-module
+from services.user_service import UserService # pylint: disable=import-error no-name-in-module
 user_service = UserService()
 users = Blueprint("users", __name__)
 

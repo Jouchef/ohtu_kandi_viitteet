@@ -1,7 +1,7 @@
 """Reference services   """
-from src.repositories.reference_repository import reference_repository as default_reference_repository # pylint: disable=no-name-in-module, import-error line-too-long
-from src.models.reference import Reference_model as Reference # pylint: disable=no-name-in-module, import-error line-too-long
-from src.models.user_references import UserReferences_model # pylint: disable=no-name-in-module, import-error line-too-long
+from repositories.reference_repository import reference_repository as default_reference_repository # pylint: disable=no-name-in-module, import-error line-too-long
+from models.reference import Reference_model as Reference # pylint: disable=no-name-in-module, import-error line-too-long
+from models.user_references import UserReferences_model # pylint: disable=no-name-in-module, import-error line-too-long
 
 class ReferenceService:
     """Reference services.

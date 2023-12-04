@@ -1,7 +1,7 @@
 """Data model for a reference.
     Using SQLAlchemy ORM. """
 
-from src.db import db # pylint: disable=import-error no-name-in-module
+from db import db # pylint: disable=import-error no-name-in-module
 
 class Reference_model(db.Model): # pylint: disable=invalid-name too-few-public-methods
     """Reference class definition."""

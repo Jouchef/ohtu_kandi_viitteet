@@ -1,6 +1,6 @@
 """Database model for user entity.
     Using SQLAlchemy ORM. """
-from src.db import db # pylint: disable=import-error no-name-in-module
+from db import db # pylint: disable=import-error no-name-in-module
 
 class User_model(db.Model): # pylint: disable=invalid-name too-few-public-methods
     """User class definition.

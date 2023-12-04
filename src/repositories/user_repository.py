@@ -1,7 +1,7 @@
-"""User repository module.
-handles all database operations related to users."""
-from src.db import db # pylint: disable=import-error no-name-in-module
-from src.models.user import User_model # pylint: disable=import-error no-name-in-module
+"""User repository module handles all database operations related to users.""" # pylint: disable=missing-class-docstring
+from db import db
+from models.user import User_model # pylint: disable=no-name-in-module import-error
+
 class UserRepository:
     """User repository class which handles all database operations 
     related to users."""

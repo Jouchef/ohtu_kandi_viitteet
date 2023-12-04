@@ -1,9 +1,9 @@
-"""Main module for the application."""
+"""Main module for the application.""" # pylint: disable=missing-function-docstring
 import os
 from flask import Flask
-from src.db import db # pylint: disable=no-name-in-module import-error
-from src.routes.user_routes import users # pylint: disable=no-name-in-module import-error
-from src.routes.reference_routes import references # pylint: disable=no-name-in-module import-error
+from db import db # pylint: disable=no-name-in-module import-error
+from routes.user_routes import users # pylint: disable=no-name-in-module import-error
+from routes.reference_routes import references # pylint: disable=no-name-in-module import-error
 #from flask_wtf.csrf import CSRFProtect # pylint: disable=import-error
 
 def create_app():

@@ -1,5 +1,9 @@
 [MAIN]
 jobs=1
+[MASTER]
+disable=
+    C0114
+
 
 [MESSAGE CONTROL]
 
