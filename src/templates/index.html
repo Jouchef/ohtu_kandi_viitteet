@@ -10,7 +10,7 @@
 <body>
 
     <div class="beginning">
-        <h1>Reference app</h1>
+        <h1>Viitevarasto</h1>
         <h2>Welcome!</h2>
         <br>
         {% if session.username %}
@@ -18,9 +18,13 @@
     </div>
 
 
-    <a href="{{ url_for('references.render_add_reference_form') }}" class="linkstyle">Add</a>
-    <a href="{{ url_for('references.export_bibtex') }}" class="linkstyle">Export BibTeX</a>
-
+    <div class="link-container">
+        <a href="{{ url_for('references.render_add_reference_form') }}" class="linkstyle">Add</a>
+        <a href="{{ url_for('references.export_bibtex') }}" class="linkstyle">Export BibTeX</a>
+        <form action="/logout" method="post">
+            <input type="submit" value="Logout" class="linkstyle">
+        </form>
+    </div>
 
     <h2>Table of references</h2>
     <div class="table-container">
@@ -47,9 +51,7 @@
 
             </tbody>
         </table>
-            <form action="/logout" method="post">
-                <input type="submit" value="Logout" class="linkstyle">
-            </form>
+
     </div>
     {% else %}
     <p> You are not logged in. </p>
