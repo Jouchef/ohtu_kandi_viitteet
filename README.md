@@ -10,8 +10,6 @@ Nettisovellus, jonka avulla voi pitää kirjaa LaTeX-ympäristössä toteutettuj
 
 [Retrospektiivi](https://github.com/Jouchef/ohtu_kandi_viitteet/blob/main/Retro.md)
 
-Sovelluslinkki: (Tulossa!)
-
 ## [Documentation](https://github.com/Jouchef/ohtu_kandi_viitteet/blob/main/dokumentaatio/dokumentti.md)
 
 ## Definition of Done
