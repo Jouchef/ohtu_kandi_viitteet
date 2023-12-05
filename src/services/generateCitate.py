@@ -9,7 +9,5 @@ class GenerateCitate:
                     bibtex_entry += f"  {key} = {value},\n"  # No quotes for year
                 else:
                     bibtex_entry += f"  {key} = \"{value}\",\n"
-        bibtex_entry = bibtex_entry.rstrip(',\n') + "\n}"  # Remove last comma and newline, then close the brace
+        bibtex_entry = bibtex_entry.rstrip(',\n') + "\n}"
         return bibtex_entry
-    
-    

@@ -1,5 +1,5 @@
 """Proceedings, of a conference.""" #pylint: disable=invalid-name
-from services.generateCitate import GenerateCitate # pylint: disable=import-error
+from services.generatecitate import GenerateCitate # pylint: disable=import-error
 class CitationInProceedings():
     """Proceedings, of a conference."""
     def __init__(self, entry_type, cite_key, author, title, booktitle,

@@ -1,8 +1,8 @@
 """Service for user related operations."""
-from repositories.user_repository import (user_repository as default_user_repository) # pylint: disable=import-error no-name-in-module line-too-long
-from werkzeug.security import generate_password_hash, check_password_hash # pylint: disable=import-error no-name-in-module
-from models.user import User_model as User # pylint: disable=import-error no-name-in-module ungrouped-imports
-from flask import session # pylint: disable=import-error no-name-in-module
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask import session
+from repositories.user_repository import (user_repository as default_user_repository) #pylint: disable=import-error
+from models.user import User_model as User # pylint: disable=import-error
 
 class UserInputError(Exception):
     """Raised when user input is invalid."""

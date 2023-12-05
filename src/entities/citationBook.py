@@ -1,5 +1,5 @@
-"""Class for book citation.""" # pylint: disable=invalid-name
-from services.generateCitate import GenerateCitate # pylint: disable=import-error
+
+from services.generatecitate import GenerateCitate # pylint: disable=import-error
 class CitationBook():
     """Class for book citation."""
     def __init__(self, entry_type, cite_key, author,

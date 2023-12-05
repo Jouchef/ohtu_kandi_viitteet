@@ -31,7 +31,18 @@ jobs:
       - name: Run tests
         run: poetry run coverage run --branch -m pytest
       - name: Run Pylint
-        run: poetry run pylint src
+        run: |
+          pylint_score=$(poetry run pylint src --rcfile .pylintrc2 --output-format=text | grep 'Your code has been rated at' | awk '{print $7}' | sed 's/\/10.00//')
+          echo "Pylint score: $pylint_score"
+          echo "PYLINT_SCORE=$pylint_score" >> $GITHUB_ENV
+
+      - name: Check Pylint score
+        run: |
+          required_score=9.0  # Set your desired threshold here
+          if (( $(echo "$PYLINT_SCORE < $required_score" | bc -l) )); then
+            echo "Pylint score is below $required_score!"
+            exit 1
+          fi
       - name: Run coverage  
         run: poetry run coverage xml
       - name: Coverage report to Codecov

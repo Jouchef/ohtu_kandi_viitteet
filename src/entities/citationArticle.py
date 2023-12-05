@@ -1,5 +1,5 @@
 """Class for article citation.""" # pylint: disable=invalid-name
-from services.generateCitate import GenerateCitate # pylint: disable=import-error
+from services.generatecitate import GenerateCitate # pylint: disable=import-error
 class CitationArticle(): # pylint: disable=too-few-public-methods too-many-instance-attributes
     """Class for article citation."""
     def __init__(self, entry_type, cite_key, author, title, journal,
