@@ -1,7 +1,8 @@
 """Repository for citations."""
-from models.reference import Reference_model as Reference # pylint: disable=import-error no-name-in-module
-from models.user_references import UserReferences_model # pylint: disable=import-error no-name-in-module
-from db import db # pylint: disable=import-error no-name-in-module
+from models.reference import Reference_model as Reference  # pylint: disable=import-error no-name-in-module
+from models.user_references import UserReferences_model  # pylint: disable=import-error no-name-in-module
+from db import db  # pylint: disable=import-error no-name-in-module
+
 
 class ReferenceRepository:
     """Repository for citations.
@@ -11,6 +12,7 @@ class ReferenceRepository:
     def find_all(self):
         """Returns all references from the database."""
         return Reference.query.all()
+
     def create(self, reference):
         """Creates a new reference and links it to a user."""
         print("Creating new reference in repository")
@@ -25,7 +27,6 @@ class ReferenceRepository:
         db.session.commit()
         return user_reference
 
-
     def get_reference(self, reference_id):
         """Returns a citation with the reference given id."""
         return Reference.query.filter_by(id=reference_id).first()
@@ -33,12 +34,12 @@ class ReferenceRepository:
     def get_all_references_by_user_id(self, user_id):
         """Returns all citations by the given user id."""
         references = Reference.query.join(UserReferences_model,
-                                                UserReferences_model.reference_id
-                                                == Reference.id).\
-                                                    filter(UserReferences_model.user_id == user_id,
-                                                           Reference.visible.is_(True)).all() # pylint: disable=line-too-long
-        #print("Haetaan käyttäjän viitteet")
-        #print(references, "testi")
+                                          UserReferences_model.reference_id
+                                          == Reference.id).\
+            filter(UserReferences_model.user_id == user_id,
+                   Reference.visible.is_(True)).all()  # pylint: disable=line-too-long
+        # print("Haetaan käyttäjän viitteet")
+        # print(references, "testi")
         return references
 
     def edit_reference(self, reference):
@@ -50,6 +51,7 @@ class ReferenceRepository:
         db.session.commit()
 
     def delete_reference(self, reference_id):
+        print("jee")
         """Deletes a reference with the given id.
         changes the reference's visible attribute to False."""
         reference = Reference.query.filter_by(id=reference_id).first()
@@ -59,4 +61,5 @@ class ReferenceRepository:
             return True
         return False
 
-reference_repository = ReferenceRepository() # pylint: disable=invalid-name
+
+reference_repository = ReferenceRepository()  # pylint: disable=invalid-name
