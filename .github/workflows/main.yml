@@ -32,7 +32,7 @@ jobs:
         run: poetry run coverage run --branch -m pytest
       - name: Run Pylint
         run: |
-          pylint_score=$(poetry run pylint src --rcfile .pylintrc2 --output-format=text | grep 'Your code has been rated at' | awk '{print $7}' | sed 's/\/10.00//')
+          pylint_score=$(poetry run pylint src --rcfile .pylin--output-format=text | grep 'Your code has been rated at' | awk '{print $7}' | sed 's/\/10.00//')
           echo "Pylint score: $pylint_score"
           echo "PYLINT_SCORE=$pylint_score" >> $GITHUB_ENV
 
