@@ -29,6 +29,7 @@ class ReferenceRepository:
 
     def get_reference(self, reference_id):
         """Returns a citation with the reference given id."""
+        print(f"Getting from database reference with id {reference_id}")
         return Reference.query.filter_by(id=reference_id).first()
 
     def get_all_references_by_user_id(self, user_id):

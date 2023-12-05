@@ -77,14 +77,14 @@ class ReferenceService:
         bibtex = "References\n\n"
         for reference in references:
             if reference.reference_type == "Article":
-                citation = CitationArticle(reference.reference_type, reference.key, reference.author,
+                citation = CitationArticle(reference.reference_type, reference.key,
+                                           reference.author,
                                            reference.title, reference.journal,
                                            reference.year, reference.volume, reference.number, reference.pages,
                                            reference.month, reference.doi, reference.note, reference.key)
                 bibtex += citation.citation_to_bibtex_entry()
                 bibtex += "\n\n"
             print(bibtex)
-            #print("tulostetaan reference: ", reference.author, reference.title, reference.reference_type)
         return bibtex
 
 
@@ -93,16 +93,19 @@ class ReferenceService:
         reference_id = the id of the reference to be edited
         kwargs = the new values for the reference
         DO: queries the reference with the given id and updates the values"""
-        # first querying the reference
+        for k in kwargs.items():
+            print(k)
         reference = self._reference_repository.get_reference(reference_id)
-        print(**kwargs)
+        print("reference from database in service")
         if reference:
             # then updating the values
+            print("Reference found")
             for key, value in kwargs.items():
                 setattr(reference, key, value)
-            # then saving the reference
+            print("reference edited")
+            print("calling edit_reference in repository")
             return self._reference_repository.edit_reference(reference)
-        return None
+        print("Error in editing reference")
 
 
     def delete_reference(self, reference_id):

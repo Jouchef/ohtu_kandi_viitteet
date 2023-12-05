@@ -20,7 +20,6 @@ def render_edit_reference_form(reference_id):
     """Render form for editing reference."""
     print("render_edit_reference_form called")
     try:
-        print("try")
         user_name = session.get("username")
         if not user_name:
             raise Exception(
@@ -28,7 +27,8 @@ def render_edit_reference_form(reference_id):
         # print("user_name")
         print("calling get_reference from reference_service")
         reference = reference_service.get_reference(reference_id)
-        print(f"reference {reference}")
+        print(f"reference id: {reference.id} got from database")
+        print(reference.reference_type)
         return render_template("edit.html", reference=reference)
 
     except Exception as error:  # pylint: disable=broad-except
@@ -71,8 +71,6 @@ def edit_reference(reference_id):
             print(f"Error occurred: {error}")
             flash(str(error))
             return redirect("/")
-    if request.form.get('submit_button') == 'Delete':
-        return None
 
     print("Error in editing reference")
     return redirect("/")
