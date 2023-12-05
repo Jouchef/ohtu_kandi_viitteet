@@ -12,10 +12,8 @@
     <div class="beginning">
         <p>Here you can edit or delete your reference</p>
 
-
-        <div class="reference">
-
             <form action="/edit/{{ reference.id }}" method="POST">
+                <input type="text" id="type" name="type" value="{{ reference.reference_type }}" readonly><br>
                 <label for="name">Author:</label>
                 <input type="text" id="author" name="author" value="{{ reference.author }}" required><br>
                 <label for="name">Title:</label>
