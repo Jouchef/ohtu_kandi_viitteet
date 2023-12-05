@@ -1,5 +1,5 @@
 """User repository module handles all database operations related to users.""" # pylint: disable=missing-class-docstring
-from db import db
+from db import db # pylint: disable=no-name-in-module import-error
 from models.user import User_model # pylint: disable=no-name-in-module import-error
 
 class UserRepository:

@@ -8,7 +8,7 @@ from flask import (render_template,
 
 from services.reference_service import ReferenceService as reference_service  # pylint: disable=import-error no-name-in-module
 from services.user_service import UserService  # pylint: disable=import-error no-name-in-module
-from repositories.reference_repository import ReferenceRepository
+from repositories.reference_repository import ReferenceRepository # pylint: disable=import-error no-name-in-module
 reference_service = reference_service()
 user_service = UserService()
 reference_repository = ReferenceRepository()
