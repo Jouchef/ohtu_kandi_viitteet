@@ -8,6 +8,8 @@ Nettisovellus, jonka avulla voi pitää kirjaa LaTeX-ympäristössä toteutettuj
 
 [Backlog](https://docs.google.com/spreadsheets/d/1X5pgB3FeSjwihuolKLkZFoQDcbzihkZDEykBRGrcw90/edit#gid=1334940093)
 
+[Retrospektiivi](https://github.com/Jouchef/ohtu_kandi_viitteet/blob/main/Retro.md)
+
 Sovelluslinkki: (Tulossa!)
 
 ## [Documentation](https://github.com/Jouchef/ohtu_kandi_viitteet/blob/main/dokumentaatio/dokumentti.md)
