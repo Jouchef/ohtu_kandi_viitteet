@@ -1,6 +1,6 @@
 import unittest #pylint: disable:invalid-name
 from entities.citationInproceedings import CitationInProceedings
-from services.generateCitate import GenerateCitate # pylint: disable=import-error
+from services.generatecitate import GenerateCitate # pylint: disable=import-error
 
 class TestCitationInProceedings(unittest.TestCase):
     """Tests for the CitationInProceedings class"""

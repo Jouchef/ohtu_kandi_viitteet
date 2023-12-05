@@ -95,6 +95,7 @@ class ReferenceService:
         DO: queries the reference with the given id and updates the values"""
         # first querying the reference
         reference = self._reference_repository.get_reference(reference_id)
+        print(**kwargs)
         if reference:
             # then updating the values
             for key, value in kwargs.items():
