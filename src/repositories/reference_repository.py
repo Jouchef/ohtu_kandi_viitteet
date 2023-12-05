@@ -51,7 +51,6 @@ class ReferenceRepository:
         db.session.commit()
 
     def delete_reference(self, reference_id):
-        print("jee")
         """Deletes a reference with the given id.
         changes the reference's visible attribute to False."""
         reference = Reference.query.filter_by(id=reference_id).first()
@@ -61,5 +60,14 @@ class ReferenceRepository:
             return True
         return False
 
+    def delete_all_references(self, user_id):
+        """Deletes all references by the given user id."""
+        references = Reference.query.join(UserReferences_model,
+                                          UserReferences_model.reference_id
+                                          == Reference.id).\
+            filter(UserReferences_model.user_id == user_id).all()
+        for reference in references:
+            reference.visible = False
+        db.session.commit()
 
 reference_repository = ReferenceRepository()  # pylint: disable=invalid-name
