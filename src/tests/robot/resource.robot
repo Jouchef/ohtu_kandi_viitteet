@@ -13,7 +13,7 @@ ${NEW_REFERENCE}  ${HOME_URL}/new_reference
 *** Keywords ***
 Open And Configure Browser
     ${options}  Evaluate  sys.modules['selenium.webdriver'].ChromeOptions()  sys
-    #Call Method  ${options}  add_argument  --headless
+    Call Method  ${options}  add_argument  --headless
     Reset Application
     Open Browser  browser=chrome  options=${options}
     Set Selenium Speed  ${DELAY}

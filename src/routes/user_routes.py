@@ -85,7 +85,7 @@ def register():
         print("User created successfully")
         return render_template("login_and_register.html")
     except Exception as error:  # pylint: disable=broad-except
-
+        print("Error: ", error)
         return render_template("register.html")
 
 
