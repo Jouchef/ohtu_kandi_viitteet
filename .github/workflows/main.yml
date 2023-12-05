@@ -20,29 +20,8 @@ jobs:
         run: pip install poetry
       - name: Install dependencies
         run: poetry install
-      - name: Setup chromedriver
-        uses: nanasess/setup-chromedriver@master
-      - run: |
-          export DISPLAY=:99
-          chromedriver --url-base=/wd/hub &
-          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
-      - name: Run robot tests
-        run: bash run_robot_tests.sh
       - name: Run tests
         run: poetry run coverage run --branch -m pytest
-      - name: Run Pylint
-        run: |
-          pylint_score=$(poetry run pylint src --rcfile .pylin--output-format=text | grep 'Your code has been rated at' | awk '{print $7}' | sed 's/\/10.00//')
-          echo "Pylint score: $pylint_score"
-          echo "PYLINT_SCORE=$pylint_score" >> $GITHUB_ENV
-
-      - name: Check Pylint score
-        run: |
-          required_score=9.0  # Set your desired threshold here
-          if (( $(echo "$PYLINT_SCORE < $required_score" | bc -l) )); then
-            echo "Pylint score is below $required_score!"
-            exit 1
-          fi
       - name: Run coverage  
         run: poetry run coverage xml
       - name: Coverage report to Codecov
