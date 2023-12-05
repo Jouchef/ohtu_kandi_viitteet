@@ -76,6 +76,13 @@ def render_add_reference_form():
     """Render form for new reference."""
     return render_template("form.html")
 
+@references.route("/export_bibtex")
+def export_bibtex():
+    """Export references in BibTeX format."""
+    bibtex = reference_service.references_to_bibtex(session.get("user_id"))
+    return render_template('bibtex_export.html', bibtex=bibtex)
+
+
 @references.route("/form", methods=["POST"])
 def create_reference():
     """Create a new reference."""
