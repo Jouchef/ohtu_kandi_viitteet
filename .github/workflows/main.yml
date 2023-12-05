@@ -24,6 +24,7 @@ jobs:
         run: poetry run coverage run --branch -m pytest
       - name: Run coverage  
         run: poetry run coverage xml
+      - name: Run pylint
+        run: pylint --rcfile=.pylintrc2
       - name: Coverage report to Codecov
         run: bash <(curl -s https://codecov.io/bash)
-
