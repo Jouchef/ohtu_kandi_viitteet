@@ -1,0 +1,37 @@
+[MASTER]
+ignore=tests
+
+[MESSAGE CONTROL]
+
+disable=raw-checker-failed,
+        bad-inline-option,
+        locally-disabled,
+        file-ignored,
+        suppressed-message,
+        useless-suppression,
+        deprecated-pragma,
+        use-symbolic-message-instead,
+        missing-module-docstring,
+        missing-function-docstring,
+        missing-class-docstring,
+        line-too-long,
+        too-many-arguments,
+        too-many-instance-attributes,
+        too-few-public-methods,
+        too-many-statements,
+        too-many-locals,
+        too-many-nested-blocks
+
+
+[BASIC]
+argument-naming-style = any
+[FORMAT]
+max-line-length=80 
+
+[REFACTORING]
+max-nested-blocks=2
+[DESIGN]
+max-statements=15
+
+[SIMILARITIES]
+ignore-comments= true
