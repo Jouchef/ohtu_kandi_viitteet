@@ -22,14 +22,11 @@ users = Blueprint("users", __name__)
 
 @users.route("/", methods=["GET"])
 def render_home():
-    """Render home page for user with all the references."""
+    """Render home page for user with all of their references."""
     user_id = session.get("user_id")
     if user_id:
-        print("User id: ", user_id)
         referenc_serv = reference_service()
-        print("Referenc_serv: ", referenc_serv)
         references = referenc_serv.get_all_references_by_user_id(user_id)
-        print("References: ", references)
     else:
         user_id = None
         references = []

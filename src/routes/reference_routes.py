@@ -22,9 +22,7 @@ def render_edit_reference_form(reference_id):
     try:
         user_name = session.get("username")
         if not user_name:
-            raise Exception(
-                "You must be logged in to edit a reference")  # pylint: disable=broad-exception-raised
-        # print("user_name")
+            raise Exception("You must be logged in to edit a reference")  # pylint: disable=broad-exception-raised
         print("calling get_reference from reference_service")
         reference = reference_service.get_reference(reference_id)
         print(f"reference id: {reference.id} got from database")
@@ -43,11 +41,9 @@ def edit_reference(reference_id):
     print("edit_reference called")
     if request.form.get('submit_button') == 'Submit':
         try:
-            print("trying to edit reference")
             user_name = session.get("username")
             if not user_name:
-                raise Exception(
-                    "You must be logged in to edit a reference")  # pylint: disable=broad-exception-raised
+                raise Exception("You must be logged in to edit a reference")  # pylint: disable=broad-exception-raised
             data = {
                 "reference_type": request.form.get("type"),
                 "author": request.form.get("author"),
@@ -62,10 +58,7 @@ def edit_reference(reference_id):
                 "note": request.form.get("note"),
                 "key": request.form.get("key"),
                 "visible": True}
-            # calling the function with the data and id
-            print("calling edit_reference from reference_service with data and id")
             reference_service.edit_reference(reference_id, **data)
-            print("reference edited")
             return redirect("/")
         except Exception as error:  # pylint: disable=broad-except
             print(f"Error occurred: {error}")
@@ -78,6 +71,7 @@ def edit_reference(reference_id):
 
 @references.route("/delete_reference/<int:reference_id>", methods=["GET"])
 def delete_reference(reference_id):
+    """Delete reference."""
     reference_repository.delete_reference(reference_id)
     return redirect("/")
 
@@ -112,14 +106,11 @@ def create_reference():
     key = request.form.get("key")
     visible = True
 
-    print(reference_type)
     try:
         user_name = session.get("username")
         user_id = session.get("user_id")
-        print(user_name)
         if not user_name:
-            raise Exception(
-                "You must be logged in to create a reference")  # pylint: disable=broad-exception-raised
+            raise Exception("You must be logged in to create a reference")  # pylint: disable=broad-exception-raised
 
         reference_service.create_reference(reference_type=reference_type, author=author,
                                            title=title, journal=journal, year=year,
@@ -127,7 +118,6 @@ def create_reference():
                                            month=month, doi=doi, note=note,
                                            key=key, visible=visible,
                                            user_id=user_id)  # pylint: disable=line-too-long
-        print("reference created")
         return redirect("/")
 
     except Exception as error:  # pylint: disable=broad-except
@@ -138,7 +128,8 @@ def create_reference():
 
 @references.route("/change_reference_type", methods=["POST"])
 def change_reference_type():
-    """Render form with correct fields."""
+    """Render form with correct fields for the selected reference type 
+    in the dropdown menu when adding a new reference."""
     if request.form.get('menu') == 'Article':
         return render_template("form.html", selected_type='Article')
     if request.form.get('menu') == 'Book':
@@ -148,3 +139,8 @@ def change_reference_type():
 
     print("Error in changing reference type")
     return render_template("form.html")
+
+@references.route("/add_doi", methods=["GET"])
+def render_doi_page():
+    """Render form to get doi."""
+    return render_template("add_doi.html")
