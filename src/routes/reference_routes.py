@@ -93,18 +93,21 @@ def export_bibtex():
 def create_reference():
     """Create a new reference."""
     reference_type = request.form.get("type")
-    author = request.form.get("author")
-    title = request.form.get("title")
-    journal = request.form.get("journal")
-    year = request.form.get("year")
-    volume = request.form.get("volume")
-    number = request.form.get("number")
-    pages = request.form.get("pages")
-    month = request.form.get("month")
-    doi = request.form.get("doi")
-    note = request.form.get("note")
-    key = request.form.get("key")
-    visible = True
+    if reference_type == "Article":
+        author = request.form.get("author")
+        title = request.form.get("title")
+        journal = request.form.get("journal")
+        year = request.form.get("year")
+        volume = request.form.get("volume")
+        number = request.form.get("number")
+        pages = request.form.get("pages")
+        month = request.form.get("month")
+        doi = request.form.get("doi")
+        note = request.form.get("note")
+        key = request.form.get("key")
+        visible = True
+    #elif reference_type == "Book":
+    #elif reference_type == "Inproceedings":
 
     try:
         user_name = session.get("username")
@@ -143,4 +146,30 @@ def change_reference_type():
 @references.route("/add_doi", methods=["GET"])
 def render_doi_page():
     """Render form to get doi."""
+    print("on page to get doi")
     return render_template("add_doi.html")
+
+@references.route("/add_doi", methods=["POST"])
+def generate_reference_from_doi():
+    """Generate reference from doi."""
+    doi = request.form.get("doi")
+    try:
+        user_name = session.get("username")
+        user_id = session.get("user_id")
+        if not user_name:
+            raise Exception("You must be logged in to create a reference")  # pylint: disable=broad-exception-raised
+        print(f"doi: {doi}")
+        print(f"user_id: {user_id}")
+        action = request.form.get("action")
+        if action == "Add reference":
+            # this adds the citation to the database
+            reference_service.create_reference_from_doi(doi, user_id)
+        if action == "Create bibtext":
+            # this returns the bibtex string
+            # reference_service.create_reference_from_doi(doi)
+            pass
+        return redirect("/")
+    except Exception as error: # pylint: disable=broad-except
+        print(f"Error occurred: {error}")
+        flash(str(error))
+        return render_template("add_doi.html")

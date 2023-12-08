@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/form.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}">
     <title>Reference app</title>
 </head>
-
 <body>
-    <form action="/form" method="POST">
+    <form action="{{ url_for('references.generate_reference_from_doi') }}" method="POST">
         DOI: <input type="text" name="doi" required>
-        <input type="submit" value="Add">
+        <input type="submit" name="action" value="Add reference" class="linkstyle">
+        <input type="submit" name="action" value="Create BibTex" class="linkstyle">
+    </form>
+
 </body>
+</html>

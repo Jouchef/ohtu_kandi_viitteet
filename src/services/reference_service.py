@@ -1,4 +1,5 @@
 """Reference services   """
+import urllib.request
 from repositories.reference_repository import reference_repository as default_reference_repository # pylint: disable=no-name-in-module, import-error line-too-long
 from models.reference import Reference_model as Reference # pylint: disable=no-name-in-module, import-error line-too-long
 from models.user_references import UserReferences_model # pylint: disable=no-name-in-module, import-error line-too-long
@@ -79,12 +80,16 @@ class ReferenceService:
             if reference.reference_type == "Article":
                 citation = CitationArticle(reference.reference_type, reference.key,
                                            reference.author,
-                                           reference.title, reference.journal,
-                                           reference.year, reference.volume, reference.number, reference.pages,
-                                           reference.month, reference.doi, reference.note, reference.key)
+                                           reference.title,
+                                           reference.journal,
+                                           reference.year,
+                                           reference.volume,
+                                           reference.number,
+                                           reference.pages,
+                                           reference.month,
+                                           reference.doi, reference.note, reference.key)
                 bibtex += citation.citation_to_bibtex_entry()
                 bibtex += "\n\n"
-            print(bibtex)
         return bibtex
 
 
@@ -93,17 +98,10 @@ class ReferenceService:
         reference_id = the id of the reference to be edited
         kwargs = the new values for the reference
         DO: queries the reference with the given id and updates the values"""
-        for k in kwargs.items():
-            print(k)
         reference = self._reference_repository.get_reference(reference_id)
-        print("reference from database in service")
         if reference:
-            # then updating the values
-            print("Reference found")
             for key, value in kwargs.items():
                 setattr(reference, key, value)
-            print("reference edited")
-            print("calling edit_reference in repository")
             return self._reference_repository.edit_reference(reference)
         print("Error in editing reference")
 
@@ -112,5 +110,63 @@ class ReferenceService:
         """Deletes a reference with the given id.
         changes the reference's visible attribute to False."""
         return self._reference_repository.delete_reference(reference_id)
+
+    def get_from_doi(self, doi):
+        """R"""
+        print ("executing function get_from_doi")
+        base_url = 'http://dx.doi.org/'
+        url = base_url + doi
+        req = urllib.request.Request(url)
+        req.add_header('Accept', 'application/x-bibtex')
+
+        with urllib.request.urlopen(req) as f:
+            bibtex = f.read().decode()
+        print(bibtex)
+        return bibtex
+
+    def parse_bibtex(self,bibtex):
+        """Parses a BibTeX entry and returns a dictionary of its fields."""
+        # add the article as the type  @article{ and }
+        print ("executing function parse_bibtex")
+        reference_type = bibtex.split('{', 1)[0].split('@', 1)[1]
+        reference_type = reference_type[0].upper() + reference_type[1:]
+
+        parts = bibtex.replace('@article{', '').rstrip(' }').split(', ')
+        bibtex_dict = {}
+        bibtex_dict = {'citation_key': parts[0],
+                       'reference_type': reference_type}
+
+        for part in parts[1:]:
+            key_value = part.split('=', 1)
+            if len(key_value) ==2:
+                key, value = key_value
+                bibtex_dict[key.strip()] = value.strip('{} ').replace('\n', ' ')
+            else:
+                last_key = list(bibtex_dict.keys())[-1]
+                bibtex_dict[last_key] += ', ' + part.strip('{} ')
+        return bibtex_dict
+
+    def create_reference_from_doi(self, doi, user_id):
+        """Creates a reference from a doi.
+        Returns the reference."""
+        bibtext = self.get_from_doi(doi)
+        parced_dict = self.parse_bibtex(bibtext)
+        print(parced_dict)
+
+        return self.create_reference(reference_type = parced_dict['reference_type'],
+                                     author = parced_dict['author'],
+                                     title = parced_dict['title'],
+                                     journal = parced_dict['journal'],
+                                     year = parced_dict['year'],
+                                     volume = parced_dict['volume'],
+                                     number = parced_dict['number'],
+                                     month = parced_dict['month'],
+                                     key = parced_dict['citation_key'],
+                                     visible = True,
+                                     user_id = user_id)
+
+
+
+
 
 reference_service = ReferenceService() # pylint: disable=invalid-name
