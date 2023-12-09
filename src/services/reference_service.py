@@ -22,7 +22,7 @@ class ReferenceService:
                          address=None, edition=None, url=None,
                          editor=None, organization=None,
                          visible=True,
-                         user_id = None): # pylint: disable=too-many-arguments line-too-long
+                         user_id = None): # pylint: disable=line-too-long
         """Create a new reference."""
         try :
             reference_new = Reference(reference_type = reference_type,
