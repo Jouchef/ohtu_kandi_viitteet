@@ -4,35 +4,29 @@
   <link rel="stylesheet" href="static/form.css">
   <title>Reference app</title>
 </head>
-
+<h1>Register</h1>
 <body>
-  <h1>Register</h1>
-
-  <form action="/register" method="post" onsubmit="return validateForm()">
-    <div>
-      <label for="username">Username</label>
-      <input type="text" name="username" id="username" />
-    </div>
-
-    <div>
-      <label for="password">Password</label>
-      <input type="password" name="password" id="password" />
-    </div>
-
-    <div>
-      <label for="password_confirmation">Password confirmation</label>
-      <input type="password" name="password_confirmation" id="password_confirmation" />
-    </div>
-
-    <button type="submit">
-      Register
-    </button>
-    <br>
+  <div class="doi-form">
+    <form action="/register" method="post" onsubmit="return validateForm()">
+      <div class="form-row">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" />
+      </div>
+      <div class="form-row">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" />
+      </div>
+      <div class="form-row">
+        <label for="password_confirmation">Password Confirmation</label>
+        <input type="password" name="password_confirmation" id="password_confirmation" />
+      </div>
+      <div class="button-container">
+      <input type="submit" value="Register" formaction="/register" formmethod="post" class="button-like" >
+      <a href="/login" class="button-like">Login Page</a>
+      <a href="/" class="button-like">Back to frontpage</a>
+      </div>
   </form>
-
-  <a href="/login" class="linkstyle">Login</a>
-  <a href="/" class="linkstyle">Back to frontpage</a>
-
+  </div>
 
   <script>
     function validateForm() {

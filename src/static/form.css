@@ -132,8 +132,8 @@ select {
     background-color: white; 
     height: 38px;
 }
-input[type="text"],
 input[type="number"],
+input[type="password"],
 select {
     flex: 1; 
     padding: 8px;
@@ -143,4 +143,13 @@ select {
     box-sizing: border-box; 
     margin-left: 10px; 
 }
-
+input[type="text"],
+select {
+    flex: 1; 
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 38px; 
+    box-sizing: border-box; 
+    margin-left: 10px; 
+}

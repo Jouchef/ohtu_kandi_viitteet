@@ -7,23 +7,26 @@
     <title>Reference app</title>
 </head>
 <h1>Login</h1>
-
-<form action="/login" method="post">
-  <div>
-      <label for="username">Username</label>
-      <input type="text" name="username" id="username" />
-  </div>
-
-  <div>
-      <label for="password">Password</label>
-      <input type="password" name="password" id="password" />
-  </div>
-
-  <div>
-      <input type="submit" value="Login"/> <br>
-      <input type="submit" value="Register" formaction="/register" formmethod="get" />
-  </div>
-</form>
+<body>
+    <div class="doi-form">
+        <form action="/login" method="post">
+            
+            <div class="form-row">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username">
+                </div>
+            <div class="form-row">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" />
+            </div>
+            <div class="button-container">
+                <input type="submit" value="Login" formaction="/login" formmethod="post" class="button-like" >
+                <input type="submit" value="Register Page" formaction="/register" formmethod="get" class="button-like" >
+                <a href="/" class="button-like">Back to frontpage</a>
+            </div>
+        </form>
+    </div>
+</body>
 {% for message in get_flashed_messages() %}
     <div class="flash-message">{{ message }}</div>
 {% endfor %}

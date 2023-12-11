@@ -68,8 +68,6 @@ User Creation Should Fail With
     [Arguments]  ${expected_message}
     ${message} =    Handle Alert
     Should Be Equal  ${message}  ${expected_message}
-    #Handle Alert    action=DISMISS
-    #Alert Should Not Be Present
 
 
     

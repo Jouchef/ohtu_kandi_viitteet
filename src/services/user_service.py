@@ -23,7 +23,6 @@ class UserService:
 
     def get_user_id(self):
         """Get user id from the session."""
-        print("Session: ", session.get("user_id"))
         return session.get("user_id")
 
     def check_credentials(self, username, password):
@@ -32,7 +31,6 @@ class UserService:
 
         if not username or not password:
             raise UserInputError("Username and password are required")
-        # check if username exists in the database
         user = self._user_repository.find_by_username(username)
 
         if not user:
@@ -45,7 +43,6 @@ class UserService:
         """Create a new user in to the database
         this is done by hashing the password and saving the user to the database 
         calling the user_repository create method."""
-
         self.validate(username, password, password_confirmation)
         hashed_password = generate_password_hash(password)
         user = self._user_repository.create(User(username = username,

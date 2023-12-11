@@ -64,12 +64,14 @@ def render_register():
 @users.route("/register", methods=["POST"])
 def register():
     """Register user."""
+    print("registering")
     username = request.form["username"]
     password = request.form["password"]
     password_confirmation = request.form["password_confirmation"]
+    print(username, password, password_confirmation)
     try:
         user_service.create_user(username, password, password_confirmation)
-        return render_template("login_and_register.html")
+        return render_home()
     except Exception:  # pylint: disable=broad-except
         return render_template("register.html")
 
