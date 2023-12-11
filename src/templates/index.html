@@ -11,9 +11,9 @@
 
     <div class="beginning">
         <h1>Viitevarasto</h1>
-        <h2>Welcome!</h2>
-        <br>
         {% if session.username %}
+        <h2>Welcome! {{ session.user }}</h2>
+        <br>
         <b> Click a reference or add one!</b>
     </div>
 

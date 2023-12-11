@@ -6,41 +6,55 @@ body {
 }
 
 .reference {
-
+    margin:auto;
     position: center;
     padding-top: 50px;
-    width: 200px;
+    max-width: 800px;
     height: 600px;
     background: rgb(235, 239, 255);
     display: flex;
+    flex-direction: column;
+    align-items: center; 
     justify-content: left;
+    padding: 20px;
+    font: 20px Arial, sans-serif;
 }
+
 
 .reference .p {
 
     color: rgb(4, 2, 57);
 }
 
-.linkstyle {
-
-    margin-top: 35px;
+.linkstyle, .button-like {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 10px 20px;
-
     border: 1px solid rgb(4, 2, 57);
     border-radius: 3px;
-    background-color: solid rgb(234, 252, 234);
+    background-color: rgb(255, 255, 255);
     color: rgb(4, 2, 57);
-    font-size: 22px;
+    font-size: 15px;
     text-decoration: none;
     cursor: pointer;
+    text-align: center;
+    width: auto;
+    margin-top: 35px;
+    margin: 0 15px; 
+    font: 20px Arial, sans-serif;
+}
+.button-container {
+    display: flex; 
+    justify-content: space-between; 
+    margin-top: 25px;    
 }
 
-.linkstyle:hover {
-
-    background-color: solid rgb(234, 252, 234);
+.linkstyle:hover, .button-like:hover {
+    background-color: rgb(254, 254, 254);
     animation: glow 1s infinite alternate;
 }
+
 
 @keyframes glow {
     0% {
@@ -56,4 +70,24 @@ body {
 
     font-size: 28px;
     color: rgb(4, 2, 57);
+}
+
+.form-row {
+    display: flex;
+    margin-bottom: 10px; 
+    align-items: center; 
+}
+
+.form-label {
+    width: 100px; 
+    margin-right: 10px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="text"][readonly] {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }

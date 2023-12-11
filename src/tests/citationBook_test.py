@@ -4,6 +4,7 @@ from entities.citationBook import CitationBook
 class TestCitationBook(unittest.TestCase):
     """Tests for the CitationBook class"""
     def test_citation_to_bibtex_entry(self):
+        """Tests the citation_to_bibtex_entry method"""
         citation = CitationBook(
             "book", "CitekeyBook", "Author Name", "Book Title", 
             "Publisher Name", 2021, volume="5", edition="2nd", 

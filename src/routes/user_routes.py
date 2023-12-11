@@ -13,12 +13,6 @@ from services.user_service import UserInputError, AuthenticationError
 user_service = UserService()
 users = Blueprint("users", __name__)
 
-# @users.before_request
-# def make_csrf_token():
-#    """Create CSRF token"""
-#    if 'csrf_token' not in session:
-#        session['csrf_token'] = secrets.token_hex(16)
-
 
 @users.route("/", methods=["GET"])
 def render_home():

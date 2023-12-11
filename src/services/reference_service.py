@@ -112,8 +112,7 @@ class ReferenceService:
         return self._reference_repository.delete_reference(reference_id)
 
     def get_from_doi(self, doi):
-        """R"""
-        print ("executing function get_from_doi")
+        """Returns a BibTeX entry from a given doi."""
         base_url = 'http://dx.doi.org/'
         url = base_url + doi
         req = urllib.request.Request(url)
@@ -121,13 +120,10 @@ class ReferenceService:
 
         with urllib.request.urlopen(req) as f:
             bibtex = f.read().decode()
-        print(bibtex)
         return bibtex
 
     def parse_bibtex(self,bibtex):
         """Parses a BibTeX entry and returns a dictionary of its fields."""
-        # add the article as the type  @article{ and }
-        print ("executing function parse_bibtex")
         reference_type = bibtex.split('{', 1)[0].split('@', 1)[1]
         reference_type = reference_type[0].upper() + reference_type[1:]
 
@@ -151,9 +147,8 @@ class ReferenceService:
         Returns the reference."""
         bibtext = self.get_from_doi(doi)
         parced_dict = self.parse_bibtex(bibtext)
-        print(parced_dict)
-
-        return self.create_reference(reference_type = parced_dict['reference_type'],
+        if parced_dict['reference_type'] == "Article":
+            return self.create_reference(reference_type = parced_dict['reference_type'],
                                      author = parced_dict['author'],
                                      title = parced_dict['title'],
                                      journal = parced_dict['journal'],
@@ -164,6 +159,23 @@ class ReferenceService:
                                      key = parced_dict['citation_key'],
                                      visible = True,
                                      user_id = user_id)
+        elif parced_dict['reference_type'] == "Book":
+            return self.create_reference(reference_type = parced_dict['reference_type'],
+                                     author = parced_dict['author'],
+                                     title = parced_dict['title'],
+                                     publisher = parced_dict['publisher'],
+                                     year = parced_dict['year'],
+                                     volume = parced_dict['volume'],
+                                     series = parced_dict['series'],
+                                     address = parced_dict['address'],
+                                     edition = parced_dict['edition'],
+                                     month = parced_dict['month'],
+                                     key = parced_dict['citation_key'],
+                                     url = parced_dict['url'],
+                                     visible = True,
+                                     user_id = user_id)
+        else:
+            return print("Error in creating reference from doi")
 
 
 
