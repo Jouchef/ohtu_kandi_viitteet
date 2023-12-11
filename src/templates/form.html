@@ -10,7 +10,7 @@
 
 
     <div class="reference">
-        <form action="/change_reference_type" method="POST"id="formContainer">
+        <form action="/change_reference_type" method="POST">
             <p>Type:
                 <select name="menu" onchange="this.form.submit()">
                     <option value="Article" {% if selected_type == 'Article' %}selected{% endif %}>Article</option>
@@ -22,50 +22,162 @@
         <form action="/form" method="POST">
             {% if selected_type == 'Book' %}
                 <input type="hidden" name="type" value="Book">
-                Author: <input type="text" name="author" required>
-                Title: <input type="text" name="title" required>
-                Year: <input type="number" name="year" required>
-                Volume: <input type="text" name="volume">
-                Series: <input type="text" name="series">
-                Address: <input type="text" name="address">
-                Edition: <input type="text" name="edition">
-                Month: <input type="text" name="month">
-                Note: <input type="text" name="note">
-                Key: <input type="text" name="key">
-                URL: <input type="text" name="url">
+                <div class="form-row">
+                    <label for="author" class="form-label">Author:</label>
+                    <input type="text" id="author" name="author" required>
+                </div>
+                <div class="form-row">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-row">
+                    <label for="year" class="form-label">Year:</label>
+                    <input type="number" id="year" name="year" required>
+                </div>
+                <div class="form-row">
+                    <label for="volume" class="form-label">Volume:</label>
+                    <input type="text" id="volume" name="volume">
+                </div>
+                <div class="form-row">
+                    <label for="series" class="form-label">Series:</label>
+                    <input type="text" id="series" name="series">
+                </div>
+                <div class="form-row">
+                    <label for="address" class="form-label">Address:</label>
+                    <input type="text" id="address" name="address">
+                </div>
+                <div class="form-row">
+                    <label for="edition" class="form-label">Edition:</label>
+                    <input type="text" id="edition" name="edition">
+                </div>
+                <div class="form-row">
+                    <label for="month" class="form-label">Month:</label>
+                    <input type="text" id="month" name="month">
+                </div>
+                <div class="form-row">
+                    <label for="note" class="form-label">Note:</label>
+                    <input type="text" id="note" name="note">
+                </div>
+                <div class="form-row">
+                    <label for="key" class="form-label">Reference Key:</label>
+                    <input type="text" id="key" name="key">
+                </div>
+                <div class="form-row">
+                    <label for="url" class="form-label">URL:</label>
+                    <input type="text" id="url" name="url">
+                </div>
+                
             {% elif selected_type == 'Inproceedings' %}
                 <input type="hidden" name="type" value="Inproceedings">
-                Author: <input type="text" name="author" required>
-                Title: <input type="text" name="title" required>
-                Booktitle: <input type="text" name="booktitle" required>
-                Year: <input type="number" name="year" required>
-                Editor: <input type="text" name="editor">
-                Volume: <input type="text" name="volume">
-                Series: <input type="text" name="series">
-                Pages: <input type="text" name="pages">
-                Address: <input type="text" name="address">
-                Month: <input type="text" name="month">
-                Organization: <input type="text" name="organization">
-                Publisher: <input type="text" name="publisher">
-                Note: <input type="text" name="note">
-                Key: <input type="text" name="key">
+                <div class="form-row">
+                    <label for="author" class="form-label">Author:</label>
+                    <input type="text" id="author" name="author" required>
+                </div>
+                <div class="form-row">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-row">
+                    <label for="year" class="form-label">Year:</label>
+                    <input type="number" id="year" name="year" required>
+                </div>
+                <div class="form-row">
+                    <label for="booktitle" class="form-label">Booktitle:</label>
+                    <input type="text" id="booktitle" name="booktitle" required>
+                </div>
+                <div class="form-row">
+                    <label for="editor" class="form-label">Editor:</label>
+                    <input type="text" id="editor" name="editor">
+                </div>
+                <div class="form-row">
+                    <label for="volume" class="form-label">Volume:</label>
+                    <input type="text" id="volume" name="volume">
+                </div>
+                <div class="form-row">
+                    <label for="series" class="form-label">Series:</label>
+                    <input type="text" id="series" name="series">
+                </div>
+                <div class="form-row">
+                    <label for="pages" class="form-label">Pages:</label>
+                    <input type="text" id="pages" name="pages">
+                </div>
+                <div class="form-row">
+                    <label for="address" class="form-label">Address:</label>
+                    <input type="text" id="address" name="address">
+                </div>
+                <div class="form-row">
+                    <label for="month" class="form-label">Month:</label>
+                    <input type="text" id="month" name="month">
+                </div>
+                <div class="form-row">
+                    <label for="organization" class="form-label">Organization:</label>
+                    <input type="text" id="organization" name="organization">
+                </div>
+                <div class="form-row">
+                    <label for="publisher" class="form-label">Publisher:</label>
+                    <input type="text" id="publisher" name="publisher">
+                </div>
+                <div class="form-row">
+                    <label for="note" class="form-label">Note:</label>
+                    <input type="text" id="note" name="note">
+                </div>
+                <div class="form-row">
+                    <label for="key" class="form-label">Reference Key:</label>
+                    <input type="text" id="key" name="key">
+            </div>
             {% else %}
                 <input type="hidden" name="type" value="Article">
-                Author: <input type="text" name="author" required>
-                Title: <input type="text" name="title" required>
-                Journal: <input type="text" name="journal" required>
-                Year: <input type="number" name="year" required>
-                Volume: <input type="text" name="volume" required>
-                Number: <input type="text" name="number" >
-                Pages: <input type="text" name="pages" >
-                Month: <input type="text" name="month">
-                DOI: <input type="text" name="doi" >
-                Note: <input type="text" name="note">
-                Key: <input type="text" name="key">
+                <div class="form-row">
+                    <label for="author" class="form-label">Author:</label>
+                    <input type="text" id="author" name="author" required>
+                </div>
+                <div class="form-row">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-row">
+                    <label for="journal" class="form-label">Journal:</label>
+                    <input type="text" id="journal" name="journal" required>
+                </div>
+                <div class="form-row">
+                    <label for="year" class="form-label">Year:</label>
+                    <input type="number" id="year" name="year" required>
+                </div>
+                <div class="form-row">
+                    <label for="volume" class="form-label">Volume:</label>
+                    <input type="text" id="volume" name="volume">
+                </div>
+                <div class="form-row">
+                    <label for="number" class="form-label">Number:</label>
+                    <input type="text" id="number" name="number">
+                </div>
+                <div class="form-row">
+                    <label for="pages" class="form-label">Pages:</label>
+                    <input type="text" id="pages" name="pages">
+                </div>
+                <div class="form-row">
+                    <label for="month" class="form-label">Month:</label>
+                    <input type="text" id="month" name="month">
+                </div>
+                <div class="form-row">
+                    <label for="doi" class="form-label">DOI:</label>
+                    <input type="text" id="doi" name="doi">
+                </div>
+                <div class="form-row">
+                    <label for="note" class="form-label">Note:</label>
+                    <input type="text" id="note" name="note">
+                </div>
+                <div class="form-row">
+                    <label for="key" class="form-label">Reference Key:</label>
+                    <input type="text" id="key" name="key">
+                </div>
 
             {% endif %}
+        <div class="button-container"></div>
+            <input type="submit" name="submit_button" value="Submit" class="button-like">
+            <a href="/" class="button-like">Back to homepage</a>
+        </div>
 
-            <input type="submit" value="Submit">
         </form>
 
     </div>

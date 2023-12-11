@@ -5,21 +5,21 @@ body {
     font-size: 22px;
 }
 
-h1 {
-
-    color: rgb(4, 2, 57);
-}
-
 .reference {
-
+    margin:auto;
     position: center;
     padding-top: 50px;
-    width: 300px;
+    max-width: 800px;
     height: 600px;
     background: rgb(235, 239, 255);
     display: flex;
+    flex-direction: column;
+    align-items: center; 
     justify-content: left;
+    padding: 20px;
+    font: 20px Arial, sans-serif;
 }
+
 
 .reference .p {
 
@@ -41,10 +41,17 @@ h1 {
     text-align: center;
     width: auto;
     margin-top: 35px;
+    margin: 0 15px; 
+    font: 20px Arial, sans-serif;
+}
+.button-container {
+    display: flex; 
+    justify-content: space-between; 
+    margin-top: 25px;    
 }
 
 .linkstyle:hover, .button-like:hover {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(254, 254, 254);
     animation: glow 1s infinite alternate;
 }
 
@@ -59,13 +66,31 @@ h1 {
     }
 }
 
-p {
+.beginning p {
 
-
-    color: rgb(4, 2, 57);
     font-size: 28px;
+    color: rgb(4, 2, 57);
 }
 
-.extended-height {
-    padding-bottom: 50px;
-  }
+.form-row {
+    display: flex;
+    margin-bottom: 10px; 
+    align-items: center; 
+}
+
+.form-label {
+    width: 100px; 
+    margin-right: 10px;
+}
+
+input[type="text"],
+input[type="number"]
+
+input[type="text"],
+input[type="number"],
+input[type="text"][readonly] {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
