@@ -1,5 +1,5 @@
 import unittest
-from services.generatecitate import GenerateCitate  
+from services.generatecitate import GenerateCitate
 
 class TestGenerateCitate(unittest.TestCase):
 
@@ -28,9 +28,11 @@ class TestGenerateCitate(unittest.TestCase):
             "}"
         )
 
-        self.assertEqual(GenerateCitate.generate_bibtex(entry_type, cite_key, fields), expected_output)
+        self.assertEqual(GenerateCitate.generate_bibtex(entry_type, cite_key, fields),
+                         expected_output)
 
     def test_generate_bibtex_with_some_empty_fields(self):
+        """Tests the generate_bibtex method with some empty fields"""
         entry_type = "article"
         cite_key = "CitekeyArticle"
         fields = {
@@ -52,7 +54,8 @@ class TestGenerateCitate(unittest.TestCase):
             "}"
         )
 
-        self.assertEqual(GenerateCitate.generate_bibtex(entry_type, cite_key, fields), expected_output)
+        self.assertEqual(GenerateCitate.generate_bibtex(entry_type, cite_key, fields),
+                         expected_output)
 
 if __name__ == '__main__':
     unittest.main()

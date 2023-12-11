@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/form.css">
-    <title>Reference app</title>
 </head>
 
 <body>
 
 
     <div class="reference">
-        <form action="/change_reference_type" method="POST">
+        <form action="/change_reference_type" method="POST"id="formContainer">
             <p>Type:
                 <select name="menu" onchange="this.form.submit()">
                     <option value="Article" {% if selected_type == 'Article' %}selected{% endif %}>Article</option>
@@ -21,27 +20,22 @@
             </p>
         </form>
 
-
-        <!-- Tietojen lähettämislomake -->
+        <!-- <form action="/form" method="POST" class="{{ 'inproceedings-form' if selected_type == 'Inproceedings' else 'default-form' }}"></form> -->
         <form action="/form" method="POST">
-            <!-- Tässä näytetään kentät valitun tyypin mukaan -->
             {% if selected_type == 'Book' %}
-                <!-- Book kentät -->
                 <input type="hidden" name="type" value="Book">
                 Author: <input type="text" name="author" required>
                 Title: <input type="text" name="title" required>
-                Publisher: <input type="text" name="publisher" required>
                 Year: <input type="number" name="year" required>
-                Volume: <input type="text" name="volume" required>
-                Series: <input type="text" name="series" required>
-                Address: <input type="text" name="address" required>
-                Edition: <input type="text" name="edition" required>
-                Month: <input type="text" name="month" required>
-                Note: <input type="text" name="note" required>
-                Key: <input type="text" name="key" required>
-                URL: <input type="text" name="url" required>
+                Volume: <input type="text" name="volume">
+                Series: <input type="text" name="series">
+                Address: <input type="text" name="address">
+                Edition: <input type="text" name="edition">
+                Month: <input type="text" name="month">
+                Note: <input type="text" name="note">
+                Key: <input type="text" name="key">
+                URL: <input type="text" name="url">
             {% elif selected_type == 'Inproceedings' %}
-                <!-- Inproceedings kentät -->
                 <input type="hidden" name="type" value="Inproceedings">
                 Author: <input type="text" name="author" required>
                 Title: <input type="text" name="title" required>
@@ -58,7 +52,6 @@
                 Note: <input type="text" name="note">
                 Key: <input type="text" name="key">
             {% else %}
-                <!-- Article kentät -->
                 <input type="hidden" name="type" value="Article">
                 Author: <input type="text" name="author" required>
                 Title: <input type="text" name="title" required>

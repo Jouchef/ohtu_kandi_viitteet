@@ -26,25 +26,28 @@ h1 {
     color: rgb(4, 2, 57);
 }
 
-.linkstyle {
-    display: inline-block;
+.linkstyle, .button-like {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 10px 20px;
     border: 1px solid rgb(4, 2, 57);
     border-radius: 3px;
     background-color: rgb(255, 255, 255);
-    font-family: Arial, Helvetica, sans-serif;
     color: rgb(4, 2, 57);
-    font-size: 22px;
+    font-size: 15px;
     text-decoration: none;
     cursor: pointer;
+    text-align: center;
+    width: auto;
+    margin-top: 35px;
 }
 
-
-.linkstyle:hover {
-
-    background-color: solid rgb(234, 252, 234);
+.linkstyle:hover, .button-like:hover {
+    background-color: rgb(255, 255, 255);
     animation: glow 1s infinite alternate;
 }
+
 
 @keyframes glow {
     0% {
@@ -62,3 +65,7 @@ p {
     color: rgb(4, 2, 57);
     font-size: 28px;
 }
+
+.extended-height {
+    padding-bottom: 50px;
+  }

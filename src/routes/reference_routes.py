@@ -18,15 +18,11 @@ references = Blueprint("references", __name__)
 @references.route("/edit/<int:reference_id>", methods=["GET"])
 def render_edit_reference_form(reference_id):
     """Render form for editing reference."""
-    print("render_edit_reference_form called")
     try:
         user_name = session.get("username")
         if not user_name:
             raise Exception("You must be logged in to edit a reference")  # pylint: disable=broad-exception-raised
-        print("calling get_reference from reference_service")
         reference = reference_service.get_reference(reference_id)
-        print(f"reference id: {reference.id} got from database")
-        print(reference.reference_type)
         return render_template("edit.html", reference=reference)
 
     except Exception as error:  # pylint: disable=broad-except
@@ -38,7 +34,6 @@ def render_edit_reference_form(reference_id):
 @references.route("/edit/<int:reference_id>", methods=["POST"])
 def edit_reference(reference_id):
     """Edit reference when oushing the submit button."""
-    print("edit_reference called")
     if request.form.get('submit_button') == 'Submit':
         try:
             user_name = session.get("username")
@@ -106,8 +101,39 @@ def create_reference():
         note = request.form.get("note")
         key = request.form.get("key")
         visible = True
-    #elif reference_type == "Book":
-    #elif reference_type == "Inproceedings":
+    elif reference_type == "Book":
+        author = request.form.get("author")
+        title = request.form.get("title")
+        publisher = request.form.get("publisher")
+        year = request.form.get("year")
+        volume = request.form.get("volume")
+        series = request.form.get("series")
+        address = request.form.get("address")
+        edition = request.form.get("edition")
+        month = request.form.get("month")
+        note = request.form.get("note")
+        key = request.form.get("key")
+        url = request.form.get("url")
+        visible = True
+
+    elif reference_type == "Inproceedings":
+        author = request.form.get("author")
+        title = request.form.get("title")
+        booktitle = request.form.get("booktitle")
+        year = request.form.get("year")
+        editor = request.form.get("editor")
+        volume = request.form.get("volume")
+        series = request.form.get("series")
+        pages = request.form.get("pages")
+        address = request.form.get("address")
+        month = request.form.get("month")
+        organization = request.form.get("organization")
+        publisher = request.form.get("publisher")
+        note = request.form.get("note")
+        key = request.form.get("key")
+        url = request.form.get("url")
+        visible = True
+
 
     try:
         user_name = session.get("username")
@@ -115,12 +141,29 @@ def create_reference():
         if not user_name:
             raise Exception("You must be logged in to create a reference")  # pylint: disable=broad-exception-raised
 
-        reference_service.create_reference(reference_type=reference_type, author=author,
+        if reference_type == "Article":
+            reference_service.create_reference(reference_type=reference_type, author=author,
                                            title=title, journal=journal, year=year,
                                            volume=volume, number=number, pages=pages,
                                            month=month, doi=doi, note=note,
                                            key=key, visible=visible,
                                            user_id=user_id)  # pylint: disable=line-too-long
+        elif reference_type == "Book":
+            reference_service.create_reference(reference_type=reference_type, author=author,
+                                           title=title, publisher=publisher, year=year,
+                                           volume=volume, series=series, address=address,
+                                           edition=edition, month=month, note=note,
+                                           key=key, url=url, visible=visible,
+                                           user_id=user_id)
+        elif reference_type == "Inproceedings":
+            reference_service.create_reference(reference_type=reference_type, author=author,
+                                           title=title, booktitle=booktitle, year=year,
+                                           editor=editor, volume=volume, series=series,
+                                           pages=pages, address=address, month=month,
+                                           organization=organization, publisher=publisher,
+                                           note=note, key=key, url=url, visible=visible,
+                                           user_id=user_id)
+
         return redirect("/")
 
     except Exception as error:  # pylint: disable=broad-except
@@ -158,17 +201,9 @@ def generate_reference_from_doi():
         user_id = session.get("user_id")
         if not user_name:
             raise Exception("You must be logged in to create a reference")  # pylint: disable=broad-exception-raised
-        print(f"doi: {doi}")
-        print(f"user_id: {user_id}")
         action = request.form.get("action")
         if action == "Add reference":
-            # this adds the citation to the database
             reference_service.create_reference_from_doi(doi, user_id)
-        if action == "Create bibtext":
-            # this returns the bibtex string
-            # reference_service.create_reference_from_doi(doi)
-            pass
-        return redirect("/")
     except Exception as error: # pylint: disable=broad-except
         print(f"Error occurred: {error}")
         flash(str(error))

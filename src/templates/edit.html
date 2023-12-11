@@ -9,41 +9,131 @@
 
 <body>
 
-    <div class="beginning">
-        <p>Here you can edit or delete your reference</p>
-
+    <div class="reference">
             <form action="/edit/{{ reference.id }}" method="POST">
-                <label for="name">Type:</label>
-                <input type="text" id="type" name="type" value="{{ reference.reference_type }}" readonly><br>
-                <label for="name">Author:</label>
-                <input type="text" id="author" name="author" value="{{ reference.author }}" required><br>
-                <label for="name">Title:</label>
-                <input type="text" id="title" name="title" value="{{ reference.title }}" required><br>
-                <label for="name">Journal:</label>
-                <input type="text" id="journal" name="journal" value="{{ reference.journal }}" required><br>
-                <label for="name">Year:</label>
-                <input type="number" id="year" name="year" value="{{ reference.year }}" required><br>
-                <label for="name">Volume:</label>
-                <input type="text" id="volume" name="volume" value="{{ reference.volume }}" required><br>
-                <label for="name">Number:</label>
-                <input type="text" id="number" name="number" value="{{ reference.number }}" required><br>
-                <label for="name">Pages:</label>
-                <input type="text" id="pages" name="pages" value="{{ reference.pages }}" required><br>
-                <label for="name">Month:</label>
-                <input type="text" id="month" name="month" value="{{ reference.month }}" required><br>
-                <label for="name">Doi:</label>
-                <input type="text" id="doi" name="doi" value="{{ reference.doi }}" required><br>
-                <label for="name">Note:</label>
-                <input type="text" id="note" name="note" value="{{ reference.note }}" required><br>
-                <label for="name">Key:</label>
-                <input type="text" id="key" name="key" value="{{ reference.key }}" required><br>
-                <input type="submit" name="submit_button" value="Submit" class="linkstyle">
-                <br>
-                <a href="/delete_reference/{{ reference.id }}" class="linkstyle">Delete</a>
+                <div class="form-row">
+                    <label for="type" class="form-label">Type:</label>
+                    <input type="text" id="type" name="type" value="{{ reference.reference_type }}" readonly>
+                </div>
+                <div class="form-row">
+                    <label for="author" class="form-label">Author:</label>
+                    <input type="text" id="author" name="author" value="{{ reference.author }}" required>
+                </div>
+                <div class="form-row">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" id="title" name="title" value="{{ reference.title }}" required>
+                </div>
+                <div class="form-row">
+                    <label for="year" class="form-label">Year:</label>
+                    <input type="number" id="year" name="year" value="{{ reference.year }}" required>
+                </div>
+                {% if reference.reference_type == 'Book' %}
+                <div class="form-row">
+                    <label for="volume" class="form-label">Volume:</label>
+                    <input type="text" id="volume" name="volume" value="{{ reference.volume }}">
+                </div>
+                <div class="form-row">
+                    <label for="series" class="form-label">Series:</label>
+                    <input type="text" id="series" name="series" value="{{ reference.series }}">
+                </div>
+                <div class="form-row">
+                    <label for="address" class="form-label">Address:</label>
+                    <input type="text" id="address" name="address" value="{{ reference.address }}">
+                </div>
+                <div class="form-row">
+                    <label for="edition" class="form-label">Edition:</label>
+                    <input type="text" id="edition" name="edition" value="{{ reference.edition }}">
+                </div>
+                <div class="form-row">
+                    <label for="month" class="form-label">Month:</label>
+                    <input type="text" id="month" name="month" value="{{ reference.month }}">
+                </div>
+                <div class="form-row">
+                    <label for="note" class="form-label">Note:</label>
+                    <input type="text" id="note" name="note" value="{{ reference.note }}">
+                </div>
+                <div class="form-row">
+                    <label for="key" class="form-label">Reference Key:</label>
+                    <input type="text" id="key" name="key" value="{{ reference.key }}">
+                </div>
+                <div class="form-row">
+                    <label for="url" class="form-label">URL:</label>
+                    <input type="text" id="url" name="url" value="{{ reference.url }}">
+                </div>
+                {% elif reference.reference_type == 'Inproceedings' %}
+                <div class="form-row">
+                    <label for="booktitle" class="form-label">Booktitle:</label>
+                    <input type="text" id="booktitle" name="booktitle" value="{{ reference.booktitle }}" required>
+                </div>
+                <div class="form-row">
+                    <label for="editor" class="form-label">Editor:</label>
+                    <input type="text" id="editor" name="editor" value="{{ reference.editor }}">
+                </div>
+                <div class="form-row">
+                    <label for="volume" class="form-label">Volume:</label>
+                    <input type="text" id="volume" name="volume" value="{{ reference.volume }}">
+                </div>
+                <div class="form-row">
+                    <label for="series" class="form-label">Series:</label>
+                    <input type="text" id="series" name="series" value="{{ reference.series }}">
+                </div>
+                <div class="form-row">
+                    <label for="pages" class="form-label">Pages:</label>
+                    <input type="text" id="pages" name="pages" value="{{ reference.pages }}">
+                </div>
+                <div class="form-row">
+                    <label for="address" class="form-label">Address:</label>
+                    <input type="text" id="address" name="address" value="{{ reference.address }}">
+                </div>
+                <div class="form-row">
+                    <label for="month" class="form-label">Month:</label>
+                    <input type="text" id="month" name="month" value="{{ reference.month }}">
+                </div>
+                <div class="form-row">
+                    <label for="organization" class="form-label">Organization:</label>
+                    <input type="text" id="organization" name="organization" value="{{ reference.organization }}">
+                </div>
+                {% elif reference.reference_type == 'Article' %}
+                <div class="form-row">
+                    <label for="journal" class="form-label">Journal:</label>
+                    <input type="text" id="journal" name="journal" value="{{ reference.journal }}" required>
+                </div>
+                <div class="form-row">
+                    <label for="volume" class="form-label">Volume:</label>
+                    <input type="text" id="volume" name="volume" value="{{ reference.volume }}">
+                </div>
+                <div class="form-row">
+                    <label for="number" class="form-label">Number:</label>
+                    <input type="text" id="number" name="number" value="{{ reference.number }}">
+                </div>
+                <div class="form-row">
+                    <label for="pages" class="form-label">Pages:</label>
+                    <input type="text" id="pages" name="pages" value="{{ reference.pages }}">
+                </div>
+                <div class="form-row">
+                    <label for="month" class="form-label">Month:</label>
+                    <input type="text" id="month" name="month" value="{{ reference.month }}">
+                </div>
+                <div class="form-row">
+                    <label for="doi" class="form-label">DOI:</label>
+                    <input type="text" id="doi" name="doi" value="{{ reference.doi }}">
+                </div>
+                <div class="form-row">
+                    <label for="note" class="form-label">Note:</label>
+                    <input type="text" id="note" name="note" value="{{ reference.note }}">
+                </div>
+                <div class="form-row">
+                    <label for="key" class="form-label">Reference Key:</label>
+                    <input type="text" id="key" name="key" value="{{ reference.key }}">
+                </div>
+                {% endif %}
+                <div class="button-container">
+                <input type="submit" name="submit_button" value="Submit" class="button-like">
+                <a href="/delete_reference/{{ reference.id }}" class="button-like">Delete</a>
+                <a href="/" class="button-like">Back to homepage</a>
+                </div>
             </form>
-
         </div>
 
 </body>
-
 </html>
