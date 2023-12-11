@@ -2,7 +2,7 @@
 currently only tested on mac OS 
  Heidi Putkuri / 2023 """
 
-import psycopg2
+import psycopg2 #pylint disable=import-error
 
 DB_NAME = 'postgres'
 username = input("Username of your database in postgres: ")
