@@ -17,7 +17,6 @@
         <b> Click a reference or add one!</b>
     </div>
 
-
     <div class="link-container">
         <a href="{{ url_for('references.render_add_reference_form') }}" class="linkstyle">Add</a>
         <a href="{{ url_for('references.export_bibtex') }}" class="linkstyle">Export BibTeX</a>
@@ -25,6 +24,7 @@
             <input type="submit" value="Logout" class="linkstyle">
         </form>
         <a href="{{ url_for('references.render_doi_page') }}" class="linkstyle">Add DOI</a>
+        <a href="/delete_all" class="linkstyle">Delete all references</a>
     </div>
 
     <h2>Table of references</h2>
@@ -52,7 +52,7 @@
 
             </tbody>
         </table>
-
+    
     </div>
     {% else %}
     <p> You are not logged in. </p>
