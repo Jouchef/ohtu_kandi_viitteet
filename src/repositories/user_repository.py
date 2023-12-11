@@ -13,7 +13,6 @@ class UserRepository:
         """Returns a user with the given username."""
         return User_model.query.filter_by(username=username).first()
 
-
     def create(self, user):
         """Creates a new user to the database."""
         new_user = User_model(username=user.username,

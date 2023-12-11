@@ -75,6 +75,11 @@ def delete_reference(reference_id):
     reference_repository.delete_reference(reference_id)
     return redirect("/")
 
+@references.route("/delete_all_references", methods=["GET"])
+def delete_all_references():
+    """Delete all references."""
+    reference_repository.delete_all_references()
+    return redirect("/")
 
 @references.route("/form", methods=["GET"])
 def render_add_reference_form():
