@@ -19,8 +19,6 @@
                 </select>
             </p>
         </form>
-
-        <!-- <form action="/form" method="POST" class="{{ 'inproceedings-form' if selected_type == 'Inproceedings' else 'default-form' }}"></form> -->
         <form action="/form" method="POST">
             {% if selected_type == 'Book' %}
                 <input type="hidden" name="type" value="Book">
