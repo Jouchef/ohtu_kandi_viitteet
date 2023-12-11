@@ -4,7 +4,7 @@ class CitationArticle(): # pylint: disable=too-few-public-methods too-many-insta
     """Class for article citation."""
     def __init__(self, entry_type, cite_key, author, title, journal,
                  year, volume, number, pages, month=None, doi=None,
-                 note=None, key=None): # pylint: disable=too-many-arguments
+                 note=None, key=None): 
         self.entry_type = entry_type
         self.cite_key = cite_key
         self.author = author
