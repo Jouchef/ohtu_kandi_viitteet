@@ -42,7 +42,7 @@ def render_edit_reference_form(reference_id):
 
 @references.route("/edit/<int:reference_id>", methods=["POST"])
 def edit_reference(reference_id):
-    """Edit reference when oushing the submit button."""
+    """Edit reference when pushing the submit button."""
     if request.form.get('submit_button') == 'Submit':
         try:
             user_name = session.get("username")
@@ -80,11 +80,6 @@ def delete_reference(reference_id):
     reference_repository.delete_reference(reference_id)
     return redirect("/")
 
-@references.route("/delete_all_references", methods=["GET"])
-def delete_all_references():
-    """Delete all references."""
-    reference_repository.delete_all_references()
-    return redirect("/")
 
 @references.route("/form", methods=["GET"])
 def render_add_reference_form():
