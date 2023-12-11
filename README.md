@@ -21,4 +21,3 @@ In order for a user story to be deemed “done” you need to check off a number
 - Hyväksymiskriteerit täyttyy
 - Funktionaaliset testit menee läpi
 - Asiakas hyväksyy user storyn
-
