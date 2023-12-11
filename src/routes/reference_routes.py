@@ -186,12 +186,9 @@ def create_reference():
 def change_reference_type():
     """Render form with correct fields for the selected reference type 
     in the dropdown menu when adding a new reference."""
-    if request.form.get('menu') == 'Article':
-        return render_template("form.html", selected_type='Article')
-    if request.form.get('menu') == 'Book':
-        return render_template("form.html", selected_type='Book')
-    if request.form.get('menu') == 'Inproceedings':
-        return render_template("form.html", selected_type='Inproceedings')
+    options = ['Article', 'Book', 'Inproceedings']
+    if request.form.get('menu') in options:
+        return render_template("form.html", selected_type=request.form.get('menu'))
 
     print("Error in changing reference type")
     return render_template("form.html")
