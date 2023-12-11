@@ -1,5 +1,5 @@
 [MASTER]
-ignore=tests
+ignore=tests, init_database.py
 
 [MESSAGE CONTROL]
 
