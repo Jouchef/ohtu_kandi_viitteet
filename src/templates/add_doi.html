@@ -8,11 +8,13 @@
 </head>
 <body>
     <h1>Add reference from DOI </h1>
+    <div class="doi-form">
     <form action="{{ url_for('references.generate_reference_from_doi') }}" method="POST">
         DOI: <input type="text" name="doi" required>
         <input type="submit" name="action" value="Add reference" class="linkstyle">
         <a href="{{ url_for('users.render_home') }}" class="linkstyle">Back to home page</a>
     </form>
+    </div>
 
 
 </body>
