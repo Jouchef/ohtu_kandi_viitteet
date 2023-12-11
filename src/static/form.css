@@ -1,13 +1,10 @@
 body {
-
     margin: auto;
     max-width: 800px;
     font-size: 22px;
 }
-
 .reference {
-    margin:auto;
-    position: center;
+    margin: auto;
     padding-top: 50px;
     max-width: 800px;
     height: 600px;
@@ -20,12 +17,27 @@ body {
     font: 20px Arial, sans-serif;
 }
 
-
 .reference .p {
-
     color: rgb(4, 2, 57);
 }
-
+.dropdown-select {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 60px;
+    border: 1px solid rgb(4, 2, 57);
+    border-radius: 3px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(4, 2, 57);
+    font-size: 15px;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    width: auto;
+    margin-top: 35px;
+    margin: 0 15px; 
+    font: 20px Arial, sans-serif;
+}
 .linkstyle, .button-like {
     display: inline-flex;
     align-items: center;
@@ -74,6 +86,7 @@ body {
 
 .form-row {
     display: flex;
+    justify-content: center;
     margin-bottom: 10px; 
     align-items: center; 
 }
@@ -83,14 +96,24 @@ body {
     margin-right: 10px;
 }
 
-input[type="text"],
-input[type="number"]
-
-input[type="text"],
-input[type="number"],
-input[type="text"][readonly] {
+select {
     flex: 1;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 16px;
+    background-color: white; 
+    height: 38px;
 }
+input[type="text"],
+input[type="number"],
+select {
+    flex: 1; 
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 38px; 
+    box-sizing: border-box; 
+    margin-left: 10px; 
+}
+

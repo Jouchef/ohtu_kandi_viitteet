@@ -94,3 +94,9 @@ th {
     border-radius: 5px;
     text-align: center;
 }
+
+.doi_form {
+    padding-top: 10px;
+    padding-left: 50px;
+    background: rgb(235, 239, 255);
+}

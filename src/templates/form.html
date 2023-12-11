@@ -11,14 +11,16 @@
 
     <div class="reference">
         <form action="/change_reference_type" method="POST">
-            <p>Type:
-                <select name="menu" onchange="this.form.submit()">
+            <div class="form-row">
+                <label for="menu">Type:</label>
+                <select name="menu" id="menu" class="dropdown-select" onchange="this.form.submit()">
                     <option value="Article" {% if selected_type == 'Article' %}selected{% endif %}>Article</option>
                     <option value="Book" {% if selected_type == 'Book' %}selected{% endif %}>Book</option>
                     <option value="Inproceedings" {% if selected_type == 'Inproceedings' %}selected{% endif %}>Inproceedings</option>
                 </select>
-            </p>
+            </div>
         </form>
+
         <form action="/form" method="POST">
             {% if selected_type == 'Book' %}
                 <input type="hidden" name="type" value="Book">
@@ -85,6 +87,7 @@
                     <label for="booktitle" class="form-label">Booktitle:</label>
                     <input type="text" id="booktitle" name="booktitle" required>
                 </div>
+
                 <div class="form-row">
                     <label for="editor" class="form-label">Editor:</label>
                     <input type="text" id="editor" name="editor">
@@ -136,12 +139,14 @@
                     <input type="text" id="title" name="title" required>
                 </div>
                 <div class="form-row">
-                    <label for="journal" class="form-label">Journal:</label>
-                    <input type="text" id="journal" name="journal" required>
-                </div>
-                <div class="form-row">
                     <label for="year" class="form-label">Year:</label>
                     <input type="number" id="year" name="year" required>
+                </div>
+                
+                
+                <div class="form-row">
+                    <label for="journal" class="form-label">Journal:</label>
+                    <input type="text" id="journal" name="journal" required>
                 </div>
                 <div class="form-row">
                     <label for="volume" class="form-label">Volume:</label>

@@ -12,41 +12,11 @@ class ReferenceService:
         """Constructor for ReferenceService."""
         self._reference_repository = reference_repository
 
-    def create_reference(self, reference_type,
-                         author=None, title=None, journal=None,
-                         year=None, volume=None,
-                         publisher = None, booktitle=None,
-                         number=None,
-                         pages=None, month=None, doi=None,
-                         note=None, key=None, series=None,
-                         address=None, edition=None, url=None,
-                         editor=None, organization=None,
-                         visible=True,
-                         user_id = None): # pylint: disable=too-many-arguments line-too-long
-        """Create a new reference."""
-        try :
-            reference_new = Reference(reference_type = reference_type,
-                                                           visible=visible,
-                                                           author = author,
-                                                           title = title,
-                                                           journal = journal,
-                                                           year = year,
-                                                           volume = volume,
-                                                           publisher = publisher,
-                                                           booktitle = booktitle,
-                                                           number = number,
-                                                           pages = pages,
-                                                           month = month,
-                                                           doi = doi,
-                                                           note = note,
-                                                           key = key,
-                                                           series = series,
-                                                           address = address,
-                                                           edition = edition,
-                                                           url = url,
-                                                           editor = editor,
-                                                           organization = organization)
-
+    def create_reference(self, reference_type, user_id, **kwargs):
+        """Creates a new reference."""
+        valid_kwargs = {k: v for k, v in kwargs.items() if v is not None}
+        try:
+            reference_new = Reference(reference_type=reference_type, **valid_kwargs)
         except Exception as error:
             print(f"Error occurred: {error}")
             raise Exception("Error occurred: {error}") from error # pylint: disable=broad-exception-raised
@@ -112,7 +82,8 @@ class ReferenceService:
         return self._reference_repository.delete_reference(reference_id)
 
     def get_from_doi(self, doi):
-        """Returns a BibTeX entry from a given doi."""
+        """Gets a BibTeX entry from a doi."""
+        print ("in get_from_doi")
         base_url = 'http://dx.doi.org/'
         url = base_url + doi
         req = urllib.request.Request(url)
@@ -124,7 +95,10 @@ class ReferenceService:
 
     def parse_bibtex(self,bibtex):
         """Parses a BibTeX entry and returns a dictionary of its fields."""
+        # add the article as the type  @article{ and }
+        print ("in parse_bibtex")
         reference_type = bibtex.split('{', 1)[0].split('@', 1)[1]
+        print(reference_type)
         reference_type = reference_type[0].upper() + reference_type[1:]
 
         parts = bibtex.replace('@article{', '').rstrip(' }').split(', ')
@@ -145,40 +119,61 @@ class ReferenceService:
     def create_reference_from_doi(self, doi, user_id):
         """Creates a reference from a doi.
         Returns the reference."""
+        print ("in create_reference_from_doi")
         bibtext = self.get_from_doi(doi)
-        parced_dict = self.parse_bibtex(bibtext)
-        if parced_dict['reference_type'] == "Article":
-            return self.create_reference(reference_type = parced_dict['reference_type'],
-                                     author = parced_dict['author'],
-                                     title = parced_dict['title'],
-                                     journal = parced_dict['journal'],
-                                     year = parced_dict['year'],
-                                     volume = parced_dict['volume'],
-                                     number = parced_dict['number'],
-                                     month = parced_dict['month'],
-                                     key = parced_dict['citation_key'],
-                                     visible = True,
-                                     user_id = user_id)
-        elif parced_dict['reference_type'] == "Book":
-            return self.create_reference(reference_type = parced_dict['reference_type'],
-                                     author = parced_dict['author'],
-                                     title = parced_dict['title'],
-                                     publisher = parced_dict['publisher'],
-                                     year = parced_dict['year'],
-                                     volume = parced_dict['volume'],
-                                     series = parced_dict['series'],
-                                     address = parced_dict['address'],
-                                     edition = parced_dict['edition'],
-                                     month = parced_dict['month'],
-                                     key = parced_dict['citation_key'],
-                                     url = parced_dict['url'],
-                                     visible = True,
-                                     user_id = user_id)
+        parsed_dict = self.parse_bibtex(bibtext)
+
+        reference_type = parsed_dict.get('reference_type')
+        print(reference_type)
+        if reference_type == 'Book':
+            return self.create_reference(reference_type=reference_type,
+                                        author=parsed_dict.get('author'),
+                                        title=parsed_dict.get('title'),
+                                        publisher=parsed_dict.get('publisher'),
+                                        year=parsed_dict.get('year'),
+                                        volume=parsed_dict.get('volume'),
+                                        series=parsed_dict.get('series'),
+                                        address=parsed_dict.get('address'),
+                                        edition=parsed_dict.get('edition'),
+                                        month=parsed_dict.get('month'),
+                                        note=parsed_dict.get('note'),
+                                        key=parsed_dict.get('citation_key'),
+                                        url=parsed_dict.get('url'),
+                                        visible=True,
+                                        user_id=user_id)
+        elif reference_type == 'Inproceedings':
+            return self.create_reference(reference_type=reference_type,
+                                        author=parsed_dict.get('author'),
+                                        title=parsed_dict.get('title'),
+                                        booktitle=parsed_dict.get('booktitle'),
+                                        year=parsed_dict.get('year'),
+                                        editor=parsed_dict.get('editor'),
+                                        volume=parsed_dict.get('volume'),
+                                        series=parsed_dict.get('series'),
+                                        pages=parsed_dict.get('pages'),
+                                        address=parsed_dict.get('address'),
+                                        month=parsed_dict.get('month'),
+                                        organization=parsed_dict.get('organization'),
+                                        publisher=parsed_dict.get('publisher'),
+                                        note=parsed_dict.get('note'),
+                                        key=parsed_dict.get('citation_key'),
+                                        url=parsed_dict.get('url'),
+                                        visible=True,
+                                        user_id=user_id)
         else:
-            return print("Error in creating reference from doi")
-
-
-
-
+            return self.create_reference(reference_type=reference_type,
+                                        author=parsed_dict.get('author'),
+                                        title=parsed_dict.get('title'),
+                                        journal=parsed_dict.get('journal'),
+                                        year=parsed_dict.get('year'),
+                                        volume=parsed_dict.get('volume'),
+                                        number=parsed_dict.get('number'),
+                                        pages=parsed_dict.get('pages'),
+                                        month=parsed_dict.get('month'),
+                                        doi=parsed_dict.get('doi'),
+                                        note=parsed_dict.get('note'),
+                                        key=parsed_dict.get('citation_key'),
+                                        visible=True,
+                                        user_id=user_id)
 
 reference_service = ReferenceService() # pylint: disable=invalid-name

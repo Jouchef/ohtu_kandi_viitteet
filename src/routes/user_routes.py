@@ -1,10 +1,8 @@
 """Module to handle user routes"""
-# import secrets
 from flask import (render_template,
                    redirect,
                    session, request,
-                   Blueprint,
-                   flash)  # pylint: disable=import-error unused-import
+                   Blueprint)  # pylint: disable=import-error unused-import
 # from flask_wtf.csrf import generate_csrf # pylint: disable=import-error unused-import
 from services.reference_service import ReferenceService as reference_service  # pylint: disable=import-error no-name-in-module
 
@@ -24,7 +22,6 @@ def render_home():
     else:
         user_id = None
         references = []
-        print("No user id")
     return render_template("index.html", references=references, user_id=user_id)
 
 
@@ -46,8 +43,7 @@ def login():
         session["user_id"] = user.id
         return redirect("/")
 
-    except (AuthenticationError, UserInputError) as error:
-        flash(str(error))
+    except (AuthenticationError, UserInputError):
         return render_template("login.html")
 
 
@@ -73,10 +69,8 @@ def register():
     password_confirmation = request.form["password_confirmation"]
     try:
         user_service.create_user(username, password, password_confirmation)
-        print("User created successfully")
         return render_template("login_and_register.html")
-    except Exception as error:  # pylint: disable=broad-except
-        print("Error: ", error)
+    except Exception:  # pylint: disable=broad-except
         return render_template("register.html")
 
 

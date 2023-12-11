@@ -29,8 +29,7 @@ def render_edit_reference_form(reference_id):
     try:
         user_name = session.get("username")
         if not user_name:
-            raise Exception(
-                "You must be logged in to edit a reference")  # pylint: disable=broad-exception-raised
+            raise Exception( "You must be logged in to edit a reference")  # pylint: disable=broad-exception-raised
         reference = reference_service.get_reference(reference_id)
         return render_template("edit.html", reference=reference)
 
@@ -47,8 +46,7 @@ def edit_reference(reference_id):
         try:
             user_name = session.get("username")
             if not user_name:
-                raise Exception(
-                    "You must be logged in to edit a reference")  # pylint: disable=broad-exception-raised
+                raise Exception("You must be logged in to edit a reference")  # pylint: disable=broad-exception-raised
             data = {
                 "reference_type": request.form.get("type"),
                 "author": request.form.get("author"),
@@ -148,8 +146,7 @@ def create_reference():
         user_name = session.get("username")
         user_id = session.get("user_id")
         if not user_name:
-            raise Exception(
-                "You must be logged in to create a reference")  # pylint: disable=broad-exception-raised
+            raise Exception("You must be logged in to create a reference")  # pylint: disable=broad-exception-raised
 
         if reference_type == "Article":
             reference_service.create_reference(reference_type=reference_type, author=author,
@@ -212,12 +209,14 @@ def generate_reference_from_doi():
         user_name = session.get("username")
         user_id = session.get("user_id")
         if not user_name:
-            raise Exception(
-                "You must be logged in to create a reference")  # pylint: disable=broad-exception-raised
+            raise Exception("You must be logged in to create a reference")  # pylint: disable=broad-exception-raised
         action = request.form.get("action")
         if action == "Add reference":
+            print("Adding reference")
             reference_service.create_reference_from_doi(doi, user_id)
-    except Exception as error:  # pylint: disable=broad-except
-        print(f"Error occurred: {error}")
-        flash(str(error))
+            flash("Reference created successfully")
+            return redirect("/")
+        return render_template("add_doi.html")
+    except Exception as e:
+        flash(str(e))
         return render_template("add_doi.html")
