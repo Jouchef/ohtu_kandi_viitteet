@@ -4,7 +4,7 @@ Library  ../AppLibrary.py
 
 *** Variables ***
 ${SERVER}  localhost:5000
-${DELAY}  0 seconds
+${DELAY}  0.2 seconds
 ${HOME_URL}  http://127.0.0.1:5000
 ${LOGIN_URL}  ${HOME_URL}/login
 ${REGISTER_URL}  ${HOME_URL}/register
@@ -13,7 +13,7 @@ ${NEW_REFERENCE}  ${HOME_URL}/new_reference
 *** Keywords ***
 Open And Configure Browser
     ${options}  Evaluate  sys.modules['selenium.webdriver'].ChromeOptions()  sys
-    Call Method  ${options}  add_argument  --headless
+    #Call Method  ${options}  add_argument  --headless
     Reset Application
     Open Browser  browser=chrome  options=${options}
     Set Selenium Speed  ${DELAY}
@@ -62,3 +62,17 @@ Login Should Fail With Message
     [Arguments]  ${message}
     Login Page Should Be Open
     Page Should Contain  ${message}
+
+Create User And Go To Login Page
+    Create User  kalle  Testisalasana123!
+    Go To Login Page
+    Login Page Should Be Open
+Delete Test Setup
+    Create User And Go To Login Page
+    Set Username  kalle
+    Set Password  Testisalasana123!
+    Submit Credentials
+    Main Page Should Be Open
+    Click Link  Add
+    New Reference Page Should Be Open
+    

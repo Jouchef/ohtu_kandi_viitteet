@@ -4,7 +4,8 @@ from repositories.reference_repository import reference_repository as default_re
 from models.reference import Reference_model as Reference # pylint: disable=no-name-in-module, import-error line-too-long
 from models.user_references import UserReferences_model # pylint: disable=no-name-in-module, import-error line-too-long
 from entities.citationArticle import CitationArticle # pylint: disable=import-error no-name-in-module
-
+from entities.citationBook import CitationBook  # pylint: disable=import-error no-name-in-module
+from entities.citationInproceedings import CitationInProceedings  # pylint: disable=import-error no-name-in-module
 class ReferenceService:
     """Reference services.
     Handles reference logic."""
@@ -34,6 +35,8 @@ class ReferenceService:
 
     def get_reference(self, reference_id):
         """Returns a citation with the reference given id."""
+        print(reference_id )
+        print ("geting reference") 
         return self._reference_repository.get_reference(reference_id)
 
     def get_all_references_by_user_id(self, user_id):
@@ -48,7 +51,7 @@ class ReferenceService:
         bibtex = "References\n\n"
         for reference in references:
             if reference.reference_type == "Article":
-                citation = CitationArticle(reference.reference_type, reference.key,
+                citation = CitationArticle(reference.reference_type,
                                            reference.author,
                                            reference.title,
                                            reference.journal,
@@ -58,6 +61,37 @@ class ReferenceService:
                                            reference.pages,
                                            reference.month,
                                            reference.doi, reference.note, reference.key)
+                bibtex += citation.citation_to_bibtex_entry()
+                bibtex += "\n\n"
+            elif reference.reference_type == "Book":
+                citation = CitationBook(reference.reference_type,
+                                           reference.author,
+                                           reference.title,
+                                           reference.publisher,
+                                           reference.year,
+                                           reference.volume,
+                                           reference.series,
+                                           reference.address,
+                                           reference.edition,
+                                           reference.month,
+                                           reference.note, reference.key)
+                bibtex += citation.generate_bibtex()
+                bibtex += "\n\n"
+            elif reference.reference_type == "Inproceedings":
+                citation = CitationInProceedings(reference.reference_type,
+                                           reference.author,
+                                           reference.title,
+                                           reference.booktitle,
+                                           reference.year,
+                                           reference.editor,
+                                           reference.volume,
+                                           reference.series,
+                                           reference.pages,
+                                           reference.address,
+                                           reference.month,
+                                           reference.organization,
+                                           reference.publisher,
+                                           reference.note, reference.key)
                 bibtex += citation.citation_to_bibtex_entry()
                 bibtex += "\n\n"
         return bibtex
@@ -73,7 +107,6 @@ class ReferenceService:
             for key, value in kwargs.items():
                 setattr(reference, key, value)
             return self._reference_repository.edit_reference(reference)
-        print("Error in editing reference")
 
 
     def delete_reference(self, reference_id):
@@ -83,7 +116,6 @@ class ReferenceService:
 
     def get_from_doi(self, doi):
         """Gets a BibTeX entry from a doi."""
-        print ("in get_from_doi")
         base_url = 'http://dx.doi.org/'
         url = base_url + doi
         req = urllib.request.Request(url)
@@ -95,10 +127,7 @@ class ReferenceService:
 
     def parse_bibtex(self,bibtex):
         """Parses a BibTeX entry and returns a dictionary of its fields."""
-        # add the article as the type  @article{ and }
-        print ("in parse_bibtex")
         reference_type = bibtex.split('{', 1)[0].split('@', 1)[1]
-        print(reference_type)
         reference_type = reference_type[0].upper() + reference_type[1:]
 
         parts = bibtex.replace('@article{', '').rstrip(' }').split(', ')
@@ -107,6 +136,7 @@ class ReferenceService:
                        'reference_type': reference_type}
 
         for part in parts[1:]:
+            part = part.strip()
             key_value = part.split('=', 1)
             if len(key_value) ==2:
                 key, value = key_value
@@ -114,17 +144,17 @@ class ReferenceService:
             else:
                 last_key = list(bibtex_dict.keys())[-1]
                 bibtex_dict[last_key] += ', ' + part.strip('{} ')
+        print ("parded:", bibtex_dict)
         return bibtex_dict
 
     def create_reference_from_doi(self, doi, user_id):
         """Creates a reference from a doi.
         Returns the reference."""
-        print ("in create_reference_from_doi")
         bibtext = self.get_from_doi(doi)
+        print("bubtext: ", bibtext)
         parsed_dict = self.parse_bibtex(bibtext)
 
         reference_type = parsed_dict.get('reference_type')
-        print(reference_type)
         if reference_type == 'Book':
             return self.create_reference(reference_type=reference_type,
                                         author=parsed_dict.get('author'),

@@ -10,7 +10,7 @@ body {
     position: center;
     padding-top: 50px;
     max-width: 800px;
-    height: 600px;
+    height: 700px;
     background: rgb(235, 239, 255);
     display: flex;
     flex-direction: column;

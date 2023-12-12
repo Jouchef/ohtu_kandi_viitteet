@@ -51,7 +51,7 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 100px 60px;
+    padding: 5px 60px;
     border: 1px solid rgb(4, 2, 57);
     border-radius: 3px;
     background-color: rgb(255, 255, 255);
@@ -123,15 +123,6 @@ body {
     margin-right: 10px;
 }
 
-select {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: white; 
-    height: 38px;
-}
 input[type="number"],
 input[type="password"],
 select {

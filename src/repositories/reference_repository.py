@@ -15,21 +15,18 @@ class ReferenceRepository:
 
     def create(self, reference):
         """Creates a new reference and links it to a user."""
-        print("Creating new reference in repository")
         db.session.add(reference)
         db.session.commit()
         return reference
 
     def add_reference_to_user(self, user_reference):
         """Adds a reference to a user."""
-        print("Adding reference to user in repository")
         db.session.add(user_reference)
         db.session.commit()
         return user_reference
 
     def get_reference(self, reference_id):
         """Returns a citation with the reference given id."""
-        print(f"Getting from database reference with id {reference_id}")
         return Reference.query.filter_by(id=reference_id).first()
 
     def get_all_references_by_user_id(self, user_id):
@@ -45,7 +42,6 @@ class ReferenceRepository:
         """INPUT: reference object that has the new values
         DO: updates the reference with the given id with the new values to the database
         RETURNS: True if successful, False if not successful"""
-        print("Editing reference in database")
         db.session.add(reference)
         db.session.commit()
 

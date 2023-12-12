@@ -93,6 +93,18 @@
                     <label for="organization" class="form-label">Organization:</label>
                     <input type="text" id="organization" name="organization" value="{{ reference.organization }}">
                 </div>
+                <div class="form-row">
+                    <label for="publisher" class="form-label">Publisher:</label>
+                    <input type="text" id="publisher" name="publisher" value="{{ reference.publisher }}">
+                </div>
+                <div class="form-row">
+                    <label for="note" class="form-label">Note:</label>
+                    <input type="text" id="note" name="note" value="{{ reference.note }}">
+                </div>
+                <div class="form-row">
+                    <label for="key" class="form-label">Reference Key:</label>
+                    <input type="text" id="key" name="key" value="{{ reference.key }}">
+                </div>
                 {% elif reference.reference_type == 'Article' %}
                 <div class="form-row">
                     <label for="journal" class="form-label">Journal:</label>

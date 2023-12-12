@@ -53,11 +53,16 @@ def edit_reference(reference_id):
                 "title": request.form.get("title"),
                 "journal": request.form.get("journal"),
                 "year": request.form.get("year"),
+                "series": request.form.get("series"),
+                "address": request.form.get("address"),
+                "edition": request.form.get("edition"),
+                "url": request.form.get("url"),
                 "volume": request.form.get("volume"),
                 "number": request.form.get("number"),
                 "pages": request.form.get("pages"),
                 "month": request.form.get("month"),
                 "doi": request.form.get("doi"),
+                "publisher": request.form.get("publisher"),
                 "note": request.form.get("note"),
                 "key": request.form.get("key"),
                 "visible": True}
@@ -94,7 +99,8 @@ def export_bibtex():
 
 @references.route("/form", methods=["POST"])
 def create_reference():
-    """Create a new reference."""
+    """Create a new reference.
+    TODO: use the architecture and services to create a new reference"""
     reference_type = request.form.get("type")
     if reference_type == "Article":
         author = request.form.get("author")
@@ -102,10 +108,10 @@ def create_reference():
         journal = request.form.get("journal")
         year = request.form.get("year")
         volume = request.form.get("volume")
-        number = request.form.get("number")
+        number = int(request.form.get("number"))
         pages = request.form.get("pages")
         month = request.form.get("month")
-        doi = request.form.get("doi")
+        doi = request.form.get("DOI")
         note = request.form.get("note")
         key = request.form.get("key")
         visible = True
@@ -212,7 +218,6 @@ def generate_reference_from_doi():
             raise Exception("You must be logged in to create a reference")  # pylint: disable=broad-exception-raised
         action = request.form.get("action")
         if action == "Add reference":
-            print("Adding reference")
             reference_service.create_reference_from_doi(doi, user_id)
             flash("Reference created successfully")
             return redirect("/")
